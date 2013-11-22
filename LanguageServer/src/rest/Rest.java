@@ -123,7 +123,7 @@ public class Rest extends Application {
         klasaManager.insertKlasa(klasa, login);
 
         return "succes";
-    }
+    } 
 
     //
     // @GET
