@@ -132,6 +132,7 @@ public class Rest extends Application {
     // public Klasa getKlase(@PathParam("id") int id)
     // {
     // return restHelper.getClassById(id);
+    // //test comit synchro
     // }
     //
     // @GET
