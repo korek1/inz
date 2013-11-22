@@ -76,7 +76,7 @@ public class Rest extends Application {
     {
         Teacher teacher = teacherManager.getTeacherById(id);
         DBUtils.cleanTeacher(teacher);
-        
+
         return teacher;
     }
 
@@ -98,10 +98,10 @@ public class Rest extends Application {
     {
         Klasa klasa = klasaManager.getKlasaById(id);
         DBUtils.cleanKlasa(klasa);
-        
-        return klasa; 
+
+        return klasa;
     }
-    
+
     @GET
     @Path("/classes")
     @Produces(MediaType.APPLICATION_JSON)
@@ -109,21 +109,21 @@ public class Rest extends Application {
     {
         List<Klasa> allClasses = klasaManager.getAllKlasy(login);
         DBUtils.cleanKlasy(allClasses);
-        
+
         return allClasses;
     }
-    
+
     @POST
     @Path("/class")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String addClass(Klasa klasa, @HeaderParam("login") String login)
     {
-       
+
         klasaManager.insertKlasa(klasa, login);
 
         return "succes";
-    } 
+    }
 
     //
     // @GET
