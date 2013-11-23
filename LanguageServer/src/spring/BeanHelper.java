@@ -6,19 +6,24 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class BeanHelper {
 
     private static ApplicationContext CONTEXT;
-    
+
     private BeanHelper()
     {
-        //no instance
+        // no instance
     }
 
-    public synchronized static Object getBean(String beanName) {
-        
-        if(CONTEXT == null)
+    public static Object getBean(String beanName)
+    {
+
+        synchronized (BeanHelper.class)
         {
-            CONTEXT = new ClassPathXmlApplicationContext("spring.xml");
+
+            if (CONTEXT == null)
+            {
+                CONTEXT = new ClassPathXmlApplicationContext("spring.xml");
+            }
         }
-        
+
         return CONTEXT.getBean(beanName);
-      }
+    }
 }

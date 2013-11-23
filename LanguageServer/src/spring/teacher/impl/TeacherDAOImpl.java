@@ -1,7 +1,10 @@
 package spring.teacher.impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +22,14 @@ public class TeacherDAOImpl extends BaseDAOImpl<Teacher> implements TeacherDAO {
     public Session getSession()
     {
         return sessionFactory.getCurrentSession();
+    }
+
+    @Override
+    public Teacher getTeacherByLogin(String login)
+    {
+        @SuppressWarnings("unchecked")
+        List<Teacher> list = sessionFactory.getCurrentSession().createCriteria(Teacher.class).add(Restrictions.eq("login", login)).list();
+
+        return list.get(0);
     }
 }

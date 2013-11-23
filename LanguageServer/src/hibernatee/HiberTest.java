@@ -1,18 +1,9 @@
 package hibernatee;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import rest.RestHelper;
-import dto.GameResult;
-import dto.Klasa;
-import dto.RozsypankaGame;
-import dto.Student;
-import dto.Tamagotchi;
 import dto.Teacher;
 
 public class HiberTest {

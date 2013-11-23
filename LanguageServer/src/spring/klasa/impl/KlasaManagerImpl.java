@@ -11,30 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import spring.klasa.KlasaDAO;
 import spring.klasa.KlasaManager;
+import spring.teacher.TeacherDAO;
 import dto.Klasa;
 import dto.Teacher;
 
 @Service
 public class KlasaManagerImpl implements KlasaManager {
-    
+
     @Autowired
     private KlasaDAO klasaDAO;
+
+    @Autowired
+    private TeacherDAO teacherDAO;
 
     @Override
     @Transactional
     public void insertKlasa(Klasa klasa, String login)
     {
-        @SuppressWarnings("unchecked")
-        List<Teacher> list = klasaDAO.getSession()
-        .createCriteria(Teacher.class)
-        .add(Restrictions.eq("login", login))
-        .list();
-        Teacher teacher = list.get(0);
+        Teacher teacher = teacherDAO.getTeacherByLogin(login);
 
         klasa.setTeacher(teacher);
         teacher.getKlasy().add(klasa);
-        
-        klasaDAO.save(klasa);        
+
+        klasaDAO.save(klasa);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class KlasaManagerImpl implements KlasaManager {
     {
         Klasa klasa = klasaDAO.get(klasaId);
         klasa.getStudents().isEmpty();
-        
+
         return klasa;
     }
 
@@ -53,7 +52,6 @@ public class KlasaManagerImpl implements KlasaManager {
     {
 
         return klasaDAO.getAllKlasy(login);
-    
     }
 
 }

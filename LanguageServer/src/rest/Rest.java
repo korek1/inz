@@ -125,65 +125,20 @@ public class Rest extends Application {
         return "succes";
     }
 
-    //
-    // @GET
-    // @Path("/class/{id}")
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public Klasa getKlase(@PathParam("id") int id)
-    // {
-    // return restHelper.getClassById(id);
-    // //test comit synchro
-    // }
-    //
-    // @GET
-    // @Path("/classes")
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public List<Klasa> getAllKlase(@HeaderParam("login") String login)
-    // {
-    // List<Klasa> allClasses = restHelper.getAllTeachersClasses(login);
-    //
-    // return allClasses;
-    // }
-    //
-    // @POST
-    // @Path("/student")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // @Produces(MediaType.TEXT_PLAIN)
-    // public String postStudent(Student student, @HeaderParam("login") String
-    // login, @HeaderParam("id") int idKlasy)
-    // {
-    // restHelper.addStudent(student, login, idKlasy);
-    //
-    // return "succes";
-    // }
+    @POST
+    @Path("/student")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String postStudent(Student student, @HeaderParam("login") String login, @HeaderParam("id") int idKlasy)
+    {
 
-    // @POST
-    // @Path("/teacher")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // @Produces(MediaType.TEXT_PLAIN)
-    // public String postTeacher(Teacher teacher, @HeaderParam("login") String
-    // login)
-    // {
-    // // restHelper.addStudent(student, login, idKlasy);
-    //
-    // return "succes";
-    // }
+        studentManager.insertStudent(student, login, idKlasy);
 
-    // @POST
-    // @Path("/class")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // @Produces(MediaType.TEXT_PLAIN)
-    // public String addClass(Klasa klasa, @HeaderParam("login") String login)
-    // {
-    // restHelper.addClass(klasa, login);
-    //
-    // return "succes";
-    // }
+        return "succes";
+    }
 
     /**
      * Image
-     * 
-     * 
      */
     @POST
     @Path("/image")

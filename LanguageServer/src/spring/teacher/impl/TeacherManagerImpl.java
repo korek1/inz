@@ -30,4 +30,12 @@ public class TeacherManagerImpl implements TeacherManager {
         return teacher;
     }
 
+    @Override
+    public Teacher getTeacherByLogin(String login)
+    {
+        Teacher teacher = teacherDAO.getTeacherByLogin(login);
+        
+        return teacher;
+    }
+
 }

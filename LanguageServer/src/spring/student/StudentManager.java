@@ -6,7 +6,7 @@ import dto.Student;
 
 public interface StudentManager {
     
-    void insertStudent(Student student);
+    void insertStudent(Student student, String login, int idKlasy);
     
     Student getStudentById(int studentId);
       

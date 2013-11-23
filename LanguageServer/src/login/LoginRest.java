@@ -1,7 +1,5 @@
 package login;
 
-import hibernatee.DBController;
-
 import java.util.Random;
 import java.util.Set;
 
@@ -12,13 +10,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import spring.BeanHelper;
+import spring.login.LoginManager;
 import auth.Auth;
 import auth.AuthMenager;
 
 @Path("/")
 public class LoginRest {
 
-    private DBController db = DBController.getInstance();
+    LoginManager loginManager = (LoginManager) BeanHelper.getBean("loginManagerImpl");
 
     @POST
     @Path("student")
@@ -27,10 +27,11 @@ public class LoginRest {
     public String logInStudent(Auth auth)
     {
         String tempPass = "";
-        boolean valid = db.validateStudent(auth);
+        boolean valid = loginManager.validateStudent(auth);
 
         if (valid)
         {
+            // simple temp pass generator
             int nextInt = new Random().nextInt();
 
             tempPass = auth.getLogin() + Integer.toString(nextInt);
@@ -49,10 +50,11 @@ public class LoginRest {
     {
 
         String tempPass = "";
-        boolean valid = db.validateTeacher(auth);
+        boolean valid = loginManager.validateTeacher(auth);
 
         if (valid)
         {
+            // simple temp pass generator
             int nextInt = new Random().nextInt();
 
             tempPass = auth.getLogin() + Integer.toString(nextInt);
