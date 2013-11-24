@@ -2,16 +2,11 @@ package rest;
 
 import java.io.IOException;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
 
+import utils.Constants;
 import auth.AuthMenager;
 
 @Provider
@@ -28,8 +23,9 @@ public class AuthFilter implements ContainerRequestFilter {
         boolean validStudent = false;
         boolean validTeacher = false;
 
-        String login = request.getHeaderString("login");
-        String pass = request.getHeaderString("pass");
+        
+        String login = request.getHeaderString(Constants.LOGIN);
+        String pass = request.getHeaderString(Constants.PASSWORD);
 
         validStudent = AuthMenager.veryfiPassStudent(login, pass);
 

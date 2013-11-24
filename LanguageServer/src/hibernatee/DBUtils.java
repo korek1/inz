@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 
 import utils.CommonUtils;
+import dto.Game;
 import dto.Klasa;
 import dto.Student;
 import dto.Tamagotchi;
@@ -103,6 +104,14 @@ public class DBUtils {
         {
             klasa.setTeacher(null);
             klasa.setStudents(null);
+        }
+    }
+    
+    public static void cleanGames(Set<Game> games)
+    {
+        for (Game game : games)
+        {
+            game.setOwner(null);
         }
     }
 

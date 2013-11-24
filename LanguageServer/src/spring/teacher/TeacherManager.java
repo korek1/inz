@@ -1,5 +1,8 @@
 package spring.teacher;
 
+import java.util.Set;
+
+import dto.Game;
 import dto.Teacher;
 
 public interface TeacherManager {
@@ -9,5 +12,7 @@ public interface TeacherManager {
     Teacher getTeacherById(int teacherId);
     
     Teacher getTeacherByLogin(String login);
+    
+    Set<Game> getAllGames(String login);
 
 }

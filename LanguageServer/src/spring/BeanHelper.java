@@ -17,7 +17,6 @@ public class BeanHelper {
 
         synchronized (BeanHelper.class)
         {
-
             if (CONTEXT == null)
             {
                 CONTEXT = new ClassPathXmlApplicationContext("spring.xml");
