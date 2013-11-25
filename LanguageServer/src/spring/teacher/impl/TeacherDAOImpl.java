@@ -1,7 +1,6 @@
 package spring.teacher.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,14 +34,4 @@ public class TeacherDAOImpl extends BaseDAOImpl<Teacher> implements TeacherDAO {
         return list.get(0);
     }
 
-    @Override
-    public Set<Game> getAllGames(String login)
-    {
-        Teacher teacher = getTeacherByLogin(login);
-        Set<Game> games = teacher.getGames();
-        
-        games.size(); //TODO ?
-        
-        return games;
-    }
 }

@@ -107,12 +107,17 @@ public class DBUtils {
         }
     }
     
-    public static void cleanGames(Set<Game> games)
+    public static void cleanGames(List<Game> games)
     {
         for (Game game : games)
         {
-            game.setOwner(null);
+            cleanGame(game);
         }
+    }
+    
+    public static void cleanGame(Game game)
+    {
+        game.setOwner(null);
     }
 
 }

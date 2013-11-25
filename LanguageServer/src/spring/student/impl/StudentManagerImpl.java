@@ -17,7 +17,7 @@ public class StudentManagerImpl implements StudentManager {
 
     @Autowired
     private StudentDAO studentDAO;
-    
+
     @Autowired
     private KlasaDAO klasaDAO;
 
@@ -26,10 +26,10 @@ public class StudentManagerImpl implements StudentManager {
     public void insertStudent(Student student, String login, int idKlasy)
     {
         Klasa klasa = klasaDAO.get(idKlasy);
-        
+
         student.setKlasa(klasa);
         klasa.getStudents().add(student);
-        
+
         studentDAO.save(student);
 
     }
@@ -48,6 +48,15 @@ public class StudentManagerImpl implements StudentManager {
     public List<Student> getStudents()
     {
         return studentDAO.getStudents();
+    }
+
+    @Override
+    @Transactional
+    public String getMyTeachersLogin(String login)
+    {
+        String teachersLogin = studentDAO.getMyTeachersLogin(login);
+        
+        return teachersLogin;
     }
 
 }

@@ -1,9 +1,10 @@
 package spring.game.impl;
 
-import java.util.Set;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,19 @@ public class GameDAOImpl extends BaseDAOImpl<Game> implements GameDAO {
     {
         Game object = (Game) sessionFactory.getCurrentSession().get(clazz, id);
         return object;
+    }
+    
+    @Override
+    public List<Game> getAllGames(String login, Class<? extends Game> clazz)
+    {
+        @SuppressWarnings("unchecked")
+        List<Game> list = sessionFactory.getCurrentSession()
+                .createCriteria(clazz)
+                .createAlias("owner", "o")
+                .add(Restrictions.eq("o.login", login))
+                .list();
+        
+        return list;
     }
 
 

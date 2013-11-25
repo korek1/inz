@@ -1,6 +1,6 @@
 package spring.teacher.impl;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,15 +40,6 @@ public class TeacherManagerImpl implements TeacherManager {
         Teacher teacher = teacherDAO.getTeacherByLogin(login);
         
         return teacher;
-    }
-
-    @Override
-    @Transactional
-    public Set<Game> getAllGames(String login)
-    {
-        Set<Game> games = teacherDAO.getAllGames(login);
-        
-        return games;
     }
 
 }

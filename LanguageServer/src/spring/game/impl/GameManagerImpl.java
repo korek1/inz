@@ -1,5 +1,7 @@
 package spring.game.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,14 +37,21 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     @Transactional
-    public Game getGameById(int gameID, Class<?> clazz)
+    public RozsypankaGame getRozsypankaById(int gameID)
     {
-        //TODO temp !!!!!!!!!!!!!!!!!!!!!!!!!11
-        Game byId = gameDAO.getById(gameID, clazz);
-        RozsypankaGame x = (RozsypankaGame) byId;
-        x.getSentences().size();
+        RozsypankaGame game = (RozsypankaGame) gameDAO.getById(gameID, RozsypankaGame.class);
+        game.getSentences().size(); //TODO ?
         
-        return byId;
+        return game;
+    }
+    
+    @Override
+    @Transactional
+    public List<Game> getAllGames(String login, Class<? extends Game> clazz)
+    {
+        List<Game> games = gameDAO.getAllGames(login, clazz);
+        
+        return games;
     }
 
 }

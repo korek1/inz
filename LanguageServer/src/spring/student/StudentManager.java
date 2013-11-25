@@ -11,4 +11,6 @@ public interface StudentManager {
     Student getStudentById(int studentId);
       
     List<Student> getStudents();
+    
+    String getMyTeachersLogin(String login);
 }
