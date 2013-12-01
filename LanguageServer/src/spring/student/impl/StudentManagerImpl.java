@@ -25,10 +25,8 @@ public class StudentManagerImpl implements StudentManager {
     @Transactional
     public void insertStudent(Student student, String login, int idKlasy)
     {
-        Klasa klasa = klasaDAO.get(idKlasy);
-
+        Klasa klasa = klasaDAO.load(idKlasy);
         student.setKlasa(klasa);
-        klasa.getStudents().add(student);
 
         studentDAO.save(student);
 
@@ -55,7 +53,7 @@ public class StudentManagerImpl implements StudentManager {
     public String getMyTeachersLogin(String login)
     {
         String teachersLogin = studentDAO.getMyTeachersLogin(login);
-        
+
         return teachersLogin;
     }
 

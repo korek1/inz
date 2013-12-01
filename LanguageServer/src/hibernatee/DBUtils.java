@@ -89,7 +89,7 @@ public class DBUtils {
         klasa.getTeacher().setGames(null);
         klasa.getTeacher().setKlasy(null);
 
-        Set<Student> students = klasa.getStudents();
+        List<Student> students = klasa.getStudents();
         for (Student student : students)
         {
             student.setAnimal(null);

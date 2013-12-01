@@ -3,7 +3,7 @@ package spring.game;
 import java.util.List;
 
 import dto.Game;
-import dto.RozsypankaGame;
+import dto.games.RozsypankaGame;
 
 public interface GameManager {
     

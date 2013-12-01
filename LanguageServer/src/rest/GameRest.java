@@ -1,11 +1,16 @@
 package rest;
 
+import game.CurrentGameCreator;
+import game.GameHelper;
+import game.data.CurrentRozsypankaTO;
+import game.impl.CurrentRozsypankaGame;
 import hibernatee.DBUtils;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -20,8 +25,9 @@ import spring.student.StudentManager;
 import spring.teacher.TeacherManager;
 import utils.CommonUtils;
 import dto.Game;
-import dto.RozsypankaGame;
+import dto.Klasa;
 import dto.Teacher;
+import dto.games.RozsypankaGame;
 
 @Path("game")
 public class GameRest {
@@ -29,10 +35,11 @@ public class GameRest {
     GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
 
+    // only for teacher
     @POST
     @Path("/rozsypanka")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllKlase(RozsypankaGame rozsypankaGame, @HeaderParam("login") String login)
+    public String postRozsypanka(RozsypankaGame rozsypankaGame, @HeaderParam("login") String login)
     {
 
         gameManager.insertGame(rozsypankaGame, login);
@@ -40,6 +47,7 @@ public class GameRest {
         return "succes";
     }
 
+    // only for teacher
     @GET
     @Path("/rozsypanka/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,7 +61,7 @@ public class GameRest {
 
     }
 
-    //trzeba ustalic jakas sensowne linki dla studenta
+    // only for teacher
     @GET
     @Path("/rozsypankas")
     @Produces(MediaType.APPLICATION_JSON)
@@ -63,26 +71,55 @@ public class GameRest {
         List<Game> allGames = gameManager.getAllGames(login, RozsypankaGame.class);
         DBUtils.cleanGames(allGames);
 
-        // samego setu,listy nie chce JSONOWAC a jak collection jest w innym obiekiecie to daje rade (?)
+        // samego setu,listy nie chce JSONOWAC a jak collection jest w innym
+        // obiekiecie to daje rade (?)
         Teacher teacher = new Teacher();
         teacher.setGames(CommonUtils.ListToSet(allGames));
 
         return teacher;
 
     }
-    
-    /*dla studenta*/
+
+    // only for student
     @GET
-    @Path("/rozsypankass")
+    @Path("/student/rozsypankas")
     @Produces(MediaType.APPLICATION_JSON)
     public Teacher getGamesStudent(@HeaderParam("login") String login)
     {
-        
+
         String teacherLogin = studentManager.getMyTeachersLogin(login);
 
         return getRozsypankaGames(teacherLogin);
 
     }
-    
 
+    @GET
+    @Path("/student/rozsypanka/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public CurrentRozsypankaTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
+    {
+
+        RozsypankaGame game = gameManager.getRozsypankaById(id);
+        
+        CurrentRozsypankaGame createCurrRozsypanka = CurrentGameCreator.createCurrRozsypanka(game);
+        GameHelper.startGame(login, createCurrRozsypanka);
+
+        CurrentRozsypankaTO currentRozsypankaTO = new CurrentRozsypankaTO();
+        currentRozsypankaTO.setData(createCurrRozsypanka.getProcessRozsypanka());
+
+        return currentRozsypankaTO;
+
+    }
+
+    @POST
+    @Path("/student/check/{noumberOfTask}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String checkPartOfGame(CurrentRozsypankaTO dataInThisTask, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
+    {
+
+        Boolean correct = GameHelper.check(login, noumberOfTask - 1, dataInThisTask.getDataFromStudent());
+
+        return correct.toString();
+    }
 }

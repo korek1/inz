@@ -40,4 +40,11 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
         return (T) sessionFactory.getCurrentSession().get(this.type, id);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public T load(int id)
+    {
+        return (T) sessionFactory.getCurrentSession().load(this.type, id);
+    }
+
 }

@@ -4,33 +4,39 @@
           "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 
-  <session-factory>
+	<session-factory>
 
-    <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-    <property name="connection.driver_class">org.postgresql.Driver</property>
-    <property name="connection.url">jdbc:postgresql://localhost:5432/hibernatedb</property>
-    <property name="connection.username">postgres</property>
-    <property name="connection.password">korek123</property>
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.url">jdbc:postgresql://localhost:5432/hibernatedb</property>
+		<property name="connection.username">postgres</property>
+		<property name="connection.password">korek123</property>
 
-    <property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+		<property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
 
-    <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-    <property name="current_session_context_class">thread</property>
-    <property name="hibernate.show_sql">true</property>
+		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+		<property name="current_session_context_class">thread</property>
+		<property name="hibernate.show_sql">true</property>
 
-    <property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">update</property>
 
-    <mapping class="dto.Student"/>
-    <mapping class="dto.Teacher"/>
-    <mapping class="dto.Klasa"/>
-    <mapping class="dto.Tamagotchi"/>
+		<mapping class="dto.Student" />
+		<mapping class="dto.Teacher" />
+		<mapping class="dto.Klasa" />
+		<mapping class="dto.Tamagotchi" />
 
-    <mapping class="dto.Game"/>
-    <mapping class="dto.RozsypankaGame"/>
-    
-    
-    
-  </session-factory>
+		<mapping class="dto.Game" />
+		<mapping class="dto.games.RozsypankaGame" />
+		<mapping class="dto.games.MemoGame" />
+		<mapping class="dto.games.WordSearchGame" />
+		<mapping class="dto.games.MillionaireGame" />
+		<mapping class="dto.GameResult" />
+
+		<mapping class="dto.games.model.PicWordPair" />
+
+
+
+	</session-factory>
 
 </hibernate-configuration>
 

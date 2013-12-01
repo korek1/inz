@@ -161,7 +161,7 @@ public class Rest extends Application {
     @Produces("image/png")
     public Response get()
     {
-        File file = new File("C:\\Users\\acer\\Desktop\\x.png");
+        File file = new File("C:\\Users\\acer\\Desktop\\postStudent.png");
 
         ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition", "attachment; filename=image_from_server.png");

@@ -35,5 +35,21 @@ public class CommonUtils {
         return s;
 
     }
+    
+    public static boolean isSpecialWord(String word)
+    {
+        boolean special = false;
+        String wordLowerCase = word.toLowerCase();
+        
+        if(wordLowerCase.equals("a") || wordLowerCase.equals("an") || wordLowerCase.equals("the"))
+        {
+            special = true;
+        }
+        
+        return special;
+        
+    }
+    
+    
 
 }

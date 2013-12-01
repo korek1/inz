@@ -17,9 +17,13 @@ public class Tamagotchi {
 	@Id
 	@GeneratedValue
 	int id;
+	
 	String name;
+	
 	int expo;
+	
 	int level;
+	
 	@OneToOne(cascade = {CascadeType.ALL})
 	Student owner;
 

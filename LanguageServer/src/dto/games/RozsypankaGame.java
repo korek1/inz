@@ -1,19 +1,22 @@
-package dto;
+package dto.games;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+
+import dto.Game;
 
 @Entity
 public class RozsypankaGame extends Game {
 
     @ElementCollection
-    private Set<String> sentences = new HashSet<>();
+    private List<String> sentences = new ArrayList<>();
 
     public RozsypankaGame()
     {
+        super();
     }
 
     public RozsypankaGame(String name)
@@ -21,12 +24,12 @@ public class RozsypankaGame extends Game {
         super(name);
     }
 
-    public Set<String> getSentences()
+    public List<String> getSentences()
     {
         return sentences;
     }
 
-    public void setSentences(Set<String> sentences)
+    public void setSentences(List<String> sentences)
     {
         this.sentences = sentences;
     }

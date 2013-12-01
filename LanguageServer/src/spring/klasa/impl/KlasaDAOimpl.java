@@ -18,11 +18,6 @@ public class KlasaDAOimpl extends BaseDAOImpl<Klasa> implements KlasaDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
-    public Session getSession()
-    {
-        return sessionFactory.getCurrentSession();
-    }
 
     @SuppressWarnings("unchecked")
     @Override

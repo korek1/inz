@@ -1,16 +1,18 @@
 package dto;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,21 +23,31 @@ public class Student {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(unique = true, nullable = false)
     private String login;
+
     private String password;
+
     private String firstName;
+
     private String lastName;
+
     private Date joinDate;
+
     private Date lastLoginDate;
+
     private int orderNoumber;
-    @ManyToOne(cascade = { CascadeType.ALL })
+
+    @ManyToOne
+    @JoinColumn(name = "klasaId")
     private Klasa klasa;
+
     @OneToOne(cascade = { CascadeType.ALL })
     private Tamagotchi animal;
-    
-    @ElementCollection
-    private Set<GameResult> gameHistory = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<GameResult> gameHistory = new ArrayList<>();
 
     public Student()
     {
@@ -153,16 +165,16 @@ public class Student {
         this.password = password;
     }
 
-    public Set<GameResult> getGameHistory()
+    public List<GameResult> getGameHistory()
     {
         return gameHistory;
     }
 
-    public void setGameHistory(Set<GameResult> gameHistory)
+    public void setGameHistory(List<GameResult> gameHistory)
     {
         this.gameHistory = gameHistory;
     }
-    
+
     
 
 }

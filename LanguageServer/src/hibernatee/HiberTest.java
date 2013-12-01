@@ -12,6 +12,7 @@ public class HiberTest {
 
     public static void main(String[] args)
     {
+
         db = DBController.getInstance();
         Session session = db.getSession();
 
@@ -34,6 +35,74 @@ public class HiberTest {
             session.close();
         }
 
+        // db = DBController.getInstance();
+        // Session session = db.getSession();
+        //
+        // Teacher teacher1 = new Teacher(null, null, "pass", "admin");
+        // Student student = new Student("name", "name2", 3, "pass", "log");
+        //
+        // RozsypankaGame game = new RozsypankaGame("game");
+        // List<String> sent = new ArrayList<>();
+        // sent.add("zdamo 1 ss asa");
+        // game.setSentences(sent);
+        //
+        // GameResult gameResult = new GameResult();
+        // gameResult.setStudent(student);
+        // gameResult.setGame(game);
+        // gameResult.setResult("2,344");
+        //
+        // GameResult gameResult2 = new GameResult();
+        // gameResult.setStudent(student);
+        // gameResult.setGame(game);
+        // gameResult.setResult("2,344");
+        //
+        // try
+        // {
+        // Transaction beginTransaction = session.beginTransaction();
+        //
+        // session.save(teacher1);
+        // session.save(student);
+        // session.save(game);
+        // session.save(gameResult);
+        //
+        // beginTransaction.commit();
+        // }
+        // catch (HibernateException e)
+        // {
+        // e.printStackTrace();
+        // }
+        // finally
+        // {
+        // session.close();
+        // }
+        //
+        // session = db.getSession();
+        // Transaction beginTransaction = session.beginTransaction();
+        // List list =
+        // session.createCriteria(GameResult.class,"r").createAlias("r.game",
+        // "g")
+        // .add(Restrictions.eq("g.id", 2)).list();
+        // session.close();
+        // System.out.println(list.size());
+        // list.size();
+
+        // List<String> senstences = new ArrayList<>();
+        // senstences.add("takie sobie proste zdanie");
+        // senstences.add("zdanie a animal the dziony an anyooi");
+        // senstences.add("yoyo hehe");
+        //
+        // RozsypankaGame rozsypankaGame = new RozsypankaGame("xx");
+        // rozsypankaGame.setSentences(senstences);
+        //
+        // CurrentRozsypankaGame createCurrRozsypanka =
+        // CurrentGameCreator.createCurrRozsypanka(rozsypankaGame);
+        //
+        // System.out.println(createCurrRozsypanka.getSolution());
+        // System.out.println(createCurrRozsypanka.getProcessRozsypanka());
+        //
+        // CurrentRozsypankaTO x = new CurrentRozsypankaTO();
+        // x.setData(createCurrRozsypanka.getProcessRozsypanka());
+        //
         // Teacher teacher1 = new Teacher("nameTeacher1",
         // "LastNameTeacher1","pas","t1");
         // Teacher teacher2 = new Teacher("nameTeacher2",

@@ -1,17 +1,17 @@
 package dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
@@ -21,11 +21,15 @@ public class Klasa {
     @Id
     @GeneratedValue
     private int id;
+   
     private String name;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    
+    @ManyToOne
+    @JoinColumn(name = "teacherId")
     private Teacher teacher;
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Set<Student> students = new HashSet<>();
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "klasa")
+    private List<Student> students = new ArrayList<>();
 
     public Klasa()
     {
@@ -68,14 +72,21 @@ public class Klasa {
         this.teacher = teacher;
     }
 
-    public Set<Student> getStudents()
+    
+    
+    public List<Student> getStudents()
     {
         return students;
     }
 
-    public void setStudents(Set<Student> students)
+    public void setStudents(List<Student> students)
     {
         this.students = students;
+    }
+
+    public void addStudent(Student student)
+    {
+        students.add(student);
     }
 
 }

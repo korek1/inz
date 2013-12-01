@@ -28,10 +28,9 @@ public class KlasaManagerImpl implements KlasaManager {
     @Transactional
     public void insertKlasa(Klasa klasa, String login)
     {
-        Teacher teacher = teacherDAO.getTeacherByLogin(login);
-
+        Integer teachersId = teacherDAO.getTeachersIdByLogin(login);
+        Teacher teacher = teacherDAO.load(teachersId);
         klasa.setTeacher(teacher);
-        teacher.getKlasy().add(klasa);
 
         klasaDAO.save(klasa);
     }

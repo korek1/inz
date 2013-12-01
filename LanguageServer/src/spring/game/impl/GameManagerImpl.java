@@ -10,8 +10,8 @@ import spring.game.GameDAO;
 import spring.game.GameManager;
 import spring.teacher.TeacherDAO;
 import dto.Game;
-import dto.RozsypankaGame;
 import dto.Teacher;
+import dto.games.RozsypankaGame;
 
 @Service
 public class GameManagerImpl implements GameManager {
@@ -26,9 +26,8 @@ public class GameManagerImpl implements GameManager {
     @Transactional
     public void insertGame(Game game, String login)
     {
-        Teacher teacher = teacherDAO.getTeacherByLogin(login);
-
-        teacher.getGames().add(game);
+        Integer teachersId = teacherDAO.getTeachersIdByLogin(login);
+        Teacher teacher = teacherDAO.load(teachersId);
         game.setOwner(teacher);
 
         gameDAO.save(game);

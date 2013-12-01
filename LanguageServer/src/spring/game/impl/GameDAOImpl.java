@@ -18,12 +18,6 @@ public class GameDAOImpl extends BaseDAOImpl<Game> implements GameDAO {
     @Autowired
     private SessionFactory sessionFactory;
     
-    @Override
-    public Session getSession()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public Game getById(int id, Class<?> clazz)

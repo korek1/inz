@@ -31,11 +31,6 @@ public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
               return criteria.list();
     }
 
-    @Override
-    public Session getSession()
-    {
-        return sessionFactory.getCurrentSession();
-    }
 
     @Override
     public String getMyTeachersLogin(String login)

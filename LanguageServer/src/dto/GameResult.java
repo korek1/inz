@@ -1,63 +1,73 @@
 package dto;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class GameResult {
-    
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private int id;
-    @OneToOne(cascade=CascadeType.ALL)
+
+    @ManyToOne
+    @JoinColumn(name = "studentId")
+    private Student student;
+
+    @OneToOne
     private Game game;
-    private int score;
-    private int time;
-    
-    
-    
+
+    // wyniki z poszczegolnych podejsc do gry zapisywane w jednym wierszy z
+    // seperatorem
+    private String result;
+
     public GameResult()
     {
         super();
     }
-    
+
     public int getId()
     {
         return id;
     }
+
     public void setId(int id)
     {
         this.id = id;
     }
+
     public Game getGame()
     {
         return game;
     }
+
     public void setGame(Game game)
     {
         this.game = game;
     }
-    public int getScore()
+
+    public Student getStudent()
     {
-        return score;
-    }
-    public void setScore(int score)
-    {
-        this.score = score;
+        return student;
     }
 
-    public int getTime()
+    public void setStudent(Student student)
     {
-        return time;
+        this.student = student;
     }
 
-    public void setTime(int time)
+    public String getResult()
     {
-        this.time = time;
-    } 
-    
-    
+        return result;
+    }
+
+    public void setResult(String result)
+    {
+        this.result = result;
+    }
 
 }

@@ -2,6 +2,7 @@ package spring.teacher.impl;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class TeacherManagerImpl implements TeacherManager {
     {
         Teacher teacher = teacherDAO.get(teacherId);
         teacher.getKlasy().isEmpty();
+
         return teacher;
     }
 
