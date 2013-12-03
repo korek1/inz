@@ -1,19 +1,18 @@
 package game.data;
 
 import game.helpers.IntGenerator;
+import game.to.MappedWordTO;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import utils.CommonUtils;
 
 public class GameDataParser {
 
-    public static List<Map<Integer, String>> processRozsypanka(List<String> senstences)
+    public static List<List<MappedWordTO>> processRozsypanka(List<String> senstences)
     {
-        List<Map<Integer, String>> list = new ArrayList<>();
+        List<List<MappedWordTO>> list = new ArrayList<>();
 
         for (String sentence : senstences)
         {
@@ -23,9 +22,9 @@ public class GameDataParser {
         return list;
     }
 
-    private static Map<Integer, String> splitSentenceToWords(String sentence)
+    private static List<MappedWordTO> splitSentenceToWords(String sentence)
     {
-        Map<Integer, String> mapper = new LinkedHashMap<>();
+        List<MappedWordTO> mapper = new ArrayList<>();
 
         String[] split = sentence.split(" ");
 
@@ -41,12 +40,35 @@ public class GameDataParser {
             {
                 Integer uniqueInt = intGenerator.getNextRandomUniqueInt();
                 String toAdd = temp + string;
-                mapper.put(uniqueInt, toAdd);
+
+                mapper.add(new MappedWordTO(uniqueInt, toAdd));
                 temp = "";
             }
         }
 
+        handleTheSameWords(mapper);
+
         return mapper;
+    }
+
+    private static void handleTheSameWords(List<MappedWordTO> mapper)
+    {
+        for (MappedWordTO mappedWordTO : mapper)
+        {
+            for (MappedWordTO mappedWordTOinside : mapper)
+            {
+                if (!mappedWordTO.equals(mappedWordTOinside))
+                {
+                    String word = mappedWordTO.getWord();
+                    String word2 = mappedWordTOinside.getWord();
+
+                    if (word.equals(word2))
+                    {
+                        mappedWordTOinside.setMappedValue(mappedWordTO.getMappedValue());
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -2,13 +2,13 @@ package rest;
 
 import game.CurrentGameCreator;
 import game.GameHelper;
-import game.data.CurrentRozsypankaTO;
-import game.impl.CurrentRozsypankaGame;
-import hibernatee.DBUtils;
+import game.to.RozsypankaGameStudentTO;
+import game.to.RozsypankaGameTO;
+import game.to.RozsypankaGameTOs;
+import game.to.SolutionTO;
+import game.to.TOsManager;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,11 +22,7 @@ import javax.ws.rs.core.MediaType;
 import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
-import spring.teacher.TeacherManager;
-import utils.CommonUtils;
 import dto.Game;
-import dto.Klasa;
-import dto.Teacher;
 import dto.games.RozsypankaGame;
 
 @Path("game")
@@ -51,13 +47,13 @@ public class GameRest {
     @GET
     @Path("/rozsypanka/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public RozsypankaGame getRozsypankaGame(@PathParam("id") int id)
+    public RozsypankaGameTO getRozsypankaGame(@PathParam("id") int id)
     {
 
         RozsypankaGame game = gameManager.getRozsypankaById(id);
-        DBUtils.cleanGame(game);
+        RozsypankaGameTO rozsypankaGameTO = TOsManager.processRozsypanka(game);
 
-        return game;
+        return rozsypankaGameTO;
 
     }
 
@@ -65,18 +61,13 @@ public class GameRest {
     @GET
     @Path("/rozsypankas")
     @Produces(MediaType.APPLICATION_JSON)
-    public Teacher getRozsypankaGames(@HeaderParam("login") String login)
+    public RozsypankaGameTOs getRozsypankaGames(@HeaderParam("login") String login)
     {
 
         List<Game> allGames = gameManager.getAllGames(login, RozsypankaGame.class);
-        DBUtils.cleanGames(allGames);
+        RozsypankaGameTOs rozsypankas = TOsManager.processRozsypankas(allGames);
 
-        // samego setu,listy nie chce JSONOWAC a jak collection jest w innym
-        // obiekiecie to daje rade (?)
-        Teacher teacher = new Teacher();
-        teacher.setGames(CommonUtils.ListToSet(allGames));
-
-        return teacher;
+        return rozsypankas;
 
     }
 
@@ -84,7 +75,7 @@ public class GameRest {
     @GET
     @Path("/student/rozsypankas")
     @Produces(MediaType.APPLICATION_JSON)
-    public Teacher getGamesStudent(@HeaderParam("login") String login)
+    public RozsypankaGameTOs getGamesStudent(@HeaderParam("login") String login)
     {
 
         String teacherLogin = studentManager.getMyTeachersLogin(login);
@@ -96,18 +87,14 @@ public class GameRest {
     @GET
     @Path("/student/rozsypanka/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public CurrentRozsypankaTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
+    public RozsypankaGameStudentTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
     {
 
         RozsypankaGame game = gameManager.getRozsypankaById(id);
-        
-        CurrentRozsypankaGame createCurrRozsypanka = CurrentGameCreator.createCurrRozsypanka(game);
-        GameHelper.startGame(login, createCurrRozsypanka);
 
-        CurrentRozsypankaTO currentRozsypankaTO = new CurrentRozsypankaTO();
-        currentRozsypankaTO.setData(createCurrRozsypanka.getProcessRozsypanka());
+        RozsypankaGameStudentTO rozsypankaGameStudentTO = CurrentGameCreator.createAndStartCurrRozsypanka(game, login);
 
-        return currentRozsypankaTO;
+        return rozsypankaGameStudentTO;
 
     }
 
@@ -115,10 +102,10 @@ public class GameRest {
     @Path("/student/check/{noumberOfTask}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String checkPartOfGame(CurrentRozsypankaTO dataInThisTask, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
+    public String checkPartOfGame(SolutionTO solution, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
     {
 
-        Boolean correct = GameHelper.check(login, noumberOfTask - 1, dataInThisTask.getDataFromStudent());
+        Boolean correct = GameHelper.check(login, noumberOfTask, solution);
 
         return correct.toString();
     }

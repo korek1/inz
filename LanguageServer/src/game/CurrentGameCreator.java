@@ -2,6 +2,9 @@ package game;
 
 import game.data.GameDataParser;
 import game.impl.CurrentRozsypankaGame;
+import game.to.MappedWordTO;
+import game.to.RozsypankaGameStudentTO;
+import game.to.TOsManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,27 +24,34 @@ public class CurrentGameCreator {
 
     }
 
-    public static CurrentRozsypankaGame createCurrRozsypanka(RozsypankaGame rozsypankaGame)
+    public static RozsypankaGameStudentTO createAndStartCurrRozsypanka(RozsypankaGame rozsypankaGame, String login)
     {
         CurrentRozsypankaGame currRozsypanka = new CurrentRozsypankaGame();
 
         setStartDate(currRozsypanka);
         List<String> sentences = rozsypankaGame.getSentences();
 
-        List<Map<Integer, String>> processRozsypanka = GameDataParser.processRozsypanka(sentences);
+        List<List<MappedWordTO>> processRozsypanka = GameDataParser.processRozsypanka(sentences);
 
         List<List<Integer>> solutionToRemember = new ArrayList<>();
 
-        for (Map<Integer, String> map : processRozsypanka)
+        for (List<MappedWordTO> list : processRozsypanka)
         {
-            List<Integer> keys = new ArrayList<Integer>(map.keySet());
-            solutionToRemember.add(keys);
+            List<Integer> temp = new ArrayList<>();
+            for (MappedWordTO mappedWordTO : list)
+            {
+                temp.add(mappedWordTO.getMappedValue());
+            }
+            solutionToRemember.add(temp);
         }
 
         currRozsypanka.setSolution(solutionToRemember);
-        currRozsypanka.setProcessRozsypanka(processRozsypanka);
 
-        return currRozsypanka;
+        GameHelper.startGame(login, currRozsypanka);
+
+        RozsypankaGameStudentTO rozsypankaGameStudentTO = TOsManager.processRozsypankaForStudent(processRozsypanka);
+
+        return rozsypankaGameStudentTO;
     }
 
     public static void createCurrMillionaire()

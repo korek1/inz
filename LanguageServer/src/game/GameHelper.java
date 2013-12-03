@@ -1,7 +1,8 @@
 package game;
 
+import game.to.SolutionTO;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameHelper {
@@ -13,10 +14,10 @@ public class GameHelper {
         currentStudentsGames.put(login, currentGame);
     }
 
-    public static boolean check(String login, int noumberOfTask, List<Integer> dataInThisTask)
+    public static boolean check(String login, int noumberOfTask, SolutionTO solution)
     {
         CurrentGame currentGame = currentStudentsGames.get(login);
-        boolean checkIfPartOfGameIsCorrect = currentGame.checkIfPartOfGameIsCorrect(noumberOfTask, dataInThisTask);
+        boolean checkIfPartOfGameIsCorrect = currentGame.checkIfPartOfGameIsCorrect(noumberOfTask - 1, solution.getDataFromStudent());
 
         return checkIfPartOfGameIsCorrect;
     }
