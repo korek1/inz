@@ -14,7 +14,7 @@ public class FileUtils {
         {
             OutputStream out = null;
             int read = 0;
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1048576];
 
             out = new FileOutputStream(new File(uploadedFileLocation));
             while ((read = uploadedInputStream.read(bytes)) != -1)
@@ -29,6 +29,22 @@ public class FileUtils {
             e.printStackTrace();
         }
 
+    }
+
+    public static String getExtension(String fileName)
+    {
+        String extension = "";
+
+        if (CommonUtils.isNotEmpty(fileName))
+        {
+            int index = fileName.lastIndexOf(".");
+            if (index != -1)
+            {
+                extension = fileName.substring(index + 1);
+            }
+        }
+
+        return extension;
     }
 
 }

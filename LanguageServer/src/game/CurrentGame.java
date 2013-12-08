@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import utils.CommonUtils;
 import dto.Game;
 
 public abstract class CurrentGame {
@@ -13,7 +14,16 @@ public abstract class CurrentGame {
     private Date finishTime;
     private List<List<Integer>> solution = new ArrayList<>();
 
-    public abstract boolean checkIfPartOfGameIsCorrect(int id, List<Integer> ids);
+    public boolean checkIfPartOfGameIsCorrect(int id, List<Integer> ids)
+    {
+        boolean correct = false;
+        List<Integer> list = solution.get(id);
+        if (CommonUtils.isNotNull(list) && list.equals(ids))
+        {
+            correct = true;
+        }
+        return correct;
+    }
 
     public Game getGame()
     {

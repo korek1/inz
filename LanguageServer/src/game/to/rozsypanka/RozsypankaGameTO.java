@@ -1,4 +1,6 @@
-package game.to;
+package game.to.rozsypanka;
+
+import game.to.GameTO;
 
 import java.util.ArrayList;
 import java.util.List;

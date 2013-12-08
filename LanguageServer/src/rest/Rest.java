@@ -1,11 +1,15 @@
 package rest;
 
+import game.helpers.MemoDirHelper;
 import hibernatee.DBUtils;
 
 import java.io.File;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -20,11 +24,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.glassfish.jersey.media.multipart.BodyPart;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import spring.BeanHelper;
+import spring.game.GameManager;
 import spring.klasa.KlasaManager;
 import spring.student.StudentManager;
 import spring.teacher.TeacherManager;
@@ -32,13 +42,16 @@ import utils.FileUtils;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
+import dto.games.MemoGame;
+import dto.games.model.PicWordPair;
 
 @Path("/")
-public class Rest extends Application {
+public class Rest /*extends Application*/ {
 
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
     KlasaManager klasaManager = (KlasaManager) BeanHelper.getBean("klasaManagerImpl");
     TeacherManager teacherManager = (TeacherManager) BeanHelper.getBean("teacherManagerImpl");
+   
 
     /**
      * Default constructor.
@@ -48,13 +61,13 @@ public class Rest extends Application {
         super();
     }
 
-    @Override
-    public Set<Class<?>> getClasses()
-    {
-        final Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add(MultiPartFeature.class);
-        return classes;
-    }
+//    @Override
+//    public Set<Class<?>> getClasses()
+//    {
+//        final Set<Class<?>> classes = new HashSet<Class<?>>();
+//        classes.add(MultiPartFeature.class);
+//        return classes;
+//    }
 
     @GET
     @Path("/student/{id}")
@@ -137,35 +150,37 @@ public class Rest extends Application {
         return "succes";
     }
 
-    /**
-     * Image
-     */
-    @POST
-    @Path("/image")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String uploadFile(@FormDataParam("file") InputStream uploadedInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail)
-    {
-        // need be customized
-        String uploadedFileLocation = "C:\\Users\\acer\\Desktop\\res\\" + fileDetail.getFileName();
-
-        // save it
-        FileUtils.saveToFile(uploadedInputStream, uploadedFileLocation);
-
-        return "hehs";
-
-    }
-
-    @GET
-    @Path("/image")
-    @Produces("image/png")
-    public Response get()
-    {
-        File file = new File("C:\\Users\\acer\\Desktop\\postStudent.png");
-
-        ResponseBuilder response = Response.ok((Object) file);
-        response.header("Content-Disposition", "attachment; filename=image_from_server.png");
-        return response.build();
-    }
-
+//    /**
+//     * Image
+//     */
+//    @POST
+//    @Path("/image")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public String uploadFile(@FormDataParam("file") InputStream uploadedInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail)
+//    {
+//        // need be customized
+//        String uploadedFileLocation = "C:\\Users\\acer\\Desktop\\res\\" + fileDetail.getFileName();
+//
+//        // save it
+//        FileUtils.saveToFile(uploadedInputStream, uploadedFileLocation);
+//
+//        return "hehs";
+//
+//    }
+//
+//    @GET
+//    @Path("/image")
+//    @Produces("image/png")
+//    public Response get()
+//    {
+//        File file = new File("C:\\Users\\acer\\Desktop\\postStudent.png");
+//
+//        ResponseBuilder response = Response.ok((Object) file);
+//        response.header("Content-Disposition", "attachment; filename=image_from_server.png");
+//        return response.build();
+//    }
+//
+//    // ////////////////////////////////
+  
 }

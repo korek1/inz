@@ -3,8 +3,10 @@ package dto.games;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import dto.Game;
 import dto.games.model.PicWordPair;
@@ -12,7 +14,7 @@ import dto.games.model.PicWordPair;
 @Entity
 public class MemoGame extends Game {
 
-    @ElementCollection
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game", cascade = CascadeType.ALL)
     List<PicWordPair> picWordPair = new ArrayList<>();
 
     public MemoGame()

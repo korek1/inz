@@ -22,6 +22,23 @@ public class CommonUtils {
     {
         return !isNotNull(obj);
     }
+    
+    public static boolean isEmpty(String string)
+    {
+        boolean empty = true;
+        
+        if(isNotNull(string) && !string.isEmpty())
+        {
+            empty = false;
+        }
+        
+        return empty;
+    }
+    
+    public static boolean isNotEmpty(String string)
+    {
+        return !isEmpty(string);
+    }
 
     public static <T> Set<T> ListToSet(List<T> list)
     {

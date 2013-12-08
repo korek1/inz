@@ -1,6 +1,5 @@
 package spring.dao;
 
-import org.hibernate.Session;
 
 
 public interface BaseDAO<T> {

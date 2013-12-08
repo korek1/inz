@@ -39,6 +39,12 @@ public class GameDAOImpl extends BaseDAOImpl<Game> implements GameDAO {
         return list;
     }
 
+    @Override
+    public void update(Game game)
+    {
+        sessionFactory.getCurrentSession().saveOrUpdate(game);
+    }
+
 
    
 

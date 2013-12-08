@@ -3,6 +3,10 @@ package dto.games.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import dto.Game;
 
 @Entity
 public class PicWordPair {
@@ -10,6 +14,10 @@ public class PicWordPair {
     @Id
     @GeneratedValue
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "gameId")
+    private Game game;
     private String word;
     private String picPath;
 
@@ -46,6 +54,16 @@ public class PicWordPair {
     public void setPicPath(String picPath)
     {
         this.picPath = picPath;
+    }
+
+    public Game getGame()
+    {
+        return game;
+    }
+
+    public void setGame(Game game)
+    {
+        this.game = game;
     }
 
 }

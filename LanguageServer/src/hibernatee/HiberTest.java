@@ -1,5 +1,10 @@
 package hibernatee;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import game.helpers.MemoDirHelper;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,6 +39,8 @@ public class HiberTest {
         {
             session.close();
         }
+        
+    
 
         // db = DBController.getInstance();
         // Session session = db.getSession();

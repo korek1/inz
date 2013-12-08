@@ -33,6 +33,7 @@
 		<mapping class="dto.GameResult" />
 
 		<mapping class="dto.games.model.PicWordPair" />
+		<mapping class="dto.games.model.MillionaireQuestion" />
 
 
 

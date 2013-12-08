@@ -11,7 +11,10 @@ import spring.game.GameManager;
 import spring.teacher.TeacherDAO;
 import dto.Game;
 import dto.Teacher;
+import dto.games.MemoGame;
+import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.WordSearchGame;
 
 @Service
 public class GameManagerImpl implements GameManager {
@@ -39,18 +42,54 @@ public class GameManagerImpl implements GameManager {
     public RozsypankaGame getRozsypankaById(int gameID)
     {
         RozsypankaGame game = (RozsypankaGame) gameDAO.getById(gameID, RozsypankaGame.class);
-        game.getSentences().size(); //TODO ?
-        
+        game.getSentences().size(); // TODO ?
+
         return game;
     }
-    
+
     @Override
     @Transactional
     public List<Game> getAllGames(String login, Class<? extends Game> clazz)
     {
         List<Game> games = gameDAO.getAllGames(login, clazz);
-        
+
         return games;
+    }
+
+    @Override
+    @Transactional
+    public void update(Game game)
+    {
+        gameDAO.update(game);
+    }
+
+    @Override
+    @Transactional
+    public MemoGame getMemoByID(int gameID)
+    {
+        MemoGame memoGame = (MemoGame) gameDAO.getById(gameID, MemoGame.class);
+        memoGame.getPicWordPair().isEmpty();
+        
+        return memoGame;
+    }
+
+    @Override
+    @Transactional
+    public MillionaireGame getMillionaireByID(int gameID)
+    {
+        MillionaireGame millionaireGame = (MillionaireGame) gameDAO.getById(gameID, MillionaireGame.class);
+        millionaireGame.getQuestions().isEmpty();
+
+        return millionaireGame;
+    }
+
+    @Override
+    @Transactional
+    public WordSearchGame getWordSearchByID(int gameID)
+    {
+        WordSearchGame wordSearchGame = (WordSearchGame) gameDAO.getById(gameID, WordSearchGame.class);
+       
+        return wordSearchGame;
     }
 
 }

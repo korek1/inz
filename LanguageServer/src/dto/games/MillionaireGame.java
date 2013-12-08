@@ -1,29 +1,35 @@
 package dto.games;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import dto.Game;
+import dto.games.model.MillionaireQuestion;
 
 @Entity
 public class MillionaireGame extends Game {
 
-    // co tu bedzie ?
-    // dalem cos zeby poki co tabela nie byla pusta
-    private String xxx;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game", cascade = CascadeType.ALL)
+    private List<MillionaireQuestion> questions = new ArrayList<>();
 
     public MillionaireGame()
     {
         super();
     }
 
-    public String getXxx()
+    public List<MillionaireQuestion> getQuestions()
     {
-        return xxx;
+        return questions;
     }
 
-    public void setXxx(String xxx)
+    public void setQuestions(List<MillionaireQuestion> questions)
     {
-        this.xxx = xxx;
+        this.questions = questions;
     }
 
 }

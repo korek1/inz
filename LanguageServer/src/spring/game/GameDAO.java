@@ -9,6 +9,8 @@ public interface GameDAO extends BaseDAO<Game> {
 
     Game getById(int id, Class<?> clazz);
     
+    void update(Game game);
+    
     List<Game> getAllGames(String login, Class<? extends Game> clazz);
     
 }

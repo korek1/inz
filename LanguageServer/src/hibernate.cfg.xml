@@ -35,6 +35,7 @@
 
 
 		<mapping class="dto.games.model.PicWordPair" />
+		<mapping class="dto.games.model.MillionaireQuestion" />
 
 	</session-factory>
 

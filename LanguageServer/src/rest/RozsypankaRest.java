@@ -2,11 +2,11 @@ package rest;
 
 import game.CurrentGameCreator;
 import game.GameHelper;
-import game.to.RozsypankaGameStudentTO;
-import game.to.RozsypankaGameTO;
-import game.to.RozsypankaGameTOs;
 import game.to.SolutionTO;
 import game.to.TOsManager;
+import game.to.rozsypanka.RozsypankaGameStudentTO;
+import game.to.rozsypanka.RozsypankaGameTO;
+import game.to.rozsypanka.RozsypankaGameTOs;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import dto.Game;
 import dto.games.RozsypankaGame;
 
 @Path("game")
-public class GameRest {
+public class RozsypankaRest {
 
     GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
@@ -104,7 +104,6 @@ public class GameRest {
     @Produces(MediaType.TEXT_PLAIN)
     public String checkPartOfGame(SolutionTO solution, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
     {
-
         Boolean correct = GameHelper.check(login, noumberOfTask, solution);
 
         return correct.toString();

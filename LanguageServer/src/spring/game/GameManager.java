@@ -3,14 +3,25 @@ package spring.game;
 import java.util.List;
 
 import dto.Game;
+import dto.games.MemoGame;
+import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.WordSearchGame;
 
 public interface GameManager {
     
     void insertGame(Game game, String login);
 
-    RozsypankaGame getRozsypankaById(int gameID);
+    void update(Game game);
     
     List<Game> getAllGames(String login, Class<? extends Game> clazz);
+
+    RozsypankaGame getRozsypankaById(int gameID);
+    
+    MemoGame getMemoByID(int gameID);
+
+    MillionaireGame getMillionaireByID(int gameID);
+    
+    WordSearchGame getWordSearchByID(int gameID);
 
 }

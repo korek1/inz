@@ -1,4 +1,4 @@
-package game.to;
+package game.to.rozsypanka;
 
 public class MappedWordTO {
 
