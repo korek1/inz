@@ -1,10 +1,5 @@
 package hibernatee;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import game.helpers.MemoDirHelper;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -41,7 +36,43 @@ public class HiberTest {
         }
         
     
-
+//        List<String> word = new ArrayList<>();
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        word.add("aaaaaaaaaaaaaaa");
+//        WordSearchBordCreator bordCreator = new WordSearchBordCreator(word );
+//        WordSearchBordTO createBord = bordCreator.createBord();
+//        
+////        System.out.println(createBord);
+//        
+//        List<WordSearchRowTO> rows = createBord.getRows();
+//        
+//        for (WordSearchRowTO wordSearchRowTO : rows)
+//        {
+//            List<MappedLetterTO> row = wordSearchRowTO.getRow();
+//            for (MappedLetterTO mappedLetterTO : row)
+//            {
+//                System.out.print(mappedLetterTO.getValue() + " ");
+//            }
+//            System.out.println();
+//        }
+//        
+//        List<List<Integer>> solution = bordCreator.getSolution();
+//        
+//        for (List<Integer> list : solution)
+//        {
+//            System.out.println(list);
+//        }
+//        
+//        System.out.println();
+//        
+//        
+//        System.out.println(bordCreator.getSolution());
         // db = DBController.getInstance();
         // Session session = db.getSession();
         //

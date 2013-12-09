@@ -8,6 +8,18 @@ public class IntGenerator {
 
     private Set<Integer> set = new HashSet<>();
     private Random rand = new Random();
+    private int range = 10000;
+
+    public IntGenerator()
+    {
+        super();
+    }
+
+    public IntGenerator(int range)
+    {
+        super();
+        this.range = range;
+    }
 
     public Integer getNextRandomUniqueInt()
     {
@@ -16,7 +28,7 @@ public class IntGenerator {
         boolean added = false;
         while (!added)
         {
-            i = rand.nextInt(10000);
+            i = rand.nextInt(range);
             added = set.add(i);
         }
 

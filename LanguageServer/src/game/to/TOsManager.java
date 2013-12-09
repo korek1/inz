@@ -6,6 +6,7 @@ import game.to.rozsypanka.MappedWordTO;
 import game.to.rozsypanka.RozsypankaGameStudentTO;
 import game.to.rozsypanka.RozsypankaGameTO;
 import game.to.rozsypanka.RozsypankaGameTOs;
+import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
 
 import java.util.ArrayList;
@@ -183,6 +184,15 @@ public class TOsManager {
         millionaireGame.setQuestions(questions);
 
         return millionaireGame;
+    }
+    
+    public static WordSearchGameStudentTO covertWordSearchGameForStudent(WordSearchGameTO wordSearchGameTO)
+    {
+        WordSearchGameStudentTO wordSearchGameStudentTO = new WordSearchGameStudentTO();
+        wordSearchGameStudentTO.setName(wordSearchGameTO.getName());
+        wordSearchGameStudentTO.setId(wordSearchGameTO.getId());
+        
+        return wordSearchGameStudentTO;
     }
 
     private static GameTO processGame(Game game)

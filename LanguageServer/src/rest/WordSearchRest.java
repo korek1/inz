@@ -3,6 +3,7 @@ package rest;
 import game.CurrentGameCreator;
 import game.to.GameTOs;
 import game.to.TOsManager;
+import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
 
 import java.util.List;
@@ -84,16 +85,15 @@ public class WordSearchRest {
     @GET
     @Path("/student/wordsearch/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public WordSearchGameTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
+    public WordSearchGameStudentTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
     {
 
         WordSearchGame wordSearchGame = gameManager.getWordSearchByID(id);
         WordSearchGameTO wordSearchGameTO = TOsManager.convertSearchGame(wordSearchGame);
-        CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGameTO, login);
-        
-        
 
-        return wordSearchGameTO;
+        WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGameTO, login);
+
+        return wordSearchGameStudentTO;
 
     }
 

@@ -1,6 +1,7 @@
 package game;
 
 import game.data.GameDataParser;
+import game.helpers.WordSearchBordCreator;
 import game.impl.CurrentMemoGame;
 import game.impl.CurrentMillionaireGame;
 import game.impl.CurrentRozsypankaGame;
@@ -10,6 +11,8 @@ import game.to.millionaire.MillionaireGameTO;
 import game.to.millionaire.MillionaireQuestionTO;
 import game.to.rozsypanka.MappedWordTO;
 import game.to.rozsypanka.RozsypankaGameStudentTO;
+import game.to.wordsearch.WordSearchBordTO;
+import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
 
 import java.io.File;
@@ -131,15 +134,26 @@ public class CurrentGameCreator {
         return convertMillionaireGame;
     }
 
-    public static void createAndStartCurrWordSearch(WordSearchGameTO wordSearchGameTO, String login)
+    public static WordSearchGameStudentTO createAndStartCurrWordSearch(WordSearchGameTO wordSearchGameTO, String login)
     {
 
         CurrentWordSearchGame currentWordSearchGame = new CurrentWordSearchGame();
         setStartDate(currentWordSearchGame);
 
+        WordSearchGameStudentTO wordSearchGameForStudentTO = TOsManager.covertWordSearchGameForStudent(wordSearchGameTO);
+
         List<String> words = wordSearchGameTO.getWords();
-        currentWordSearchGame.setWordsSolution(words);
+
+        WordSearchBordCreator bordCreator = new WordSearchBordCreator(words);
+        WordSearchBordTO createBord = bordCreator.createBord();
+
+        wordSearchGameForStudentTO.setBord(createBord);
+
+        currentWordSearchGame.setSolution(bordCreator.getSolution());
+
         GameHelper.startGame(login, currentWordSearchGame);
+
+        return wordSearchGameForStudentTO;
     }
 
     private static void setStartDate(CurrentGame currGame)
