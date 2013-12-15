@@ -2,12 +2,13 @@ package rest;
 
 import game.CurrentGameCreator;
 import game.to.GameTOs;
-import game.to.TOsManager;
+import game.to.TOsGameManager;
 import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -16,10 +17,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import rest.auth.Role;
 import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
 import dto.Game;
+import dto.games.GameCategory;
 import dto.games.WordSearchGame;
 
 @Path("game")
@@ -29,12 +32,12 @@ public class WordSearchRest {
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
 
     @POST
+    @RolesAllowed({ Role.TEACHER })
     @Path("/wordsearch")
     @Produces(MediaType.APPLICATION_JSON)
     public String postWordSearch(WordSearchGameTO searchGameTO, @HeaderParam("login") String login)
     {
-
-        WordSearchGame wordSearchGame = TOsManager.covertWordSearchGameTO(searchGameTO);
+        WordSearchGame wordSearchGame = TOsGameManager.covertWordSearchGameTO(searchGameTO);
 
         gameManager.insertGame(wordSearchGame, login);
 
@@ -43,27 +46,28 @@ public class WordSearchRest {
 
     // only for teacher
     @GET
+    @RolesAllowed({ Role.TEACHER })
     @Path("/wordsearch/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public WordSearchGameTO getWordSearchGame(@PathParam("id") int id)
     {
 
         WordSearchGame wordSearchGame = gameManager.getWordSearchByID(id);
-        WordSearchGameTO wordSearchGameTO = TOsManager.convertSearchGame(wordSearchGame);
+        WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
 
         return wordSearchGameTO;
 
     }
 
-    // only for teacher
     @GET
+    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
     @Path("/wordsearches")
     @Produces(MediaType.APPLICATION_JSON)
     public GameTOs getWordSearchGames(@HeaderParam("login") String login)
     {
 
         List<Game> allGames = gameManager.getAllGames(login, WordSearchGame.class);
-        GameTOs gameTOs = TOsManager.processGames(allGames);
+        GameTOs gameTOs = TOsGameManager.processGames(allGames);
 
         return gameTOs;
 
@@ -71,6 +75,7 @@ public class WordSearchRest {
 
     // only for student
     @GET
+    @RolesAllowed({ Role.STUDENT })
     @Path("/student/wordsearches")
     @Produces(MediaType.APPLICATION_JSON)
     public GameTOs getGamesStudent(@HeaderParam("login") String login)
@@ -84,12 +89,13 @@ public class WordSearchRest {
 
     @GET
     @Path("/student/wordsearch/{id}")
+    @RolesAllowed({ Role.STUDENT })
     @Produces(MediaType.APPLICATION_JSON)
     public WordSearchGameStudentTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
     {
 
         WordSearchGame wordSearchGame = gameManager.getWordSearchByID(id);
-        WordSearchGameTO wordSearchGameTO = TOsManager.convertSearchGame(wordSearchGame);
+        WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
 
         WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGameTO, login);
 

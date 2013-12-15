@@ -18,9 +18,9 @@
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>rest,client,dto,hibernate,auth,utils,spring,game</param-value>
     </init-param>
-    <init-param>
+     <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>rest.MemoRest</param-value>
+            <param-value>rest.config.Config</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>

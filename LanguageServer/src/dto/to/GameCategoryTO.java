@@ -1,15 +1,20 @@
-package game.to;
+package dto.to;
 
-
-public class GameTO {
+public class GameCategoryTO {
 
     private String name;
     private int id;
-    private int categoryId;
 
-    public GameTO()
+    public GameCategoryTO()
     {
         super();
+    }
+    
+    public GameCategoryTO(String name, int id)
+    {
+        super();
+        this.name = name;
+        this.id = id;
     }
 
     public String getName()
@@ -31,17 +36,5 @@ public class GameTO {
     {
         this.id = id;
     }
-
-    public int getCategoryId()
-    {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId)
-    {
-        this.categoryId = categoryId;
-    }
-    
-    
 
 }

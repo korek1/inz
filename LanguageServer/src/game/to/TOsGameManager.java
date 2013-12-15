@@ -14,45 +14,40 @@ import java.util.Collections;
 import java.util.List;
 
 import dto.Game;
+import dto.games.GameCategory;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
 import dto.games.WordSearchGame;
 import dto.games.model.MillionaireQuestion;
+import dto.to.GameCategoryTO;
+import dto.to.GameCategoryTOs;
 
-public class TOsManager {
+public class TOsGameManager {
+    
+    public static final GameCategoryTOs GAME_CATEGORIES = getGameCategories();
 
-    public static RozsypankaGameTO processRozsypanka(RozsypankaGame rozsypankaGame, boolean setSentences)
+    public static RozsypankaGameTO convertRozsypankaGame(RozsypankaGame rozsypankaGame)
     {
+
         RozsypankaGameTO rozsypankaGameTO = new RozsypankaGameTO();
-        rozsypankaGameTO.setId(rozsypankaGame.getId());
-        rozsypankaGameTO.setName(rozsypankaGame.getName());
-        if (setSentences)
-        {
-            rozsypankaGameTO.setSentences(rozsypankaGame.getSentences());
-        }
+        convertGame(rozsypankaGameTO, rozsypankaGame);
+
+        rozsypankaGameTO.setSentences(rozsypankaGame.getSentences());
+
         return rozsypankaGameTO;
 
     }
 
-    public static RozsypankaGameTO processRozsypanka(RozsypankaGame rozsypankaGame)
+    public static RozsypankaGame convertRozsypankaGameTO(RozsypankaGameTO rozsypankaGameTO)
     {
+        RozsypankaGame rozsypankaGame = new RozsypankaGame();
+        convertGameTO(rozsypankaGame, rozsypankaGameTO);
 
-        return processRozsypanka(rozsypankaGame, true);
+        List<String> sentences = rozsypankaGameTO.getSentences();
+        rozsypankaGame.setSentences(sentences);
 
-    }
+        return rozsypankaGame;
 
-    public static RozsypankaGameTOs processRozsypankas(List<Game> rozsypankaGames)
-    {
-        RozsypankaGameTOs rozsypankaGamesTO = new RozsypankaGameTOs();
-
-        for (Game rozsypankaGame : rozsypankaGames)
-        {
-            RozsypankaGameTO processRozsypanka = processRozsypanka((RozsypankaGame) rozsypankaGame, false);
-            rozsypankaGamesTO.addRozsypankaTO(processRozsypanka);
-
-        }
-
-        return rozsypankaGamesTO;
     }
 
     public static RozsypankaGameStudentTO processRozsypankaForStudent(List<List<MappedWordTO>> processRozsypanka)
@@ -70,24 +65,11 @@ public class TOsManager {
 
     }
 
-    public static GameTOs processGames(List<Game> gameDB)
-    {
-        GameTOs gameTOs = new GameTOs();
-
-        for (Game game : gameDB)
-        {
-            GameTO gameTO = processGame(game);
-            gameTOs.add(gameTO);
-        }
-
-        return gameTOs;
-    }
-
     public static WordSearchGame covertWordSearchGameTO(WordSearchGameTO wordSearchGameTO)
     {
         WordSearchGame wordSearchGame = new WordSearchGame();
-        wordSearchGame.setName(wordSearchGameTO.getName());
-
+        convertGameTO(wordSearchGame, wordSearchGameTO);
+        
         String wordsDB = "";
         List<String> words = wordSearchGameTO.getWords();
         for (String string : words)
@@ -102,9 +84,8 @@ public class TOsManager {
     public static WordSearchGameTO convertSearchGame(WordSearchGame wordSearchGame)
     {
         WordSearchGameTO wordSearchGameTO = new WordSearchGameTO();
+        convertGame(wordSearchGameTO, wordSearchGame);
 
-        int id = wordSearchGame.getId();
-        String name = wordSearchGame.getName();
         String wordsDB = wordSearchGame.getWords();
         String[] split = wordsDB.split("#");
 
@@ -114,20 +95,15 @@ public class TOsManager {
             words.add(split[i]);
         }
 
-        wordSearchGameTO.setId(id);
-        wordSearchGameTO.setName(name);
         wordSearchGameTO.setWords(words);
+
         return wordSearchGameTO;
     }
 
     public static MillionaireGameTO convertMillionaireGame(MillionaireGame millionaireGame)
     {
         MillionaireGameTO millionaireGameTO = new MillionaireGameTO();
-
-        int id = millionaireGame.getId();
-        String name = millionaireGame.getName();
-        millionaireGameTO.setId(id);
-        millionaireGameTO.setName(name);
+        convertGame(millionaireGameTO, millionaireGame);
 
         List<MillionaireQuestion> questions = millionaireGame.getQuestions();
         for (MillionaireQuestion millionaireQuestion : questions)
@@ -157,9 +133,7 @@ public class TOsManager {
     public static MillionaireGame convertMillionaireGameTO(MillionaireGameTO millionaireGameTO)
     {
         MillionaireGame millionaireGame = new MillionaireGame();
-
-        String name = millionaireGameTO.getName();
-        millionaireGame.setName(name);
+        convertGameTO(millionaireGame, millionaireGameTO);
 
         List<MillionaireQuestion> questions = new ArrayList<>();
         List<MillionaireQuestionTO> questionsTO = millionaireGameTO.getQuestions();
@@ -185,14 +159,27 @@ public class TOsManager {
 
         return millionaireGame;
     }
-    
+
     public static WordSearchGameStudentTO covertWordSearchGameForStudent(WordSearchGameTO wordSearchGameTO)
     {
         WordSearchGameStudentTO wordSearchGameStudentTO = new WordSearchGameStudentTO();
         wordSearchGameStudentTO.setName(wordSearchGameTO.getName());
         wordSearchGameStudentTO.setId(wordSearchGameTO.getId());
-        
+
         return wordSearchGameStudentTO;
+    }
+
+    public static GameTOs processGames(List<Game> gameDB)
+    {
+        GameTOs gameTOs = new GameTOs();
+
+        for (Game game : gameDB)
+        {
+            GameTO gameTO = processGame(game);
+            gameTOs.add(gameTO);
+        }
+
+        return gameTOs;
     }
 
     private static GameTO processGame(Game game)
@@ -202,6 +189,48 @@ public class TOsManager {
         gameTO.setName(game.getName());
 
         return gameTO;
+    }
+
+    private static void convertGame(GameTO gameTO, Game game)
+    {
+        int id = game.getId();
+        String name = game.getName();
+        int categoryId = game.getCategory();
+
+        categoryId = GameCategory.validateCategory(categoryId);
+
+        gameTO.setCategoryId(categoryId);
+        gameTO.setId(id);
+        gameTO.setName(name);
+    }
+
+    private static void convertGameTO(Game game, GameTO gameTO)
+    {
+        int categoryId = gameTO.getCategoryId();
+        String name = gameTO.getName();
+
+        categoryId = GameCategory.validateCategory(categoryId);
+
+        game.setCategory(categoryId);
+        game.setName(name);
+
+    }
+    
+    private static GameCategoryTOs getGameCategories()
+    {
+        GameCategoryTOs categories = new GameCategoryTOs();
+
+        GameCategory[] values = GameCategory.values();
+        for (GameCategory gameCategory : values)
+        {
+            int id = gameCategory.getId();
+            String name = gameCategory.getName();
+
+            GameCategoryTO categoryTO = new GameCategoryTO(name, id);
+            categories.addCategoryTO(categoryTO);
+        }
+        
+        return categories;
     }
 
 }

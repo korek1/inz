@@ -20,6 +20,8 @@ public class Game {
     private int id;
 
     private String name;
+    
+    private int category;
 
     @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "teacherId")
@@ -65,5 +67,16 @@ public class Game {
     {
         this.owner = owner;
     }
+
+    public int getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+    
 
 }

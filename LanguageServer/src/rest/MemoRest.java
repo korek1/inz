@@ -3,7 +3,7 @@ package rest;
 import game.CurrentGameCreator;
 import game.helpers.MemoDirHelper;
 import game.to.GameTOs;
-import game.to.TOsManager;
+import game.to.TOsGameManager;
 
 import java.io.File;
 import java.io.InputStream;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -30,6 +31,7 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
+import rest.auth.Role;
 import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
@@ -39,7 +41,7 @@ import dto.games.MemoGame;
 import dto.games.model.PicWordPair;
 
 @Path("game")
-public class MemoRest extends Application{
+public class MemoRest /*extends Application*/{
     
     GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl"); 
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
@@ -49,15 +51,16 @@ public class MemoRest extends Application{
         super();
     }
 
-    @Override
-    public Set<Class<?>> getClasses()
-    {
-        final Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add(MultiPartFeature.class);
-        return classes;
-    }
+//    @Override
+//    public Set<Class<?>> getClasses()
+//    {
+//        final Set<Class<?>> classes = new HashSet<Class<?>>();
+//        classes.add(MultiPartFeature.class);
+//        return classes;
+//    }
     
     @POST
+    @RolesAllowed({Role.TEACHER})
     @Path("/memo")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
@@ -106,13 +109,14 @@ public class MemoRest extends Application{
     {
         List<Game> allGames = gameManager.getAllGames(login, MemoGame.class);
         
-        GameTOs gameTOs = TOsManager.processGames(allGames);
+        GameTOs gameTOs = TOsGameManager.processGames(allGames);
         
         return gameTOs;
         
     }
 
     @GET
+    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
     @Path("/memo/{id}")
     @Produces(MediaType.MULTIPART_FORM_DATA)
     public Response getMemo(@HeaderParam("login") String login, @PathParam("id") int gameID) throws ParseException
@@ -136,6 +140,7 @@ public class MemoRest extends Application{
     }
     
     @GET
+    @RolesAllowed({ Role.STUDENT })
     @Path("/student/memos")
     @Produces(MediaType.APPLICATION_JSON)
     public GameTOs getMemosStudent(@HeaderParam("login") String login) throws ParseException
@@ -147,6 +152,7 @@ public class MemoRest extends Application{
     }
     
     @GET
+    @RolesAllowed({ Role.STUDENT })
     @Path("/student/memo/{id}")
     @Produces(MediaType.MULTIPART_FORM_DATA)
     public Response getMemoStudent(@HeaderParam("login") String login, @PathParam("id") int gameID) throws ParseException

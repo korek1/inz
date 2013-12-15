@@ -6,7 +6,7 @@ import game.impl.CurrentMemoGame;
 import game.impl.CurrentMillionaireGame;
 import game.impl.CurrentRozsypankaGame;
 import game.impl.CurrentWordSearchGame;
-import game.to.TOsManager;
+import game.to.TOsGameManager;
 import game.to.millionaire.MillionaireGameTO;
 import game.to.millionaire.MillionaireQuestionTO;
 import game.to.rozsypanka.MappedWordTO;
@@ -102,7 +102,7 @@ public class CurrentGameCreator {
 
         GameHelper.startGame(login, currRozsypanka);
 
-        RozsypankaGameStudentTO rozsypankaGameStudentTO = TOsManager.processRozsypankaForStudent(processRozsypanka);
+        RozsypankaGameStudentTO rozsypankaGameStudentTO = TOsGameManager.processRozsypankaForStudent(processRozsypanka);
 
         return rozsypankaGameStudentTO;
     }
@@ -112,7 +112,7 @@ public class CurrentGameCreator {
         CurrentMillionaireGame currentMillionaireGame = new CurrentMillionaireGame();
         setStartDate(currentMillionaireGame);
 
-        MillionaireGameTO convertMillionaireGame = TOsManager.convertMillionaireGame(millionaireGame);
+        MillionaireGameTO convertMillionaireGame = TOsGameManager.convertMillionaireGame(millionaireGame);
         List<MillionaireQuestionTO> questions = convertMillionaireGame.getQuestions();
 
         List<List<Integer>> solutionToRemember = new ArrayList<>();
@@ -131,6 +131,7 @@ public class CurrentGameCreator {
         currentMillionaireGame.setSolution(solutionToRemember);
 
         GameHelper.startGame(login, currentMillionaireGame);
+        
         return convertMillionaireGame;
     }
 
@@ -140,12 +141,12 @@ public class CurrentGameCreator {
         CurrentWordSearchGame currentWordSearchGame = new CurrentWordSearchGame();
         setStartDate(currentWordSearchGame);
 
-        WordSearchGameStudentTO wordSearchGameForStudentTO = TOsManager.covertWordSearchGameForStudent(wordSearchGameTO);
+        WordSearchGameStudentTO wordSearchGameForStudentTO = TOsGameManager.covertWordSearchGameForStudent(wordSearchGameTO);
 
         List<String> words = wordSearchGameTO.getWords();
 
         WordSearchBordCreator bordCreator = new WordSearchBordCreator(words);
-        WordSearchBordTO createBord = bordCreator.createBord();
+        WordSearchBordTO createBord = bordCreator.createBord(1000,1000);
 
         wordSearchGameForStudentTO.setBord(createBord);
 
