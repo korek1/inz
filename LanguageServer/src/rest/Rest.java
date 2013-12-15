@@ -33,6 +33,7 @@ import dto.to.KlasaTOs;
 import dto.to.StudentTO;
 import dto.to.TOsManager;
 import dto.to.TeacherTO;
+import dto.to.toserver.StudentInsertTO;
 
 @Path("/")
 public class Rest  {
@@ -132,10 +133,10 @@ public class Rest  {
     @Path("/student")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String postStudent(Student student, @HeaderParam("login") String login, @HeaderParam("id") int idKlasy)
+    public String postStudent(StudentInsertTO student, @HeaderParam("login") String login)
     {
-
-        studentManager.insertStudent(student, login, idKlasy);
+        
+        studentManager.insertStudent(student, login);
 
         return "succes";
     }

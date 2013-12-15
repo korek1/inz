@@ -11,6 +11,8 @@ import spring.student.StudentDAO;
 import spring.student.StudentManager;
 import dto.Klasa;
 import dto.Student;
+import dto.to.toserver.StudentInsertTO;
+import dto.to.toserver.TOsInsertManager;
 
 @Service
 public class StudentManagerImpl implements StudentManager {
@@ -55,6 +57,18 @@ public class StudentManagerImpl implements StudentManager {
         String teachersLogin = studentDAO.getMyTeachersLogin(login);
 
         return teachersLogin;
+    }
+
+    @Override
+    @Transactional
+    public void insertStudent(StudentInsertTO student, String login)
+    {
+        Klasa klasa = klasaDAO.get(student.getIdKlasy());
+        String name = klasa.getName();
+        
+        Student studentDB = TOsInsertManager.convertStudentTO(student, name);
+        
+        studentDAO.save(studentDB);
     }
 
 }

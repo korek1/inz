@@ -41,6 +41,7 @@ public class TOsManager {
         StudentTO studentTO = new StudentTO();
 
         int id = student.getId();
+        String login = student.getLogin();
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
         int orderNoumber = student.getOrderNoumber();
@@ -49,6 +50,7 @@ public class TOsManager {
         studentTO.setFirstName(firstName);
         studentTO.setLastName(lastName);
         studentTO.setOrderNoumber(orderNoumber);
+        studentTO.setLogin(login);
 
         return studentTO;
     }
@@ -60,10 +62,12 @@ public class TOsManager {
         int id = teacher.getId();
         String firstName = teacher.getFirstName();
         String lastName = teacher.getLastName();
+        String login = teacher.getLogin();
 
         teacherTO.setId(id);
         teacherTO.setFirstName(firstName);
         teacherTO.setLastName(lastName);
+        teacherTO.setLogin(login);
 
         return teacherTO;
     }
@@ -83,10 +87,12 @@ public class TOsManager {
             String firstName = student.getFirstName();
             String lastName = student.getLastName();
             int orderNoumber = student.getOrderNoumber();
+            int idStudent = student.getId();
 
             studentTO.setFirstName(firstName);
             studentTO.setLastName(lastName);
             studentTO.setOrderNoumber(orderNoumber);
+            studentTO.setId(idStudent);
 
             klasaTO.addStudentTO(studentTO);
         }

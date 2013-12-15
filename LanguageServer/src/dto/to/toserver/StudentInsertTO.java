@@ -1,49 +1,39 @@
-package dto.to;
+package dto.to.toserver;
 
-
-public class StudentTO {
-
-    private int id;
+public class StudentInsertTO {
     
-    private String login;
-
     private String firstName;
 
     private String lastName;
 
     private int orderNoumber;
+    
+    private int idKlasy;
 
-    private String klasa;
-
-    public StudentTO()
+    
+    public StudentInsertTO()
     {
         super();
     }
 
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
     public String getFirstName()
     {
         return firstName;
     }
 
+
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
     }
 
+
     public String getLastName()
     {
         return lastName;
     }
+
 
     public void setLastName(String lastName)
     {
@@ -56,33 +46,25 @@ public class StudentTO {
         return orderNoumber;
     }
 
+
     public void setOrderNoumber(int orderNoumber)
     {
         this.orderNoumber = orderNoumber;
     }
 
-    public String getKlasa()
+
+    public int getIdKlasy()
     {
-        return klasa;
+        return idKlasy;
     }
 
-    public void setKlasa(String klasa)
-    {
-        this.klasa = klasa;
-    }
 
-    public String getLogin()
+    public void setIdKlasy(int idKlasy)
     {
-        return login;
-    }
-
-    public void setLogin(String login)
-    {
-        this.login = login;
+        this.idKlasy = idKlasy;
     }
     
     
-
 
 
 }
