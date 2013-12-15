@@ -13,12 +13,13 @@ public class TOsInsertManager {
         String firstName = studentInsertTO.getFirstName();
         String lastName = studentInsertTO.getLastName();
         int orderNoumber = studentInsertTO.getOrderNoumber();
+        String password = studentInsertTO.getPassword();
 
         student.setFirstName(firstName);
         student.setLastName(lastName);
         student.setOrderNoumber(orderNoumber);
         student.setLogin(createLoginForStudent(lastName, orderNoumber, klasName));
-        student.setPassword(createPassForStudent(lastName));
+        student.setPassword(password);
 
         return student;
 

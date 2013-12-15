@@ -5,6 +5,8 @@ public class StudentInsertTO {
     private String firstName;
 
     private String lastName;
+    
+    private String password;
 
     private int orderNoumber;
     
@@ -62,6 +64,18 @@ public class StudentInsertTO {
     public void setIdKlasy(int idKlasy)
     {
         this.idKlasy = idKlasy;
+    }
+
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
     
     
