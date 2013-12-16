@@ -4,20 +4,30 @@ import game.CurrentGame;
 
 import java.util.List;
 
+import dto.Game;
+
 public class CurrentWordSearchGame extends CurrentGame {
 
-    public CurrentWordSearchGame()
+    public CurrentWordSearchGame(Game game)
     {
-        super();
+        super(game);
     }
 
     @Override
     public boolean checkIfPartOfGameIsCorrect(int id, List<Integer> ids)
     {
         boolean correct = false;
-        if (getSolution().contains(ids))
+
+        boolean canPerformChecking = manageAttempt(id);
+        if (canPerformChecking)
         {
-            correct = true;
+            increaseAttempts();
+
+            if (getSolution().contains(ids))
+            {
+                correct = true;
+                increaseCorectAnswers();
+            }
         }
         return correct;
     }

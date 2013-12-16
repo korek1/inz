@@ -40,7 +40,7 @@ public class ZwierzRest {
     }
 
     @GET
-    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
+    @RolesAllowed({ Role.STUDENT })
     @Produces(MediaType.MULTIPART_FORM_DATA)
     public Response getAnimalData(@HeaderParam("login") String login) throws ParseException
     {

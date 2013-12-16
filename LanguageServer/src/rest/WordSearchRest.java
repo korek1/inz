@@ -95,9 +95,8 @@ public class WordSearchRest {
     {
 
         WordSearchGame wordSearchGame = gameManager.getWordSearchByID(id);
-        WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
 
-        WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGameTO, login);
+        WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGame, login);
 
         return wordSearchGameStudentTO;
 

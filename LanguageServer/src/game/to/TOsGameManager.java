@@ -50,9 +50,10 @@ public class TOsGameManager {
 
     }
 
-    public static RozsypankaGameStudentTO processRozsypankaForStudent(List<List<MappedWordTO>> processRozsypanka)
+    public static RozsypankaGameStudentTO processRozsypankaForStudent(Game game, List<List<MappedWordTO>> processRozsypanka)
     {
         RozsypankaGameStudentTO rozsypankaGameTO = null;
+        convertGame(rozsypankaGameTO, game);
 
         for (List<MappedWordTO> list : processRozsypanka)
         {
@@ -162,6 +163,7 @@ public class TOsGameManager {
 
     public static WordSearchGameStudentTO covertWordSearchGameForStudent(WordSearchGameTO wordSearchGameTO)
     {
+        //TODO nie powinno byc na sztywno
         WordSearchGameStudentTO wordSearchGameStudentTO = new WordSearchGameStudentTO();
         wordSearchGameStudentTO.setName(wordSearchGameTO.getName());
         wordSearchGameStudentTO.setId(wordSearchGameTO.getId());
@@ -185,8 +187,7 @@ public class TOsGameManager {
     private static GameTO processGame(Game game)
     {
         GameTO gameTO = new GameTO();
-        gameTO.setId(game.getId());
-        gameTO.setName(game.getName());
+        convertGame(gameTO, game);
 
         return gameTO;
     }
@@ -196,23 +197,28 @@ public class TOsGameManager {
         int id = game.getId();
         String name = game.getName();
         int categoryId = game.getCategory();
+        int difficultyFactor = game.getDifficultyFactor();
+        
 
         categoryId = GameCategory.validateCategory(categoryId);
 
         gameTO.setCategoryId(categoryId);
         gameTO.setId(id);
         gameTO.setName(name);
+        gameTO.setDifficultyFactor(difficultyFactor);
     }
 
     private static void convertGameTO(Game game, GameTO gameTO)
     {
         int categoryId = gameTO.getCategoryId();
         String name = gameTO.getName();
+        int difficultyFactor = gameTO.getDifficultyFactor();
 
         categoryId = GameCategory.validateCategory(categoryId);
 
         game.setCategory(categoryId);
         game.setName(name);
+        game.setDifficultyFactor(difficultyFactor);
 
     }
     

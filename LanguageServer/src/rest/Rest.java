@@ -45,9 +45,6 @@ public class Rest  {
     KlasaManager klasaManager = (KlasaManager) BeanHelper.getBean("klasaManagerImpl");
     TeacherManager teacherManager = (TeacherManager) BeanHelper.getBean("teacherManagerImpl");
 
-    /**
-     * Default constructor.
-     */
     public Rest()
     {
         super();

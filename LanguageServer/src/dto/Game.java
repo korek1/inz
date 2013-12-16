@@ -22,6 +22,8 @@ public class Game {
     private String name;
     
     private int category;
+    
+    private int difficultyFactor;
 
     @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "teacherId")
@@ -77,6 +79,17 @@ public class Game {
     {
         this.category = category;
     }
+
+    public int getDifficultyFactor()
+    {
+        return difficultyFactor;
+    }
+
+    public void setDifficultyFactor(int difficultyFactor)
+    {
+        this.difficultyFactor = difficultyFactor;
+    }
+    
     
 
 }

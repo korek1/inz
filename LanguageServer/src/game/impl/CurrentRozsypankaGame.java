@@ -5,19 +5,15 @@ import game.CurrentGame;
 import java.util.List;
 import java.util.Map;
 
+import dto.Game;
+
 public class CurrentRozsypankaGame extends CurrentGame {
+
+    public CurrentRozsypankaGame(Game game)
+    {
+        super(game);
+    }
     
 
-    private List<Map<Integer, String>> processRozsypanka;
-
-    public List<Map<Integer, String>> getProcessRozsypanka()
-    {
-        return processRozsypanka;
-    }
-
-    public void setProcessRozsypanka(List<Map<Integer, String>> processRozsypanka)
-    {
-        this.processRozsypanka = processRozsypanka;
-    }
 
 }

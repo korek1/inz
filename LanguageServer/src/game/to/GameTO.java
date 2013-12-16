@@ -6,6 +6,7 @@ public class GameTO {
     private String name;
     private int id;
     private int categoryId;
+    private int difficultyFactor;
 
     public GameTO()
     {
@@ -40,6 +41,16 @@ public class GameTO {
     public void setCategoryId(int categoryId)
     {
         this.categoryId = categoryId;
+    }
+
+    public int getDifficultyFactor()
+    {
+        return difficultyFactor;
+    }
+
+    public void setDifficultyFactor(int difficultyFactor)
+    {
+        this.difficultyFactor = difficultyFactor;
     }
     
     

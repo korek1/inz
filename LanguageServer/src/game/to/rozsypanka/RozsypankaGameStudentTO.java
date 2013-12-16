@@ -1,9 +1,11 @@
 package game.to.rozsypanka;
 
+import game.to.GameTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RozsypankaGameStudentTO {
+public class RozsypankaGameStudentTO extends GameTO{
 
     private List<MappedWordTOs> sentences = new ArrayList<>();
 

@@ -29,13 +29,14 @@ import utils.FileUtils;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.WordSearchGame;
 import dto.games.model.PicWordPair;
 
 public class CurrentGameCreator {
 
     public static FormDataMultiPart createAndStartCurrMemo(MemoGame memoGame, String login)
     {
-        CurrentMemoGame currentMemoGame = new CurrentMemoGame();
+        CurrentMemoGame currentMemoGame = new CurrentMemoGame(memoGame);
         setStartDate(currentMemoGame);
 
         List<PicWordPair> picWordPairList = memoGame.getPicWordPair();
@@ -79,7 +80,7 @@ public class CurrentGameCreator {
 
     public static RozsypankaGameStudentTO createAndStartCurrRozsypanka(RozsypankaGame rozsypankaGame, String login)
     {
-        CurrentRozsypankaGame currRozsypanka = new CurrentRozsypankaGame();
+        CurrentRozsypankaGame currRozsypanka = new CurrentRozsypankaGame(rozsypankaGame);
 
         setStartDate(currRozsypanka);
         List<String> sentences = rozsypankaGame.getSentences();
@@ -102,14 +103,14 @@ public class CurrentGameCreator {
 
         GameHelper.startGame(login, currRozsypanka);
 
-        RozsypankaGameStudentTO rozsypankaGameStudentTO = TOsGameManager.processRozsypankaForStudent(processRozsypanka);
+        RozsypankaGameStudentTO rozsypankaGameStudentTO = TOsGameManager.processRozsypankaForStudent(rozsypankaGame, processRozsypanka);
 
         return rozsypankaGameStudentTO;
     }
 
     public static MillionaireGameTO createAndStartCurrMillionaire(MillionaireGame millionaireGame, String login)
     {
-        CurrentMillionaireGame currentMillionaireGame = new CurrentMillionaireGame();
+        CurrentMillionaireGame currentMillionaireGame = new CurrentMillionaireGame(millionaireGame);
         setStartDate(currentMillionaireGame);
 
         MillionaireGameTO convertMillionaireGame = TOsGameManager.convertMillionaireGame(millionaireGame);
@@ -135,12 +136,14 @@ public class CurrentGameCreator {
         return convertMillionaireGame;
     }
 
-    public static WordSearchGameStudentTO createAndStartCurrWordSearch(WordSearchGameTO wordSearchGameTO, String login)
+    public static WordSearchGameStudentTO createAndStartCurrWordSearch(WordSearchGame wordSearchGame, String login)
     {
 
-        CurrentWordSearchGame currentWordSearchGame = new CurrentWordSearchGame();
+        CurrentWordSearchGame currentWordSearchGame = new CurrentWordSearchGame(wordSearchGame);
         setStartDate(currentWordSearchGame);
 
+        WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
+        
         WordSearchGameStudentTO wordSearchGameForStudentTO = TOsGameManager.covertWordSearchGameForStudent(wordSearchGameTO);
 
         List<String> words = wordSearchGameTO.getWords();
@@ -161,5 +164,7 @@ public class CurrentGameCreator {
     {
         currGame.setStartTime(new Date());
     }
+    
+    
 
 }
