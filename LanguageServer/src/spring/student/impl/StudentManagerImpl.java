@@ -67,6 +67,7 @@ public class StudentManagerImpl implements StudentManager {
         String name = klasa.getName();
         
         Student studentDB = TOsInsertManager.convertStudentTO(student, name);
+        studentDB.setKlasa(klasa);
         
         studentDAO.save(studentDB);
     }

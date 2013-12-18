@@ -136,7 +136,7 @@ public class CurrentGameCreator {
         return convertMillionaireGame;
     }
 
-    public static WordSearchGameStudentTO createAndStartCurrWordSearch(WordSearchGame wordSearchGame, String login)
+    public static WordSearchGameStudentTO createAndStartCurrWordSearch(WordSearchGame wordSearchGame, String login, int widthBoard, int heightBoard)
     {
 
         CurrentWordSearchGame currentWordSearchGame = new CurrentWordSearchGame(wordSearchGame);
@@ -149,7 +149,7 @@ public class CurrentGameCreator {
         List<String> words = wordSearchGameTO.getWords();
 
         WordSearchBordCreator bordCreator = new WordSearchBordCreator(words);
-        WordSearchBordTO createBord = bordCreator.createBord(1000,1000);
+        WordSearchBordTO createBord = bordCreator.createBord(widthBoard, heightBoard);
 
         wordSearchGameForStudentTO.setBord(createBord);
 

@@ -88,15 +88,18 @@ public class WordSearchRest {
     }
 
     @GET
-    @Path("/student/wordsearch/{id}")
+    @Path("/student/wordsearch/{id}/width/{width}/height/{height}")
     @RolesAllowed({ Role.STUDENT })
     @Produces(MediaType.APPLICATION_JSON)
-    public WordSearchGameStudentTO getRozsypankaGamex(@HeaderParam("login") String login, @PathParam("id") int id)
+    public WordSearchGameStudentTO getRozsypankaGamex(@HeaderParam("login") String login,
+                                                      @PathParam("id") int id,
+                                                      @PathParam("width") int width,
+                                                      @PathParam("height") int height)
     {
 
         WordSearchGame wordSearchGame = gameManager.getWordSearchByID(id);
 
-        WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGame, login);
+        WordSearchGameStudentTO wordSearchGameStudentTO = CurrentGameCreator.createAndStartCurrWordSearch(wordSearchGame, login, width, height);
 
         return wordSearchGameStudentTO;
 
