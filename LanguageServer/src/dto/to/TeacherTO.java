@@ -1,6 +1,5 @@
 package dto.to;
 
-import java.util.List;
 
 public class TeacherTO {
 
@@ -11,8 +10,6 @@ public class TeacherTO {
     private String lastName;
 
     private String login;
-
-    private List<KlasaTO> klasy;
 
     public TeacherTO()
     {
@@ -57,16 +54,6 @@ public class TeacherTO {
     public void setLogin(String login)
     {
         this.login = login;
-    }
-
-    public List<KlasaTO> getKlasy()
-    {
-        return klasy;
-    }
-
-    public void setKlasy(List<KlasaTO> klasy)
-    {
-        this.klasy = klasy;
     }
 
 }
