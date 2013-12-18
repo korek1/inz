@@ -6,7 +6,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import dto.GameResult;
+import spring.BeanHelper;
+import spring.game.GameManager;
+import spring.gameresult.GameResultManager;
+import spring.gameresult.impl.GameResultManagerImpl;
+
 public class GameHelper {
+    
+    static GameResultManager gameResultManager =  (GameResultManager) BeanHelper.getBean("gameResultManagerImpl"); 
 
     private static Map<String, CurrentGame> currentStudentsGames = new HashMap<>();
 
@@ -25,7 +33,11 @@ public class GameHelper {
         {
             currentGame.setFinishTime(new Date());
             
-            //calculate points and save to db
+            //calculate points and save to db 
+            PointsDirector pointsDirector = new PointsDirector(currentGame);
+            GameResult produceGameResult = pointsDirector.produceGameResult();
+            
+            gameResultManager.saveOrUpdateGameResult(produceGameResult ,login);
             
             removeGame(login);
         }

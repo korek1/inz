@@ -3,6 +3,7 @@ package spring.game;
 import java.util.List;
 
 import dto.Game;
+import dto.GameResult;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;

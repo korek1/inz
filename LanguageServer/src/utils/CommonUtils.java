@@ -70,13 +70,21 @@ public class CommonUtils {
 
     /**
      * Returns diff in second between two dates.
-     * @param date1 earlier date
-     * @param date2 later date
+     * 
+     * @param date1
+     *            earlier date
+     * @param date2
+     *            later date
      * @return
      */
     public static long differenceInSecond(Date date1, Date date2)
     {
-        return date2.getTime() - date1.getTime() / 1000;
+        return (date2.getTime() - date1.getTime()) / 1000;
     }
 
+    public static int getPercentage(long l1, long l2)
+    {
+
+        return (int) ((l1 * 100.0f) / l2);
+    }
 }

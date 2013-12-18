@@ -10,6 +10,7 @@ import spring.game.GameDAO;
 import spring.game.GameManager;
 import spring.teacher.TeacherDAO;
 import dto.Game;
+import dto.GameResult;
 import dto.Teacher;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
@@ -91,5 +92,6 @@ public class GameManagerImpl implements GameManager {
        
         return wordSearchGame;
     }
+
 
 }

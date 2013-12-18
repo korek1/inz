@@ -52,15 +52,14 @@ public class TOsGameManager {
 
     public static RozsypankaGameStudentTO processRozsypankaForStudent(Game game, List<List<MappedWordTO>> processRozsypanka)
     {
-        RozsypankaGameStudentTO rozsypankaGameTO = null;
-        convertGame(rozsypankaGameTO, game);
 
         for (List<MappedWordTO> list : processRozsypanka)
         {
             Collections.shuffle(list);
         }
+        RozsypankaGameStudentTO rozsypankaGameTO =  new RozsypankaGameStudentTO(processRozsypanka);;
+        convertGame(rozsypankaGameTO, game);
 
-        rozsypankaGameTO = new RozsypankaGameStudentTO(processRozsypanka);
 
         return rozsypankaGameTO;
 
