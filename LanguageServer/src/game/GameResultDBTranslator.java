@@ -1,6 +1,9 @@
 package game;
 
+import dto.Game;
 import dto.GameResult;
+import dto.to.gameresult.GameResultTO;
+import dto.to.gameresult.ScoreTO;
 import utils.CommonUtils;
 
 public class GameResultDBTranslator {
@@ -22,21 +25,33 @@ public class GameResultDBTranslator {
         return result;
     }
 
-    public static String fromDB(GameResult gameResult)
+    public static GameResultTO fromDB(GameResult gameResult)
     {
+        GameResultTO gameResultTO = new GameResultTO();
         
         String resultsDBs = gameResult.getResult();
-
         String[] results = resultsDBs.split(RESUT_SEPARATOR);
         
         for (String result : results)
         {
             String[] split = result.split(VALUE_SEPARATOR);
             int duration = Integer.parseInt(split[0]);
-            int pert = Integer.parseInt(split[1]);
+            int score = Integer.parseInt(split[1]);
+            
+            ScoreTO scoreTO = new ScoreTO(duration, score);
+            
+            gameResultTO.addScoreTO(scoreTO);
         }
         
-        return "jakies TO sie stworzy";
+        Game game = gameResult.getGame();
+        int gameID = game.getId();
+        String name = game.getName();
+        
+        gameResultTO.setGameID(gameID);
+        gameResultTO.setGameName(name);
+        gameResultTO.setAttempts(gameResultTO.getScores().size());
+        
+        return gameResultTO;
     }
 
 }
