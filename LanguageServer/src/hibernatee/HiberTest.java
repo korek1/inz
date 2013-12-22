@@ -15,7 +15,6 @@ import dto.games.RozsypankaGame;
 public class HiberTest {
 
     static DBController db;
-    
 
     public static void main(String[] args)
     {
@@ -25,13 +24,15 @@ public class HiberTest {
 
         Teacher teacher1 = new Teacher(null, null, "pass", "admin");
         Teacher teacher2 = new Teacher("Jan", "Kowalski", "pass", "jan");
-        
+
         Klasa klasa = new Klasa();
         klasa.setName("1a");
-        
+        klasa.setYear(2013);
+
         Klasa klasa2 = new Klasa();
         klasa2.setName("1b");
-        
+        klasa2.setYear(2013);
+
         Student student = new Student();
         student.setFirstName("Adam");
         student.setLastName("Kot");
@@ -39,7 +40,7 @@ public class HiberTest {
         student.setLogin("Kot1a113");
         student.setPassword("pass");
         student.setOrderNoumber(1);
-        
+
         Student student2 = new Student();
         student2.setFirstName("Aga");
         student2.setLastName("Byk");
@@ -47,35 +48,49 @@ public class HiberTest {
         student2.setLogin("Byk1a113");
         student2.setPassword("pass");
         student2.setOrderNoumber(1);
-        
+
+        Student student3 = new Student();
+        student3.setFirstName("Aga");
+        student3.setLastName("XYZ");
+        student3.setKlasa(klasa);
+        student3.setLogin("a");
+        student3.setPassword("a");
+        student3.setOrderNoumber(2);
+
+        Student student4 = new Student();
+        student4.setFirstName("Aga");
+        student4.setLastName("XXX");
+        student4.setKlasa(klasa);
+        student4.setLogin("b");
+        student4.setPassword("b");
+        student4.setOrderNoumber(3);
 
         klasa.setTeacher(teacher2);
         klasa2.setTeacher(teacher2);
-        
+
         RozsypankaGame rozsypankaGame = new RozsypankaGame();
         rozsypankaGame.setCategory(0);
         rozsypankaGame.setDifficultyFactor(5);
         rozsypankaGame.setOwner(teacher2);
         rozsypankaGame.setName("JakisInnyName");
-        
+
         List<String> sentences = new ArrayList<>();
         sentences.add("Pierwsze fajne zdanie");
         sentences.add("Drugie fajne zdanie");
         sentences.add("Trzecie fajne zdanie");
         rozsypankaGame.setSentences(sentences);
-        
+
         RozsypankaGame rozsypankaGame2 = new RozsypankaGame();
         rozsypankaGame2.setCategory(5);
         rozsypankaGame2.setDifficultyFactor(10);
         rozsypankaGame2.setOwner(teacher2);
         rozsypankaGame2.setName("JakisName");
-        
+
         List<String> sentences2 = new ArrayList<>();
         sentences2.add("Pierwsze fajne zdanie");
         sentences2.add("Drugie fajne zdanie");
         sentences2.add("Trzecie fajne zdanie");
         rozsypankaGame2.setSentences(sentences2);
-        
 
         try
         {
@@ -89,10 +104,12 @@ public class HiberTest {
 
             session.save(student);
             session.save(student2);
+            session.save(student3);
+            session.save(student4);
 
             session.save(rozsypankaGame);
             session.save(rozsypankaGame2);
-            
+
             beginTransaction.commit();
         }
         catch (HibernateException e)
@@ -103,45 +120,44 @@ public class HiberTest {
         {
             session.close();
         }
-        
-    
-//        List<String> word = new ArrayList<>();
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        word.add("aaaaaaaaaaaaaaa");
-//        WordSearchBordCreator bordCreator = new WordSearchBordCreator(word );
-//        WordSearchBordTO createBord = bordCreator.createBord();
-//        
-////        System.out.println(createBord);
-//        
-//        List<WordSearchRowTO> rows = createBord.getRows();
-//        
-//        for (WordSearchRowTO wordSearchRowTO : rows)
-//        {
-//            List<MappedLetterTO> row = wordSearchRowTO.getRow();
-//            for (MappedLetterTO mappedLetterTO : row)
-//            {
-//                System.out.print(mappedLetterTO.getValue() + " ");
-//            }
-//            System.out.println();
-//        }
-//        
-//        List<List<Integer>> solution = bordCreator.getSolution();
-//        
-//        for (List<Integer> list : solution)
-//        {
-//            System.out.println(list);
-//        }
-//        
-//        System.out.println();
-//        
-//        
-//        System.out.println(bordCreator.getSolution());
+
+        // List<String> word = new ArrayList<>();
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // word.add("aaaaaaaaaaaaaaa");
+        // WordSearchBordCreator bordCreator = new WordSearchBordCreator(word );
+        // WordSearchBordTO createBord = bordCreator.createBord();
+        //
+        // // System.out.println(createBord);
+        //
+        // List<WordSearchRowTO> rows = createBord.getRows();
+        //
+        // for (WordSearchRowTO wordSearchRowTO : rows)
+        // {
+        // List<MappedLetterTO> row = wordSearchRowTO.getRow();
+        // for (MappedLetterTO mappedLetterTO : row)
+        // {
+        // System.out.print(mappedLetterTO.getValue() + " ");
+        // }
+        // System.out.println();
+        // }
+        //
+        // List<List<Integer>> solution = bordCreator.getSolution();
+        //
+        // for (List<Integer> list : solution)
+        // {
+        // System.out.println(list);
+        // }
+        //
+        // System.out.println();
+        //
+        //
+        // System.out.println(bordCreator.getSolution());
         // db = DBController.getInstance();
         // Session session = db.getSession();
         //

@@ -15,6 +15,15 @@ public class GameResultTO {
         super();
     }
 
+    public GameResultTO(GameResultTO gameResultTO)
+    {
+        super();
+        this.gameID = gameResultTO.getGameID();
+        this.gameName = gameResultTO.getGameName();
+        this.attempts = gameResultTO.getAttempts();
+        this.scores = gameResultTO.getScores();
+    }
+
     public int getGameID()
     {
         return gameID;

@@ -7,6 +7,7 @@ public class KlasaTO {
 
     private int id;
     private String name;
+    private int year;
     private List<StudentTO> students;
 
     public KlasaTO()
@@ -42,6 +43,16 @@ public class KlasaTO {
     public void setStudents(List<StudentTO> students)
     {
         this.students = students;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
     }
 
     public void addStudentTO(StudentTO studentTO)

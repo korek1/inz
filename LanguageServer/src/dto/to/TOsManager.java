@@ -5,11 +5,12 @@ import game.GameResultDBTranslator;
 import java.util.Collection;
 import java.util.List;
 
+import utils.CommonUtils;
 import dto.GameResult;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
-import dto.games.GameCategory;
+import dto.to.gameresult.GameResultClassTO;
 import dto.to.gameresult.GameResultTO;
 import dto.to.gameresult.GameResultTOs;
 
@@ -58,6 +59,7 @@ public class TOsManager {
 
         String name = klasa.getName();
         int id = klasa.getId();
+        int year = klasa.getYear();
 
         List<Student> students = klasa.getStudents();
         for (Student student : students)
@@ -79,6 +81,7 @@ public class TOsManager {
 
         klasaTO.setId(id);
         klasaTO.setName(name);
+        klasaTO.setYear(year);
 
         return klasaTO;
     }
@@ -93,9 +96,11 @@ public class TOsManager {
 
             int id = klasa.getId();
             String name = klasa.getName();
+            int year = klasa.getYear();
 
             klasaTO.setId(id);
             klasaTO.setName(name);
+            klasaTO.setYear(year);
 
             klasaTOs.addKlasaTO(klasaTO);
 
@@ -115,6 +120,34 @@ public class TOsManager {
         }
         
         return gameResultTOs;
+    }
+    
+    public static GameResultClassTO convertGameResultClassTO(Student student, GameResult gameResult)
+    {
+        GameResultClassTO gameResultClassTO = null;
+        
+            if(CommonUtils.isNotNull(gameResult))
+            {
+                GameResultTO gameResultTO = GameResultDBTranslator.fromDB(gameResult);
+                gameResultClassTO = new GameResultClassTO(gameResultTO);
+            }
+            else
+            {
+                gameResultClassTO = new GameResultClassTO(new GameResultTO());
+            }
+            
+            String firstName = student.getFirstName();
+            String lastName = student.getLastName();
+            int orderNoumber = student.getOrderNoumber();
+            int id = student.getId();
+            
+            gameResultClassTO.setStudentID(id);
+            gameResultClassTO.setStudentName(firstName);
+            gameResultClassTO.setStudentLastName(lastName);
+            gameResultClassTO.setStudentOrderNoumber(orderNoumber);
+            
+        
+        return gameResultClassTO;
     }
 
    

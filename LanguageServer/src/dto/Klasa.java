@@ -3,7 +3,6 @@ package dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,21 +12,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="CLASSES")
+@Table(name = "CLASSES")
 public class Klasa {
 
     @Id
     @GeneratedValue
     private int id;
-   
+
     private String name;
-    
+
+    private int year;
+
     @ManyToOne
     @JoinColumn(name = "teacherId")
     private Teacher teacher;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "klasa")
     private List<Student> students = new ArrayList<>();
 
@@ -72,8 +72,6 @@ public class Klasa {
         this.teacher = teacher;
     }
 
-    
-    
     public List<Student> getStudents()
     {
         return students;
@@ -87,6 +85,16 @@ public class Klasa {
     public void addStudent(Student student)
     {
         students.add(student);
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
     }
 
 }

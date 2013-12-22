@@ -37,32 +37,24 @@ import dto.games.MemoGame;
 import dto.games.model.PicWordPair;
 
 @Path("game")
-public class MemoRest /*extends Application*/{
-    
-    GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl"); 
+public class MemoRest {
+
+    GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
-    
+
     public MemoRest()
     {
         super();
     }
 
-//    @Override
-//    public Set<Class<?>> getClasses()
-//    {
-//        final Set<Class<?>> classes = new HashSet<Class<?>>();
-//        classes.add(MultiPartFeature.class);
-//        return classes;
-//    }
-    
     @POST
-    @RolesAllowed({Role.TEACHER})
+    @RolesAllowed({ Role.TEACHER })
     @Path("/memo")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
     public String insertMemo(@HeaderParam("login") String login, @HeaderParam("name") String gameName, FormDataMultiPart multiPart)
     {
-        
+
         MemoGame memoGame = new MemoGame();
         memoGame.setName(gameName);
         gameManager.insertGame(memoGame, login);
@@ -77,7 +69,7 @@ public class MemoRest /*extends Application*/{
             String word = entry.getKey();
             picWordPair.setWord(word);
             picWordPair.setGame(memoGame);
-            
+
             List<FormDataBodyPart> value = entry.getValue();
             for (FormDataBodyPart formDataBodyPart : value)
             {
@@ -88,7 +80,7 @@ public class MemoRest /*extends Application*/{
                 String location = MemoDirHelper.saveMemoPic(login, gameID, stream, extension);
                 picWordPair.setPicPath(location);
             }
-            
+
             picWordPairList.add(picWordPair);
         }
         memoGame.setPicWordPair(picWordPairList);
@@ -97,18 +89,18 @@ public class MemoRest /*extends Application*/{
         return "hehs";
 
     }
-    
+
     @GET
     @Path("/memos")
     @Produces(MediaType.APPLICATION_JSON)
     public GameTOs getMemos(@HeaderParam("login") String login) throws ParseException
     {
         List<Game> allGames = gameManager.getAllGames(login, MemoGame.class);
-        
+
         GameTOs gameTOs = TOsGameManager.processGames(allGames);
-        
+
         return gameTOs;
-        
+
     }
 
     @GET
@@ -119,7 +111,7 @@ public class MemoRest /*extends Application*/{
     {
         MemoGame memoGame = gameManager.getMemoByID(gameID);
         List<PicWordPair> picWordPairList = memoGame.getPicWordPair();
-        
+
         FormDataMultiPart multiPart = new FormDataMultiPart();
         for (PicWordPair picWordPair : picWordPairList)
         {
@@ -127,14 +119,14 @@ public class MemoRest /*extends Application*/{
             String picPath = picWordPair.getPicPath();
             String extension = FileUtils.getExtension(picPath);
             File pic = new File(picPath);
-            
-            multiPart.field(word,(Object) pic, new MediaType("image", extension));
-            
+
+            multiPart.field(word, (Object) pic, new MediaType("image", extension));
+
         }
-        
+
         return Response.ok(multiPart, MediaType.MULTIPART_FORM_DATA).build();
     }
-    
+
     @GET
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/memos")
@@ -142,11 +134,11 @@ public class MemoRest /*extends Application*/{
     public GameTOs getMemosStudent(@HeaderParam("login") String login) throws ParseException
     {
         String teacherLogin = studentManager.getMyTeachersLogin(login);
-        
+
         return getMemos(teacherLogin);
-        
+
     }
-    
+
     @GET
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/memo/{id}")
@@ -154,9 +146,9 @@ public class MemoRest /*extends Application*/{
     public Response getMemoStudent(@HeaderParam("login") String login, @PathParam("id") int gameID) throws ParseException
     {
         MemoGame memoGame = gameManager.getMemoByID(gameID);
-        
+
         FormDataMultiPart multiPart = CurrentGameCreator.createAndStartCurrMemo(memoGame, login);
-        
+
         return Response.ok(multiPart, MediaType.MULTIPART_FORM_DATA).build();
     }
 

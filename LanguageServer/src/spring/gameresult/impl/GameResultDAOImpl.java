@@ -71,6 +71,27 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
         
         return gameHistory;
     }
-    
+
+    @Override
+    public GameResult getStudentGamesResult(int studentID, int gameID)
+    {
+        GameResult gameResult = null;
+        
+        @SuppressWarnings("unchecked")
+        List<GameResult> list = sessionFactory.getCurrentSession()
+                      .createCriteria(GameResult.class)
+                      .createAlias("game", "g")
+                      .createAlias("student", "s")
+                      .add(Restrictions.eq("s.id", studentID))
+                      .add(Restrictions.eq("game.id", gameID))
+                      .list();
+        
+        if(!list.isEmpty())
+        {
+            gameResult = list.get(0);
+        }
+        
+        return gameResult;
+    }
     
 }

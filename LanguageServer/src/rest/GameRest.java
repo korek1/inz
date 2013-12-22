@@ -16,15 +16,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
+
 import rest.auth.Role;
 import spring.BeanHelper;
 import spring.gameresult.GameResultManager;
 import dto.to.GameCategoryTOs;
+import dto.to.gameresult.GameResultClassTOs;
 import dto.to.gameresult.GameResultTOs;
 
 @Path("game")
 public class GameRest {
-    
+
     GameResultManager gameResultManager = (GameResultManager) BeanHelper.getBean("gameResultManagerImpl");
 
     public GameRest()
@@ -52,12 +55,13 @@ public class GameRest {
 
         return correct.toString();
     }
-    
-    
+
     /**
      * Returns student's game history
-     * @param login - teacher login 
-     * @param idStudent 
+     * 
+     * @param login
+     *            - teacher login
+     * @param idStudent
      * @return
      * @throws ParseException
      */
@@ -68,8 +72,31 @@ public class GameRest {
     public GameResultTOs getGameResult(@HeaderParam("login") String login, @PathParam("id") int idStudent) throws ParseException
     {
         GameResultTOs gameResultTOs = gameResultManager.getStudentsGamesResult(idStudent);
-        
+
         return gameResultTOs;
+    }
+
+    /**
+     * Returns concrete game history of given class
+     * 
+     * @param login
+     * @param classID
+     * @param gameID
+     * @return
+     * @throws ParseException
+     */
+    @GET
+    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
+    @Path("/result/class/{classID}/game/{gameID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getClassGameResult(@HeaderParam("login") String login, @PathParam("classID") int classID, @PathParam("gameID") int gameID) throws ParseException
+    {
+        GameResultClassTOs classGameResults = gameResultManager.getClassGameResults(classID, gameID);
+
+        Gson g = new Gson();
+        String json = g.toJson(classGameResults);
+
+        return json;
     }
 
 }
