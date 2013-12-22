@@ -1,40 +1,20 @@
 package dto.to;
 
+import game.GameResultDBTranslator;
+
 import java.util.Collection;
 import java.util.List;
 
+import dto.GameResult;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
 import dto.games.GameCategory;
+import dto.to.gameresult.GameResultTO;
+import dto.to.gameresult.GameResultTOs;
 
 public class TOsManager {
     
-
-    
-    
-    // public static Student convertStudentTO(StudentTO studentTO)
-    // {
-    // Student student = new Student();
-    //
-    // return student;
-    // }
-    //
-    // public static Teacher convertTeacherTO(TeacherTO teacherTO)
-    // {
-    // Teacher teacher = new Teacher();
-    //
-    // return teacher;
-    // }
-    //
-    // public static Klasa convertKlasaTO(KlasaTO klasaTO)
-    // {
-    // Klasa klasa = new Klasa();
-    //
-    // return klasa;
-    // }
-    
-   
 
     public static StudentTO convertStudent(Student student)
     {
@@ -122,6 +102,19 @@ public class TOsManager {
         }
 
         return klasaTOs;
+    }
+    
+    public static GameResultTOs convertGameResultTO(List<GameResult> gameResults)
+    {
+        GameResultTOs gameResultTOs = new GameResultTOs();
+        
+        for (GameResult gameResult : gameResults)
+        {
+            GameResultTO gameResultTO = GameResultDBTranslator.fromDB(gameResult);
+            gameResultTOs.addGameResultTO(gameResultTO);
+        }
+        
+        return gameResultTOs;
     }
 
    

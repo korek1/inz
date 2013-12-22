@@ -1,7 +1,5 @@
 package spring.gameresult.impl;
 
-import game.GameResultDBTranslator;
-
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import spring.dao.impl.BaseDAOImpl;
 import spring.gameresult.GameResultDAO;
+import spring.student.StudentDAO;
 import dto.GameResult;
 import dto.Student;
 
@@ -19,6 +18,9 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
 
     @Autowired
     private SessionFactory sessionFactory;
+    
+    @Autowired
+    private StudentDAO studentDAO;
 
     @Override
     public void saveOrUpdateGameResult(GameResult gameResult, String login)
@@ -59,6 +61,15 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
             this.save(gameResultBD);
         }
         
+    }
+
+    @Override
+    public List<GameResult> getStudentsGamesResults(int studentID)
+    {
+        Student student = studentDAO.load(studentID);
+        List<GameResult> gameHistory = student.getGameHistory();
+        
+        return gameHistory;
     }
     
     

@@ -1,14 +1,21 @@
 package hibernatee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import dto.Klasa;
+import dto.Student;
 import dto.Teacher;
+import dto.games.RozsypankaGame;
 
 public class HiberTest {
 
     static DBController db;
+    
 
     public static void main(String[] args)
     {
@@ -17,13 +24,75 @@ public class HiberTest {
         Session session = db.getSession();
 
         Teacher teacher1 = new Teacher(null, null, "pass", "admin");
+        Teacher teacher2 = new Teacher("Jan", "Kowalski", "pass", "jan");
+        
+        Klasa klasa = new Klasa();
+        klasa.setName("1a");
+        
+        Klasa klasa2 = new Klasa();
+        klasa2.setName("1b");
+        
+        Student student = new Student();
+        student.setFirstName("Adam");
+        student.setLastName("Kot");
+        student.setKlasa(klasa);
+        student.setLogin("Kot1a113");
+        student.setPassword("pass");
+        student.setOrderNoumber(1);
+        
+        Student student2 = new Student();
+        student2.setFirstName("Aga");
+        student2.setLastName("Byk");
+        student2.setKlasa(klasa2);
+        student2.setLogin("Byk1a113");
+        student2.setPassword("pass");
+        student2.setOrderNoumber(1);
+        
+
+        klasa.setTeacher(teacher2);
+        klasa2.setTeacher(teacher2);
+        
+        RozsypankaGame rozsypankaGame = new RozsypankaGame();
+        rozsypankaGame.setCategory(0);
+        rozsypankaGame.setDifficultyFactor(5);
+        rozsypankaGame.setOwner(teacher2);
+        rozsypankaGame.setName("JakisInnyName");
+        
+        List<String> sentences = new ArrayList<>();
+        sentences.add("Pierwsze fajne zdanie");
+        sentences.add("Drugie fajne zdanie");
+        sentences.add("Trzecie fajne zdanie");
+        rozsypankaGame.setSentences(sentences);
+        
+        RozsypankaGame rozsypankaGame2 = new RozsypankaGame();
+        rozsypankaGame2.setCategory(5);
+        rozsypankaGame2.setDifficultyFactor(10);
+        rozsypankaGame2.setOwner(teacher2);
+        rozsypankaGame2.setName("JakisName");
+        
+        List<String> sentences2 = new ArrayList<>();
+        sentences2.add("Pierwsze fajne zdanie");
+        sentences2.add("Drugie fajne zdanie");
+        sentences2.add("Trzecie fajne zdanie");
+        rozsypankaGame2.setSentences(sentences2);
+        
 
         try
         {
             Transaction beginTransaction = session.beginTransaction();
 
             session.save(teacher1);
+            session.save(teacher2);
 
+            session.save(klasa);
+            session.save(klasa2);
+
+            session.save(student);
+            session.save(student2);
+
+            session.save(rozsypankaGame);
+            session.save(rozsypankaGame2);
+            
             beginTransaction.commit();
         }
         catch (HibernateException e)
