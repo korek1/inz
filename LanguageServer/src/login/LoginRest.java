@@ -1,10 +1,8 @@
 package login;
 
 import java.util.Random;
-import java.util.Set;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -63,16 +61,6 @@ public class LoginRest {
         }
 
         return tempPass;
-    }
-
-    @GET
-    @Path("online")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getStudent()
-    {
-        Set<String> onlineAll = AuthMenager.onlineAll();
-
-        return onlineAll.toString();
     }
 
 }

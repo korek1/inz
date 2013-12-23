@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -86,5 +87,10 @@ public class CommonUtils {
     {
 
         return (int) ((l1 * 100.0f) / l2);
+    }
+    
+    public static long getCurrentTimeStamp()
+    {
+        return Calendar.getInstance().getTimeInMillis();
     }
 }

@@ -2,16 +2,24 @@ package auth;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
 import utils.CommonUtils;
+import dto.to.IsOnlineTO;
+import dto.to.OnlineTOs;
 
 public class AuthMenager {
 
-    private static Map<String, String> loginPassTeachersMap = new TreeMap<>();
-    private static Map<String, String> loginPassStudentsMap = new TreeMap<>();
+    private static Map<String, TempPass> loginPassTeachersMap = new TreeMap<>();
+    private static Map<String, TempPass> loginPassStudentsMap = new TreeMap<>();
+
+    private static final Thread REMOVER = inactiveUserRemover();
+
+    private AuthMenager()
+    {
+        // no instance
+    }
 
     // student
     public static void addTempPassStudent(String login, String tempPass)
@@ -48,51 +56,122 @@ public class AuthMenager {
 
     }
 
-    // for tests
-    public static Set<String> onlineAll()
+    private static synchronized void addTempPass(String login, String tempPass, Map<String, TempPass> map)
     {
-        Set<String> online = new HashSet<>();
-
-        for (Entry<String, String> entry : loginPassStudentsMap.entrySet())
-        {
-            online.add(entry.getKey() + " - student");
-        }
-
-        for (Entry<String, String> entry : loginPassTeachersMap.entrySet())
-        {
-            online.add(entry.getKey() + " - teacher");
-        }
-
-        return online;
+        map.put(login, new TempPass(tempPass));
     }
 
-    // ////////////////////////////////////////////////////
-
-    private static void addTempPass(String login, String tempPass, Map<String, String> map)
-    {
-        map.put(login, tempPass);
-    }
-
-    private static boolean veryfiPass(String login, String pass, Map<String, String> map)
+    private static boolean veryfiPass(String login, String pass, Map<String, TempPass> map)
     {
 
         boolean passCorrect = false;
         if (CommonUtils.isNotNull(login) && CommonUtils.isNotNull(pass))
         {
-            String storedPass = map.get(login);
+            TempPass storedPass = map.get(login);
 
-            if (pass.equals(storedPass))
+            String tempPassString = null;
+            if (CommonUtils.isNotNull(storedPass))
+            {
+                tempPassString = storedPass.getTempPass();
+            }
+
+            if (pass.equals(tempPassString))
             {
                 passCorrect = true;
+                storedPass.updateTimeStamp();
             }
         }
         return passCorrect;
 
     }
 
-    private static void dropPass(String login, Map<String, String> map)
+    private static void dropPass(String login, Map<String, TempPass> map)
     {
         map.remove(login);
+    }
+
+    private static Thread inactiveUserRemover()
+    {
+        Thread x = new Thread(new Runnable(){
+
+            @Override
+            public void run()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Thread.sleep(180000); // 3 min
+                    }
+                    catch (InterruptedException e)
+                    {
+                        // do nothing
+                    }
+
+                    removeInactive();
+                }
+            }
+        });
+
+        x.start();
+
+        return x;
+    }
+
+    private static synchronized void removeInactive()
+    {
+        Set<String> teachersToRemove = new HashSet<>();
+        Set<String> studentsToRemove = new HashSet<>();
+        Set<String> teacherKeySet = loginPassTeachersMap.keySet();
+
+        for (String key : teacherKeySet)
+        {
+            TempPass tempPass = loginPassTeachersMap.get(key);
+            if (!tempPass.isValid())
+            {
+                teachersToRemove.add(key);
+            }
+        }
+
+        Set<String> StudentKeySet = loginPassStudentsMap.keySet();
+
+        for (String key : StudentKeySet)
+        {
+            TempPass tempPass = loginPassStudentsMap.get(key);
+            if (!tempPass.isValid())
+            {
+                studentsToRemove.add(key);
+            }
+        }
+
+        for (String login : teachersToRemove)
+        {
+            dropPassTeacher(login);
+        }
+
+        for (String login : studentsToRemove)
+        {
+            dropPassStudent(login);
+        }
+    }
+
+    public static OnlineTOs checkWhoIsOnline(IsOnlineTO logins)
+    {
+        OnlineTOs onlineTOs = new OnlineTOs();
+
+        for (String login : logins.getLogins())
+        {
+            if (loginPassStudentsMap.containsKey(login))
+            {
+                onlineTOs.addOnline(login);
+            }
+            else
+            {
+                onlineTOs.addOffline(login);
+            }
+        }
+
+        return onlineTOs;
     }
 
 }

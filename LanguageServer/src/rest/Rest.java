@@ -2,8 +2,6 @@ package rest;
 
 import java.util.List;
 
-import javax.annotation.security.DenyAll;
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,21 +13,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.ext.Provider;
-
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import rest.auth.Role;
 import spring.BeanHelper;
 import spring.klasa.KlasaManager;
 import spring.student.StudentManager;
 import spring.teacher.TeacherManager;
+import auth.AuthMenager;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
+import dto.to.IsOnlineTO;
 import dto.to.KlasaTO;
 import dto.to.KlasaTOs;
+import dto.to.OnlineTOs;
 import dto.to.StudentTO;
 import dto.to.TOsManager;
 import dto.to.TeacherTO;
@@ -136,6 +133,18 @@ public class Rest  {
         studentManager.insertStudent(student, login);
 
         return "succes";
+    }
+    
+    @POST
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/online")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public OnlineTOs getOnline(IsOnlineTO isOnlineTO)
+    {
+        OnlineTOs onlineTOs = AuthMenager.checkWhoIsOnline(isOnlineTO);
+
+        return onlineTOs;
     }
 
     // /**
