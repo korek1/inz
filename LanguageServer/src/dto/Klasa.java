@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import dto.to.toserver.KlasaInsertTO;
+
 @Entity
 @Table(name = "CLASSES")
 public class Klasa {
@@ -40,6 +42,13 @@ public class Klasa {
     {
         super();
         this.name = name;
+    }
+
+    public Klasa(KlasaInsertTO klasaInsertTO)
+    {
+        super();
+        this.name = klasaInsertTO.getName();
+        this.year = klasaInsertTO.getYear();
     }
 
     public int getId()

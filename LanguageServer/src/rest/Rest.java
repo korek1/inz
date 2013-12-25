@@ -30,10 +30,12 @@ import dto.to.OnlineTOs;
 import dto.to.StudentTO;
 import dto.to.TOsManager;
 import dto.to.TeacherTO;
+import dto.to.toserver.KlasaInsertTO;
 import dto.to.toserver.StudentInsertTO;
+import dto.to.toserver.TeacherInsertTO;
 
 @Path("/")
-public class Rest  {
+public class Rest {
 
     @Context
     SecurityContext context;
@@ -46,7 +48,7 @@ public class Rest  {
     {
         super();
     }
- 
+
     @GET
     @RolesAllowed({ Role.STUDENT, Role.TEACHER })
     @Path("/student/{id}")
@@ -102,10 +104,10 @@ public class Rest  {
     @Path("/class")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String addClass(Klasa klasa, @HeaderParam("login") String login)
+    public String addClass(KlasaInsertTO klasa, @HeaderParam("login") String login)
     {
 
-        klasaManager.insertKlasa(klasa, login);
+        klasaManager.insertKlasa(new Klasa(klasa), login);
 
         return "succes";
     }
@@ -115,9 +117,9 @@ public class Rest  {
     @Path("/teacher")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String postTeacher(Teacher teacher)
+    public String postTeacher(TeacherInsertTO teacher)
     {
-        teacherManager.insertTeacher(teacher);
+        teacherManager.insertTeacher(new Teacher(teacher));
 
         return "succes";
     }
@@ -129,12 +131,12 @@ public class Rest  {
     @Produces(MediaType.TEXT_PLAIN)
     public String postStudent(StudentInsertTO student, @HeaderParam("login") String login)
     {
-        
+
         studentManager.insertStudent(student, login);
 
         return "succes";
     }
-    
+
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/online")
