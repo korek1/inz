@@ -21,7 +21,6 @@ public class AuthFilter implements ContainerRequestFilter {
     {
 
         String role = validateUser(request);
-        System.out.println(role);
         request.setSecurityContext(new SecurityContextImpl(role));
 
     }

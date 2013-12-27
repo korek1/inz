@@ -23,7 +23,7 @@ import dto.to.GameCategoryTO;
 import dto.to.GameCategoryTOs;
 
 public class TOsGameManager {
-    
+
     public static final GameCategoryTOs GAME_CATEGORIES = getGameCategories();
 
     public static RozsypankaGameTO convertRozsypankaGame(RozsypankaGame rozsypankaGame)
@@ -57,9 +57,8 @@ public class TOsGameManager {
         {
             Collections.shuffle(list);
         }
-        RozsypankaGameStudentTO rozsypankaGameTO =  new RozsypankaGameStudentTO(processRozsypanka);;
+        RozsypankaGameStudentTO rozsypankaGameTO = new RozsypankaGameStudentTO(processRozsypanka);;
         convertGame(rozsypankaGameTO, game);
-
 
         return rozsypankaGameTO;
 
@@ -69,13 +68,23 @@ public class TOsGameManager {
     {
         WordSearchGame wordSearchGame = new WordSearchGame();
         convertGameTO(wordSearchGame, wordSearchGameTO);
-        
+
         String wordsDB = "";
-        List<String> words = wordSearchGameTO.getWords();
-        for (String string : words)
+        List<String> angWords = wordSearchGameTO.getAngWords();
+        List<String> polWords = wordSearchGameTO.getPolWords();
+
+        for (int i = 0; i < angWords.size(); i++)
         {
-            wordsDB += ("#" + string);
+            String angWord = angWords.get(i);
+            String polWord = polWords.get(i);
+
+            wordsDB += ("#" + angWord + "#" + polWord);
         }
+        //
+        // for (String string : angWords)
+        // {
+        // wordsDB += ("#" + string);
+        // }
         wordSearchGame.setWords(wordsDB);
 
         return wordSearchGame;
@@ -89,13 +98,23 @@ public class TOsGameManager {
         String wordsDB = wordSearchGame.getWords();
         String[] split = wordsDB.split("#");
 
-        List<String> words = new ArrayList<>();
+        List<String> angWords = new ArrayList<>();
+        List<String> polWords = new ArrayList<>();
         for (int i = 1; i < split.length; i++)
         {
-            words.add(split[i]);
+            if (i % 2 == 1)
+            {
+                angWords.add(split[i]);
+            }
+            else
+            {
+                polWords.add(split[i]);
+            }
+
         }
 
-        wordSearchGameTO.setWords(words);
+        wordSearchGameTO.setAngWords(angWords);
+        wordSearchGameTO.setPolWords(polWords);
 
         return wordSearchGameTO;
     }
@@ -162,10 +181,7 @@ public class TOsGameManager {
 
     public static WordSearchGameStudentTO covertWordSearchGameForStudent(WordSearchGameTO wordSearchGameTO)
     {
-        //TODO nie powinno byc na sztywno
-        WordSearchGameStudentTO wordSearchGameStudentTO = new WordSearchGameStudentTO();
-        wordSearchGameStudentTO.setName(wordSearchGameTO.getName());
-        wordSearchGameStudentTO.setId(wordSearchGameTO.getId());
+        WordSearchGameStudentTO wordSearchGameStudentTO = new WordSearchGameStudentTO(wordSearchGameTO);
 
         return wordSearchGameStudentTO;
     }
@@ -197,7 +213,6 @@ public class TOsGameManager {
         String name = game.getName();
         int categoryId = game.getCategory();
         int difficultyFactor = game.getDifficultyFactor();
-        
 
         categoryId = GameCategory.validateCategory(categoryId);
 
@@ -220,7 +235,7 @@ public class TOsGameManager {
         game.setDifficultyFactor(difficultyFactor);
 
     }
-    
+
     private static GameCategoryTOs getGameCategories()
     {
         GameCategoryTOs categories = new GameCategoryTOs();
@@ -234,7 +249,7 @@ public class TOsGameManager {
             GameCategoryTO categoryTO = new GameCategoryTO(name, id);
             categories.addCategoryTO(categoryTO);
         }
-        
+
         return categories;
     }
 

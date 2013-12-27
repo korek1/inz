@@ -132,7 +132,7 @@ public class CurrentGameCreator {
         currentMillionaireGame.setSolution(solutionToRemember);
 
         GameHelper.startGame(login, currentMillionaireGame);
-        
+
         return convertMillionaireGame;
     }
 
@@ -143,15 +143,17 @@ public class CurrentGameCreator {
         setStartDate(currentWordSearchGame);
 
         WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
-        
+
         WordSearchGameStudentTO wordSearchGameForStudentTO = TOsGameManager.covertWordSearchGameForStudent(wordSearchGameTO);
 
-        List<String> words = wordSearchGameTO.getWords();
+        List<String> angWords = wordSearchGameTO.getAngWords();
+        List<String> polWords = wordSearchGameTO.getPolWords();
 
-        WordSearchBordCreator bordCreator = new WordSearchBordCreator(words);
+        WordSearchBordCreator bordCreator = new WordSearchBordCreator(angWords, polWords);
         WordSearchBordTO createBord = bordCreator.createBord(widthBoard, heightBoard);
 
         wordSearchGameForStudentTO.setBord(createBord);
+        wordSearchGameForStudentTO.setPolWords(bordCreator.getPolMappedWords());
 
         currentWordSearchGame.setSolution(bordCreator.getSolution());
 
@@ -164,7 +166,5 @@ public class CurrentGameCreator {
     {
         currGame.setStartTime(new Date());
     }
-    
-    
 
 }

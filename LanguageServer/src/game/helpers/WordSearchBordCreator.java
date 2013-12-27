@@ -1,5 +1,6 @@
 package game.helpers;
 
+import game.to.rozsypanka.MappedWordTO;
 import game.to.wordsearch.MappedLetterTO;
 import game.to.wordsearch.WordSearchBordTO;
 import game.to.wordsearch.WordSearchRowTO;
@@ -9,21 +10,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class WordSearchBordCreator
-{
+public class WordSearchBordCreator {
     private static final int DEFAULT_WIDTH = 15;
     private static final int DEFAULT_HEIGTH = 8;
 
     private List<String> words;
+    private List<String> polWords;
+    private List<MappedWordTO> polMappedWords = new ArrayList<>();
     private IntGenerator intGenerator;
     private List<List<MappedLetterTO>> mappedWords = new ArrayList<>();
     private List<List<Integer>> solution = new ArrayList<>();
     private Random rand = new Random();
 
-    public WordSearchBordCreator(List<String> words)
+    public WordSearchBordCreator(List<String> words, List<String> polWords)
     {
         super();
         this.words = words;
+        this.polWords = polWords;
     }
 
     public WordSearchBordTO createBord()
@@ -130,14 +133,27 @@ public class WordSearchBordCreator
 
         List<MappedLetterTO> mappedWord = new ArrayList<>();
         List<Integer> partOfSolution = new ArrayList<>();
+
+        Integer randomUniqueInt = intGenerator.getNextRandomUniqueInt();
+
+        MappedWordTO mappedWordTO = new MappedWordTO(randomUniqueInt, polWords.remove(0)); // mapped
+                                                                                           // value
+                                                                                           // z
+                                                                                           // pierwszej
+                                                                                           // literny
+                                                                                           // ang
+                                                                                           // word
+        polMappedWords.add(mappedWordTO);
+
         for (int i = 0; i < lettersChar.length; i++)
         {
             char c = lettersChar[i];
-            Integer randomUniqueInt = intGenerator.getNextRandomUniqueInt();
 
             partOfSolution.add(randomUniqueInt);
             MappedLetterTO mappedLetter = new MappedLetterTO(c, randomUniqueInt);
             mappedWord.add(mappedLetter);
+
+            randomUniqueInt = intGenerator.getNextRandomUniqueInt();
         }
 
         solution.add(partOfSolution);
@@ -149,4 +165,10 @@ public class WordSearchBordCreator
     {
         return solution;
     }
+
+    public List<MappedWordTO> getPolMappedWords()
+    {
+        return polMappedWords;
+    }
+
 }

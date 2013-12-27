@@ -1,6 +1,5 @@
 package game.to;
 
-
 public class GameTO {
 
     private String name;
@@ -11,6 +10,15 @@ public class GameTO {
     public GameTO()
     {
         super();
+    }
+
+    public GameTO(GameTO gameTO)
+    {
+        super();
+        this.name = gameTO.getName();
+        this.id = gameTO.getId();
+        this.categoryId = gameTO.getCategoryId();
+        this.difficultyFactor = gameTO.getDifficultyFactor();
     }
 
     public String getName()
@@ -52,7 +60,5 @@ public class GameTO {
     {
         this.difficultyFactor = difficultyFactor;
     }
-    
-    
 
 }

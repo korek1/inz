@@ -7,27 +7,42 @@ import java.util.List;
 
 public class WordSearchGameTO extends GameTO {
 
-    private List<String> words = new ArrayList<>();
+    private List<String> angWords = new ArrayList<>();
+    private List<String> polWords = new ArrayList<>();
 
     public WordSearchGameTO()
     {
         super();
     }
 
-    public List<String> getWords()
+    public List<String> getAngWords()
     {
-        return words;
+        return angWords;
     }
 
-    public void setWords(List<String> words)
+    public void setAngWords(List<String> words)
     {
-        this.words = words;
+        this.angWords = words;
     }
-    
-    public void addWord(String word)
+
+    public List<String> getPolWords()
     {
-        words.add(word);
+        return polWords;
     }
-    
-    
+
+    public void setPolWords(List<String> polWords)
+    {
+        this.polWords = polWords;
+    }
+
+    public void addAngWord(String word)
+    {
+        angWords.add(word);
+    }
+
+    public void addPolWord(String word)
+    {
+        polWords.add(word);
+    }
+
 }
