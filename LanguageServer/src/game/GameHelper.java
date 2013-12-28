@@ -1,6 +1,7 @@
 package game;
 
 import game.to.SolutionTO;
+import game.to.StartedByTeacherTO;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +18,17 @@ public class GameHelper {
     static GameResultManager gameResultManager =  (GameResultManager) BeanHelper.getBean("gameResultManagerImpl"); 
 
     private static Map<String, CurrentGame> currentStudentsGames = new HashMap<>();
+    private static Map<String, StartedByTeacherTO> startedByTeacher = new HashMap<>();
+    
+    public static void startGameTeacher(String login, StartedByTeacherTO started)
+    {
+        startedByTeacher.put(login, started);
+    }
+    
+    public static StartedByTeacherTO getStartedByTeacher(String login)
+    {
+        return startedByTeacher.get(login);
+    }
 
     public static void startGame(String login, CurrentGame currentGame)
     {

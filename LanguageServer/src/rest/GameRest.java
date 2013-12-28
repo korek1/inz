@@ -1,7 +1,9 @@
 package rest;
 
 import game.GameHelper;
+import game.helpers.GameTypeEnum;
 import game.to.SolutionTO;
+import game.to.StartedByTeacherTO;
 import game.to.TOsGameManager;
 
 import java.text.ParseException;
@@ -20,7 +22,10 @@ import com.google.gson.Gson;
 
 import rest.auth.Role;
 import spring.BeanHelper;
+import spring.game.GameManager;
 import spring.gameresult.GameResultManager;
+import spring.student.StudentManager;
+import dto.Game;
 import dto.to.GameCategoryTOs;
 import dto.to.gameresult.GameResultClassTOs;
 import dto.to.gameresult.GameResultTOs;
@@ -29,6 +34,8 @@ import dto.to.gameresult.GameResultTOs;
 public class GameRest {
 
     GameResultManager gameResultManager = (GameResultManager) BeanHelper.getBean("gameResultManagerImpl");
+    GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
+    StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
 
     public GameRest()
     {
@@ -97,6 +104,31 @@ public class GameRest {
         String json = g.toJson(classGameResults);
 
         return json;
+    }
+
+    @GET
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/start/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String startGameForStudents(@HeaderParam("login") String login, @PathParam("id") int gameID)
+    {
+
+        GameTypeEnum type = gameManager.getType(gameID);
+        GameHelper.startGameTeacher(login, new StartedByTeacherTO(gameID, type.getPath()));
+
+        return "ok";
+    }
+
+    @GET
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/start") 
+    @Produces(MediaType.APPLICATION_JSON)
+    public StartedByTeacherTO getStartedByTeacher(@HeaderParam("login") String login)
+    {
+        String teachersLogin = studentManager.getMyTeachersLogin(login);
+        StartedByTeacherTO startedByTeacher = GameHelper.getStartedByTeacher(teachersLogin);
+
+        return startedByTeacher;
     }
 
 }

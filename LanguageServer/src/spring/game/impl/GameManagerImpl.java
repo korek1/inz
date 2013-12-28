@@ -1,5 +1,7 @@
 package spring.game.impl;
 
+import game.helpers.GameTypeEnum;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,7 @@ public class GameManagerImpl implements GameManager {
     {
         MemoGame memoGame = (MemoGame) gameDAO.getById(gameID, MemoGame.class);
         memoGame.getPicWordPair().isEmpty();
-        
+
         return memoGame;
     }
 
@@ -89,9 +91,17 @@ public class GameManagerImpl implements GameManager {
     public WordSearchGame getWordSearchByID(int gameID)
     {
         WordSearchGame wordSearchGame = (WordSearchGame) gameDAO.getById(gameID, WordSearchGame.class);
-       
+
         return wordSearchGame;
     }
 
+    @Override
+    @Transactional
+    public GameTypeEnum getType(int id)
+    {
+        GameTypeEnum type = gameDAO.getType(id);
+
+        return type;
+    }
 
 }

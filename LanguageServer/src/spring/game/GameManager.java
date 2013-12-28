@@ -1,5 +1,7 @@
 package spring.game;
 
+import game.helpers.GameTypeEnum;
+
 import java.util.List;
 
 import dto.Game;
@@ -24,5 +26,7 @@ public interface GameManager {
     MillionaireGame getMillionaireByID(int gameID);
     
     WordSearchGame getWordSearchByID(int gameID);
+    
+    GameTypeEnum getType(int id);
 
 }
