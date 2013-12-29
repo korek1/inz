@@ -14,9 +14,11 @@ import spring.teacher.TeacherDAO;
 import dto.Game;
 import dto.GameResult;
 import dto.Teacher;
+import dto.games.HangManGame;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.SpellGame;
 import dto.games.WordSearchGame;
 
 @Service
@@ -102,6 +104,25 @@ public class GameManagerImpl implements GameManager {
         GameTypeEnum type = gameDAO.getType(id);
 
         return type;
+    }
+
+    @Override
+    @Transactional
+    public HangManGame getHangManByID(int gameID)
+    {
+        HangManGame hangManGame = (HangManGame) gameDAO.getById(gameID, HangManGame.class);
+
+        return hangManGame;
+    }
+
+    @Override
+    @Transactional
+    public SpellGame getSpellGameByID(int gameID)
+    {
+        SpellGame spellGame = (SpellGame) gameDAO.getById(gameID, SpellGame.class);
+        spellGame.getWords().isEmpty();
+
+        return spellGame;
     }
 
 }

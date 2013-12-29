@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import dto.GameResult;
 import spring.BeanHelper;
-import spring.game.GameManager;
 import spring.gameresult.GameResultManager;
-import spring.gameresult.impl.GameResultManagerImpl;
+import dto.GameResult;
 
 public class GameHelper {
     
@@ -19,6 +17,11 @@ public class GameHelper {
 
     private static Map<String, CurrentGame> currentStudentsGames = new HashMap<>();
     private static Map<String, StartedByTeacherTO> startedByTeacher = new HashMap<>();
+    
+    public static CurrentGame getCurrGame(String login)
+    {
+        return currentStudentsGames.get(login);
+    }
     
     public static void startGameTeacher(String login, StartedByTeacherTO started)
     {

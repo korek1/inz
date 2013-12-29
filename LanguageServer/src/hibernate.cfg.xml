@@ -31,11 +31,14 @@
 		<mapping class="dto.games.MemoGame" />
 		<mapping class="dto.games.WordSearchGame" />
 		<mapping class="dto.games.MillionaireGame" />
+		<mapping class="dto.games.HangManGame" />
+		<mapping class="dto.games.SpellGame" />
 		<mapping class="dto.GameResult" />
 
 
 		<mapping class="dto.games.model.PicWordPair" />
 		<mapping class="dto.games.model.MillionaireQuestion" />
+		<mapping class="dto.games.model.SpellPair" />
 
 	</session-factory>
 

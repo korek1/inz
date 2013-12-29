@@ -2,11 +2,14 @@ package rest;
 
 import game.GameHelper;
 import game.helpers.GameTypeEnum;
+import game.impl.CurrentHangManGame;
 import game.to.SolutionTO;
 import game.to.StartedByTeacherTO;
 import game.to.TOsGameManager;
+import game.to.hangman.LetterPositionTO;
 
 import java.text.ParseException;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -61,6 +64,20 @@ public class GameRest {
         Boolean correct = GameHelper.check(login, noumberOfTask, solution);
 
         return correct.toString();
+    }
+    
+    @POST
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/student/hangman/check/{noumberOfTask}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public LetterPositionTO checkPartOfGameHangMan(SolutionTO solution, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
+    {
+        CurrentHangManGame currGame =  (CurrentHangManGame) GameHelper.getCurrGame(login);
+        
+        checkPartOfGame(solution, noumberOfTask, login);
+
+        return new LetterPositionTO(currGame.getLetterPosition());
     }
 
     /**

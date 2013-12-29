@@ -6,9 +6,11 @@ import java.util.List;
 
 import dto.Game;
 import dto.GameResult;
+import dto.games.HangManGame;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.SpellGame;
 import dto.games.WordSearchGame;
 
 public interface GameManager {
@@ -26,6 +28,10 @@ public interface GameManager {
     MillionaireGame getMillionaireByID(int gameID);
     
     WordSearchGame getWordSearchByID(int gameID);
+    
+    SpellGame getSpellGameByID(int gameID);
+    
+    HangManGame getHangManByID(int gameID);
     
     GameTypeEnum getType(int id);
 

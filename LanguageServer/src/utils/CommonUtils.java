@@ -4,9 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class CommonUtils {
+
+    private static final Random RAND = new Random();
 
     public static boolean isNotNull(Object obj)
     {
@@ -88,9 +91,20 @@ public class CommonUtils {
 
         return (int) ((l1 * 100.0f) / l2);
     }
-    
+
     public static long getCurrentTimeStamp()
     {
         return Calendar.getInstance().getTimeInMillis();
+    }
+
+    /**
+     * Returns rand from 1 to range inclusive;
+     * 
+     * @param range
+     * @return
+     */
+    public static int rand(int range)
+    {
+        return RAND.nextInt(range + 1) + 1;
     }
 }

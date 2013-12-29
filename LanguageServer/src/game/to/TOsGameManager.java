@@ -1,11 +1,13 @@
 package game.to;
 
+import game.to.hangman.HangManTO;
 import game.to.millionaire.MillionaireGameTO;
 import game.to.millionaire.MillionaireQuestionTO;
 import game.to.rozsypanka.MappedWordTO;
 import game.to.rozsypanka.RozsypankaGameStudentTO;
 import game.to.rozsypanka.RozsypankaGameTO;
-import game.to.rozsypanka.RozsypankaGameTOs;
+import game.to.spell.SpellGameTO;
+import game.to.spell.SpellPairTO;
 import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
 
@@ -15,10 +17,13 @@ import java.util.List;
 
 import dto.Game;
 import dto.games.GameCategory;
+import dto.games.HangManGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.SpellGame;
 import dto.games.WordSearchGame;
 import dto.games.model.MillionaireQuestion;
+import dto.games.model.SpellPair;
 import dto.to.GameCategoryTO;
 import dto.to.GameCategoryTOs;
 
@@ -80,11 +85,7 @@ public class TOsGameManager {
 
             wordsDB += ("#" + angWord + "#" + polWord);
         }
-        //
-        // for (String string : angWords)
-        // {
-        // wordsDB += ("#" + string);
-        // }
+
         wordSearchGame.setWords(wordsDB);
 
         return wordSearchGame;
@@ -117,6 +118,44 @@ public class TOsGameManager {
         wordSearchGameTO.setPolWords(polWords);
 
         return wordSearchGameTO;
+    }
+
+    public static SpellGame covertSpellGameTO(SpellGameTO spellGameTO)
+    {
+        SpellGame spellGame = new SpellGame();
+        convertGameTO(spellGame, spellGameTO);
+
+        List<SpellPair> wordsDB = new ArrayList<>();
+        List<SpellPairTO> words = spellGameTO.getWords();
+        
+        for (SpellPairTO spellPairTO : words)
+        {
+            SpellPair pair = new SpellPair();
+
+            pair.setWordOk(spellPairTO.getWordOk());
+            pair.setWordWrong(spellPairTO.getWordWrong());
+            
+            pair.setGame(spellGame);
+            wordsDB.add(pair);
+        }
+
+        spellGame.setWords(wordsDB);
+
+        return spellGame;
+    }
+
+    public static SpellGameTO convertSpellGame(SpellGame spellGame)
+    {
+        SpellGameTO spellGameTO = new SpellGameTO();
+        convertGame(spellGameTO, spellGame);
+
+        List<SpellPair> words = spellGame.getWords();
+        for (SpellPair spellPair : words)
+        {
+            spellGameTO.addPair(new SpellPairTO(spellPair.getWordOk(), spellPair.getWordWrong()));
+        }
+
+        return spellGameTO;
     }
 
     public static MillionaireGameTO convertMillionaireGame(MillionaireGame millionaireGame)
@@ -177,6 +216,39 @@ public class TOsGameManager {
         millionaireGame.setQuestions(questions);
 
         return millionaireGame;
+    }
+
+    public static HangManGame convertHangManGameTO(HangManTO hangManTO)
+    {
+        HangManGame hangManGame = new HangManGame();
+        convertGameTO(hangManGame, hangManTO);
+
+        List<String> words = hangManTO.getWords();
+        String toDB = "";
+        for (String word : words)
+        {
+            toDB += ("#" + word);
+        }
+
+        hangManGame.setWords(toDB);
+
+        return hangManGame;
+    }
+
+    public static HangManTO convertHangManGame(HangManGame hangManGame)
+    {
+        HangManTO hangManTO = new HangManTO();
+        convertGame(hangManTO, hangManGame);
+
+        String words = hangManGame.getWords();
+        String[] split = words.split("#");
+        for (int i = 1; i < split.length; i++)
+        {
+            hangManTO.addWord(split[i]);
+        }
+
+        return hangManTO;
+
     }
 
     public static WordSearchGameStudentTO covertWordSearchGameForStudent(WordSearchGameTO wordSearchGameTO)

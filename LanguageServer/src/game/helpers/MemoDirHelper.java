@@ -7,8 +7,8 @@ import utils.FileUtils;
 
 public class MemoDirHelper {
 
-    private static final String BASE_DIR = System.getProperty("user.dir") + File.separator + "teacher_files" + File.separator;
-    private static final String MEMO_DIR = "memo" + File.separator;
+    public static final String BASE_DIR = System.getProperty("user.dir") + File.separator + "teacher_files" + File.separator;
+    public static final String MEMO_DIR = "memo" + File.separator;
 
     public static String saveMemoPic(String login, int gameID, InputStream pic, String extension)
     {

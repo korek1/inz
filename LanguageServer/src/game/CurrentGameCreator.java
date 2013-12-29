@@ -1,16 +1,25 @@
 package game;
 
 import game.data.GameDataParser;
+import game.helpers.HangManSolutionHelper;
 import game.helpers.WordSearchBordCreator;
+import game.impl.CurrentHangManGame;
 import game.impl.CurrentMemoGame;
 import game.impl.CurrentMillionaireGame;
 import game.impl.CurrentRozsypankaGame;
+import game.impl.CurrentSpellGame;
 import game.impl.CurrentWordSearchGame;
 import game.to.TOsGameManager;
+import game.to.hangman.HangManStudentTO;
+import game.to.hangman.HangManTO;
 import game.to.millionaire.MillionaireGameTO;
 import game.to.millionaire.MillionaireQuestionTO;
 import game.to.rozsypanka.MappedWordTO;
 import game.to.rozsypanka.RozsypankaGameStudentTO;
+import game.to.spell.SpellGameStudentTO;
+import game.to.spell.SpellGameTO;
+import game.to.spell.SpellPairStudentTO;
+import game.to.spell.SpellPairTO;
 import game.to.wordsearch.WordSearchBordTO;
 import game.to.wordsearch.WordSearchGameStudentTO;
 import game.to.wordsearch.WordSearchGameTO;
@@ -25,10 +34,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
+import utils.CommonUtils;
 import utils.FileUtils;
+import dto.games.HangManGame;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.SpellGame;
 import dto.games.WordSearchGame;
 import dto.games.model.PicWordPair;
 
@@ -160,6 +172,69 @@ public class CurrentGameCreator {
         GameHelper.startGame(login, currentWordSearchGame);
 
         return wordSearchGameForStudentTO;
+    }
+
+    public static SpellGameStudentTO createAndStartCurrSpellGame(SpellGame spellGame, String login)
+    {
+
+        CurrentSpellGame currentSpellGame = new CurrentSpellGame(spellGame);
+        setStartDate(currentSpellGame);
+
+        SpellGameTO spellGameTO = TOsGameManager.convertSpellGame(spellGame);
+        SpellGameStudentTO spellGameStudentTO = new SpellGameStudentTO(spellGameTO);
+
+        List<List<Integer>> solution = new ArrayList<>();
+
+        for (SpellPairTO pairTO : spellGameTO.getWords())
+        {
+            String wordOk = pairTO.getWordOk();
+            String wordWrong = pairTO.getWordWrong();
+
+            int rand = CommonUtils.rand(2);
+
+            List<Integer> partSolution = new ArrayList<>();
+            if (rand == 1)
+            {
+                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordOk, wordWrong));
+            }
+            else
+            {
+                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordWrong, wordOk));
+            }
+            partSolution.add(rand);
+            solution.add(partSolution);
+        }
+
+        currentSpellGame.setSolution(solution);
+
+        GameHelper.startGame(login, currentSpellGame);
+
+        return spellGameStudentTO;
+    }
+
+    public static HangManStudentTO createAndStartCurrHangMan(HangManGame hangManGame, String login)
+    {
+        CurrentHangManGame currentHangManGame = new CurrentHangManGame(hangManGame);
+        setStartDate(currentHangManGame);
+
+        HangManTO hangManGameTO = TOsGameManager.convertHangManGame(hangManGame);
+        HangManStudentTO hangManStudentTO = new HangManStudentTO(hangManGameTO);
+
+        List<List<Integer>> solution = new ArrayList<>();
+
+        for (String word : hangManGameTO.getWords())
+        {
+            hangManStudentTO.addWordLength(word.length());
+            List<Integer> partSolution = HangManSolutionHelper.createPartSolution(word);
+            solution.add(partSolution);
+        }
+
+        currentHangManGame.setSolution(solution);
+
+        GameHelper.startGame(login, currentHangManGame);
+
+        return hangManStudentTO;
+
     }
 
     private static void setStartDate(CurrentGame currGame)
