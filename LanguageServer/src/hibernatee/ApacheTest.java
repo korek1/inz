@@ -1,21 +1,30 @@
 package hibernatee;
 
+import game.to.GameTO;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 
 import org.apache.commons.fileupload.MultipartStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import auth.Auth;
@@ -35,13 +44,53 @@ public class ApacheTest {
 
         String tempPass = login("jan", "pass", true);
 
-        checkKlasy(tempPass);
+     //   checkKlasy(tempPass);
 
-        tempPass = login("Kot1a113", "pass", false);
+      //  tempPass = login("Kot1a113", "pass", false);
 
-        getMemos(tempPass); // pamietaj ze trzeba najpierw dodaæ gre memo bedac nauczycielem i w lini 48 podac jej ID - ja akurat mialem id=11
+    //    getMemos(tempPass); // pamietaj ze trzeba najpierw dodaæ gre memo bedac nauczycielem i w lini 48 podac jej ID - ja akurat mialem id=11
                             // zdjecia dodawaj png bo tak tu jest ustawione na sztywno
+        
+        postMemo(tempPass);
 
+    }
+    
+    private static void postMemo(String tempPass) throws URISyntaxException, HttpException, IOException
+    {
+        HttpPost post = new HttpPost("http://localhost:8080/LanguageServer/game/memo");
+        
+        post.addHeader("login", "jan");
+        post.addHeader("pass", tempPass);
+        post.addHeader("Accept", "*/*");
+      
+        GameTO gameTO = new GameTO();
+        gameTO.setName("gamename2");
+        gameTO.setDifficultyFactor(4);
+        gameTO.setCategoryId(4);
+        String jsonGameTO = g.toJson(gameTO);
+
+        
+        MultipartEntity multipart = new MultipartEntity();
+        
+        StringBody jsonContent = new StringBody(jsonGameTO);
+        multipart.addPart("gamedetails", jsonContent);
+        
+        File imageCat = new File("C:\\Users\\acer\\Desktop\\memo\\cat.PNG");
+        multipart.addPart("cat", new FileBody(imageCat));
+        
+        File imageDog = new File("C:\\Users\\acer\\Desktop\\memo\\dog.PNG");
+        multipart.addPart("dog", new FileBody(imageDog));
+        
+        File imageBug = new File("C:\\Users\\acer\\Desktop\\memo\\bug.PNG");
+        multipart.addPart("bug", new FileBody(imageBug));
+        
+        post.setEntity(multipart);
+        
+        HttpResponse execute = client.execute(post);
+        
+        StatusLine statusLine = execute.getStatusLine();
+        
+        System.out.println(statusLine.getStatusCode());
     }
 
     private static void getMemos(String tempPass) throws Exception

@@ -18,6 +18,7 @@ import java.util.List;
 import dto.Game;
 import dto.games.GameCategory;
 import dto.games.HangManGame;
+import dto.games.MemoGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
 import dto.games.SpellGame;
@@ -277,6 +278,15 @@ public class TOsGameManager {
         convertGame(gameTO, game);
 
         return gameTO;
+    }
+    
+    public static MemoGame memoConvert(GameTO gameTO)
+    {
+        MemoGame memoGame = new MemoGame();
+        
+        convertGame(gameTO, memoGame);
+        
+        return memoGame;
     }
 
     private static void convertGame(GameTO gameTO, Game game)

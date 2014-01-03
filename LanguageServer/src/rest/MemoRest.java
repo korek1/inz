@@ -2,6 +2,7 @@ package rest;
 
 import game.CurrentGameCreator;
 import game.helpers.MemoDirHelper;
+import game.to.GameTO;
 import game.to.GameTOs;
 import game.to.TOsGameManager;
 
@@ -26,6 +27,8 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+
+import com.google.gson.Gson;
 
 import rest.auth.Role;
 import spring.BeanHelper;
@@ -54,34 +57,45 @@ public class MemoRest {
     @Produces(MediaType.TEXT_PLAIN)
     public String insertMemo(@HeaderParam("login") String login, @HeaderParam("name") String gameName, FormDataMultiPart multiPart)
     {
+        List<FormDataBodyPart> info = multiPart.getFields("gamedetails");
 
-        MemoGame memoGame = new MemoGame();
-        memoGame.setName(gameName);
+        FormDataBodyPart bodyPartInfo = info.get(0);
+        String string = bodyPartInfo.getValueAs(String.class);
+
+        Gson gson = new Gson();
+        GameTO gameTO = gson.fromJson(string, GameTO.class);
+
+        MemoGame memoGame = TOsGameManager.memoConvert(gameTO);
+
         gameManager.insertGame(memoGame, login);
         int gameID = memoGame.getId();
+
         List<PicWordPair> picWordPairList = new ArrayList<>();
 
         Map<String, List<FormDataBodyPart>> fields = multiPart.getFields();
 
         for (Map.Entry<String, List<FormDataBodyPart>> entry : fields.entrySet())
         {
-            PicWordPair picWordPair = new PicWordPair();
             String word = entry.getKey();
-            picWordPair.setWord(word);
-            picWordPair.setGame(memoGame);
-
-            List<FormDataBodyPart> value = entry.getValue();
-            for (FormDataBodyPart formDataBodyPart : value)
+            if (!word.equals("gamedetails"))
             {
-                InputStream stream = formDataBodyPart.getValueAs(InputStream.class);
-                ContentDisposition contentDisposition = formDataBodyPart.getContentDisposition();
-                String fileName = contentDisposition.getFileName();
-                String extension = FileUtils.getExtension(fileName);
-                String location = MemoDirHelper.saveMemoPic(login, gameID, stream, extension);
-                picWordPair.setPicPath(location);
-            }
+                PicWordPair picWordPair = new PicWordPair();
+                picWordPair.setWord(word);
+                picWordPair.setGame(memoGame);
 
-            picWordPairList.add(picWordPair);
+                List<FormDataBodyPart> value = entry.getValue();
+                for (FormDataBodyPart formDataBodyPart : value)
+                {
+                    InputStream stream = formDataBodyPart.getValueAs(InputStream.class);
+                    ContentDisposition contentDisposition = formDataBodyPart.getContentDisposition();
+                    String fileName = contentDisposition.getFileName();
+                    String extension = FileUtils.getExtension(fileName);
+                    String location = MemoDirHelper.saveMemoPic(login, gameID, stream, extension);
+                    picWordPair.setPicPath(location);
+                }
+
+                picWordPairList.add(picWordPair);
+            }
         }
         memoGame.setPicWordPair(picWordPairList);
         gameManager.update(memoGame);
