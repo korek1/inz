@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.klasa.KlasaDAO;
 import spring.student.StudentDAO;
 import spring.student.StudentManager;
+import utils.CommonUtils;
 import dto.Klasa;
 import dto.Student;
 import dto.to.toserver.StudentInsertTO;
@@ -65,11 +66,55 @@ public class StudentManagerImpl implements StudentManager {
     {
         Klasa klasa = klasaDAO.get(student.getIdKlasy());
         String name = klasa.getName();
-        
+
         Student studentDB = TOsInsertManager.convertStudentTO(student, name);
         studentDB.setKlasa(klasa);
-        
+
         studentDAO.save(studentDB);
+    }
+
+    @Override
+    @Transactional
+    public void updateStudent(StudentInsertTO studentTO, int id)
+    {
+        Student student = studentDAO.load(id);
+
+        if (CommonUtils.isNotNull(studentTO.getFirstName()))
+        {
+            student.setFirstName(studentTO.getFirstName());
+        }
+        if (CommonUtils.isNotNull(studentTO.getLastName()))
+        {
+            student.setLastName(studentTO.getLastName());
+        }
+        if (studentTO.getIdKlasy() != 0)
+        {
+            Klasa klasa = klasaDAO.load(studentTO.getIdKlasy());
+            student.setKlasa(klasa);
+        }
+        if (studentTO.getOrderNoumber() != 0)
+        {
+            student.setOrderNoumber(studentTO.getOrderNoumber());
+        }
+        if (CommonUtils.isNotNull(studentTO.getPassword()))
+        {
+            student.setPassword(studentTO.getPassword());
+        }
+
+        studentDAO.save(student);
+
+    }
+
+    @Override
+    @Transactional
+    public void changePass(String newPass, String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+        
+        student.setPassword(newPass);
+        
+        studentDAO.save(student);
+        
     }
 
 }

@@ -139,6 +139,32 @@ public class Rest {
 
     @POST
     @RolesAllowed({ Role.TEACHER })
+    @Path("/student/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String updateStudent(StudentInsertTO student, @PathParam("id") int id)
+    {
+
+        studentManager.updateStudent(student, id);
+
+        return "succes";
+    }
+    
+    @POST
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/student/pass")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String changePass(String newPass, @HeaderParam("login") String login)
+    {
+
+        studentManager.changePass(newPass, login);
+
+        return "succes";
+    }
+
+    @POST
+    @RolesAllowed({ Role.TEACHER })
     @Path("/online")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

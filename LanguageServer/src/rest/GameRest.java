@@ -30,6 +30,7 @@ import spring.gameresult.GameResultManager;
 import spring.student.StudentManager;
 import dto.Game;
 import dto.to.GameCategoryTOs;
+import dto.to.PointsTO;
 import dto.to.gameresult.GameResultClassTOs;
 import dto.to.gameresult.GameResultTOs;
 
@@ -65,7 +66,7 @@ public class GameRest {
 
         return correct.toString();
     }
-    
+
     @POST
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/hangman/check/{noumberOfTask}")
@@ -73,8 +74,8 @@ public class GameRest {
     @Produces(MediaType.APPLICATION_JSON)
     public LetterPositionTO checkPartOfGameHangMan(SolutionTO solution, @PathParam("noumberOfTask") int noumberOfTask, @HeaderParam("login") String login)
     {
-        CurrentHangManGame currGame =  (CurrentHangManGame) GameHelper.getCurrGame(login);
-        
+        CurrentHangManGame currGame = (CurrentHangManGame) GameHelper.getCurrGame(login);
+
         checkPartOfGame(solution, noumberOfTask, login);
 
         return new LetterPositionTO(currGame.getLetterPosition());
@@ -138,7 +139,7 @@ public class GameRest {
 
     @GET
     @RolesAllowed({ Role.STUDENT })
-    @Path("/start") 
+    @Path("/start")
     @Produces(MediaType.APPLICATION_JSON)
     public StartedByTeacherTO getStartedByTeacher(@HeaderParam("login") String login)
     {
@@ -146,6 +147,29 @@ public class GameRest {
         StartedByTeacherTO startedByTeacher = GameHelper.getStartedByTeacher(teachersLogin);
 
         return startedByTeacher;
+    }
+
+    @GET
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/points")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PointsTO getPoints(@HeaderParam("login") String login)
+    {
+        PointsTO pointsTO = gameResultManager.getPoints(login);
+
+        return pointsTO;
+    }
+
+    @POST
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/points")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String spendPoints(@HeaderParam("login") String login, int points)
+    {
+        gameResultManager.spendPoints(points, login);
+
+        return "ok";
     }
 
 }

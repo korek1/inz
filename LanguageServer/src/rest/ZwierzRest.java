@@ -3,6 +3,7 @@ package rest;
 import java.io.File;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -32,9 +33,13 @@ public class ZwierzRest {
     @RolesAllowed({ Role.STUDENT })
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    public String storeAnimalData(@HeaderParam("login") String login, @FormDataParam("file") InputStream is)
+    public String storeAnimalData(@HeaderParam("login") String login,
+                                  @FormDataParam("file") InputStream is,
+                                  @FormDataParam("eq") InputStream eq,
+                                  @FormDataParam("info") InputStream info,
+                                  @FormDataParam("img") InputStream img)
     {
-        AnimalDirHelper.storeAnimal(login, is);
+        AnimalDirHelper.storeAnimal(login, is, eq, info, img);
 
         return "ok";
     }
@@ -46,9 +51,12 @@ public class ZwierzRest {
     {
 
         FormDataMultiPart multiPart = new FormDataMultiPart();
-        File file = AnimalDirHelper.getAnimalFile(login);
+        List<File> animalFile = AnimalDirHelper.getAnimalFile(login);
 
-        multiPart.field("animal", (Object) file, new MediaType("file", "x"));
+        multiPart.field("file", (Object) animalFile.get(0), new MediaType("file", "x"));
+        multiPart.field("eq", (Object) animalFile.get(1), new MediaType("file", "x"));
+        multiPart.field("info", (Object) animalFile.get(2), new MediaType("file", "x"));
+        multiPart.field("img", (Object) animalFile.get(3), new MediaType("file", "x"));
 
         return Response.ok(multiPart, MediaType.MULTIPART_FORM_DATA).build();
     }

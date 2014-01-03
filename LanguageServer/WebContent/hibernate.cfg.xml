@@ -23,7 +23,6 @@
 		<mapping class="dto.Student" />
 		<mapping class="dto.Teacher" />
 		<mapping class="dto.Klasa" />
-		<mapping class="dto.Tamagotchi" />
 
 		<mapping class="dto.Game" />
 		<mapping class="dto.games.RozsypankaGame" />

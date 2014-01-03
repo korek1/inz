@@ -11,6 +11,10 @@ public interface StudentManager {
     
     void insertStudent(StudentInsertTO student, String login);
     
+    void updateStudent(StudentInsertTO student, int id);
+    
+    void changePass(String newPass, String login);
+    
     Student getStudentById(int studentId);
       
     List<Student> getStudents();

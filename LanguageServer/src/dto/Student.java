@@ -38,13 +38,16 @@ public class Student {
     private Date lastLoginDate;
 
     private int orderNoumber;
+    
+    private int totalPoints;
+    
+    private int availablePoints;
 
+    private int lastPoints;
+    
     @ManyToOne
     @JoinColumn(name = "klasaId")
     private Klasa klasa;
-
-    @OneToOne(cascade = { CascadeType.ALL })
-    private Tamagotchi animal;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<GameResult> gameHistory = new ArrayList<>();
@@ -140,16 +143,6 @@ public class Student {
         this.login = login;
     }
 
-    public Tamagotchi getAnimal()
-    {
-        return animal;
-    }
-
-    public void setAnimal(Tamagotchi animal)
-    {
-        this.animal = animal;
-    }
-
     public Klasa getKlasa()
     {
         return klasa;
@@ -175,6 +168,37 @@ public class Student {
         this.gameHistory = gameHistory;
     }
 
+    public int getTotalPoints()
+    {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints)
+    {
+        this.totalPoints = totalPoints;
+    }
+
+    public int getLastPoints()
+    {
+        return lastPoints;
+    }
+
+    public void setLastPoints(int lastPoints)
+    {
+        this.lastPoints = lastPoints;
+    }
+
+    public int getAvailablePoints()
+    {
+        return availablePoints;
+    }
+
+    public void setAvailablePoints(int availablePoints)
+    {
+        this.availablePoints = availablePoints;
+    }
+    
     
 
+    
 }

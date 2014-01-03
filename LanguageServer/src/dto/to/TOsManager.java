@@ -26,12 +26,14 @@ public class TOsManager {
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
         int orderNoumber = student.getOrderNoumber();
+        int totalPoints = student.getTotalPoints();
 
         studentTO.setId(id);
         studentTO.setFirstName(firstName);
         studentTO.setLastName(lastName);
         studentTO.setOrderNoumber(orderNoumber);
         studentTO.setLogin(login);
+        studentTO.setTotalPoints(totalPoints);
 
         return studentTO;
     }
@@ -70,11 +72,13 @@ public class TOsManager {
             String lastName = student.getLastName();
             int orderNoumber = student.getOrderNoumber();
             int idStudent = student.getId();
+            String login = student.getLogin();
 
             studentTO.setFirstName(firstName);
             studentTO.setLastName(lastName);
             studentTO.setOrderNoumber(orderNoumber);
             studentTO.setId(idStudent);
+            studentTO.setLogin(login);
 
             klasaTO.addStudentTO(studentTO);
         }

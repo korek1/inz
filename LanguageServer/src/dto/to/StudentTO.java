@@ -1,10 +1,9 @@
 package dto.to;
 
-
 public class StudentTO {
 
     private int id;
-    
+
     private String login;
 
     private String firstName;
@@ -14,6 +13,8 @@ public class StudentTO {
     private int orderNoumber;
 
     private String klasa;
+
+    private int totalPoints;
 
     public StudentTO()
     {
@@ -50,7 +51,6 @@ public class StudentTO {
         this.lastName = lastName;
     }
 
-
     public int getOrderNoumber()
     {
         return orderNoumber;
@@ -80,9 +80,15 @@ public class StudentTO {
     {
         this.login = login;
     }
-    
-    
 
+    public int getTotalPoints()
+    {
+        return totalPoints;
+    }
 
+    public void setTotalPoints(int totalPoints)
+    {
+        this.totalPoints = totalPoints;
+    }
 
 }

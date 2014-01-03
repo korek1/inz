@@ -12,6 +12,7 @@ import spring.klasa.KlasaDAO;
 import dto.GameResult;
 import dto.Klasa;
 import dto.Student;
+import dto.to.PointsTO;
 import dto.to.TOsManager;
 import dto.to.gameresult.GameResultClassTO;
 import dto.to.gameresult.GameResultClassTOs;
@@ -22,11 +23,10 @@ public class GameResultManagerImpl implements GameResultManager {
 
     @Autowired
     private GameResultDAO gameResultDAO;
-    
+
     @Autowired
     private KlasaDAO klasaDAO;
-    
-    
+
     @Override
     @Transactional
     public void saveOrUpdateGameResult(GameResult gameResult, String login)
@@ -34,18 +34,16 @@ public class GameResultManagerImpl implements GameResultManager {
         gameResultDAO.saveOrUpdateGameResult(gameResult, login);
     }
 
-
     @Override
     @Transactional
     public GameResultTOs getStudentsGamesResult(int studentID)
     {
         List<GameResult> studentsGamesResults = gameResultDAO.getStudentsGamesResults(studentID);
-        
+
         GameResultTOs convertGameResultTO = TOsManager.convertGameResultTO(studentsGamesResults);
-        
+
         return convertGameResultTO;
     }
-
 
     @Override
     @Transactional
@@ -53,19 +51,43 @@ public class GameResultManagerImpl implements GameResultManager {
     {
         Klasa klasa = klasaDAO.load(classID);
         List<Student> students = klasa.getStudents();
-        
+
         GameResultClassTOs convertGameResultClassTOs = new GameResultClassTOs();
-        
+
         for (Student student : students)
         {
             GameResult studentGamesResult = gameResultDAO.getStudentGamesResult(student.getId(), gameID);
 
             GameResultClassTO convertGameResultClassTO = TOsManager.convertGameResultClassTO(student, studentGamesResult);
-           
+
             convertGameResultClassTOs.addGameResultClassTO(convertGameResultClassTO);
         }
-        
+
         return convertGameResultClassTOs;
+    }
+
+    @Override
+    @Transactional
+    public void addPoints(int points, String login)
+    {
+        gameResultDAO.savePoints(points, login);
+
+    }
+
+    @Override
+    @Transactional
+    public PointsTO getPoints(String login)
+    {
+        PointsTO points = gameResultDAO.getPoints(login);
+
+        return points;
+    }
+
+    @Override
+    @Transactional
+    public void spendPoints(int points, String login)
+    {
+        gameResultDAO.spendPoints(points, login);
     }
 
 }

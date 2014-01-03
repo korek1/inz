@@ -52,7 +52,11 @@ public class GameHelper {
             PointsDirector pointsDirector = new PointsDirector(currentGame);
             GameResult produceGameResult = pointsDirector.produceGameResult();
             
+            int points = pointsDirector.calcPoints();
+            
             gameResultManager.saveOrUpdateGameResult(produceGameResult ,login);
+            
+            gameResultManager.addPoints(points, login);
             
             removeGame(login);
         }

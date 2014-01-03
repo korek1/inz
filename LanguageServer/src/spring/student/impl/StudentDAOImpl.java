@@ -48,4 +48,23 @@ public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
         return x ;
     }
 
+
+    @Override
+    public Student getByLogin(String login)
+    {
+        Student student = null;
+        
+        @SuppressWarnings("unchecked")
+        List<Student> list = sessionFactory.getCurrentSession().createCriteria(Student.class, "s")
+        .add(Restrictions.eq("s.login", login))
+        .list();
+        
+        if(!list.isEmpty())
+        {
+            student = list.get(0);
+        }
+        
+        return student;
+    }
+
 }

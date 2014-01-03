@@ -16,7 +16,7 @@ public class PointsDirector {
     private final double TIME_FACTOR = 1.00;
     private final double DIFF_FACTOR = 0.1;
 
-    private final int TOTAL_POINTS_FOR_SINGLE_GAME = 100; 
+    private final int TOTAL_POINTS_FOR_SINGLE_GAME = 100;
 
     public PointsDirector(CurrentGame currGame)
     {
@@ -29,20 +29,22 @@ public class PointsDirector {
         GameResult gameResult = new GameResult();
         gameResult.setGame(currGame.getGame());
 
-        points = calculatePoints();
-        
         String string = GameResultDBTranslator.toDB(currGame);
         gameResult.setResult(string);
 
-        System.out.println("punkty : " + points );
-        
         return gameResult;
 
     }
 
+    public int calcPoints()
+    {
+        points = calculatePoints();
+        return points;
+    }
+
     private int calculatePoints()
     {
-        int pointsForGame = 0; 
+        int pointsForGame = 0;
 
         long gameDuration = currGame.getGameDuration();
 
@@ -76,6 +78,5 @@ public class PointsDirector {
     {
         return points;
     }
-    
-    
+
 }

@@ -12,13 +12,14 @@ import spring.gameresult.GameResultDAO;
 import spring.student.StudentDAO;
 import dto.GameResult;
 import dto.Student;
+import dto.to.PointsTO;
 
 @Service
 public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameResultDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-    
+
     @Autowired
     private StudentDAO studentDAO;
 
@@ -26,26 +27,18 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     public void saveOrUpdateGameResult(GameResult gameResult, String login)
     {
         @SuppressWarnings("unchecked")
-        List<GameResult> list = sessionFactory.getCurrentSession()
-                      .createCriteria(GameResult.class)
-                      .createAlias("game", "g")
-                      .createAlias("student", "s")
-                      .add(Restrictions.eq("s.login", login))
-                      .add(Restrictions.eq("game.id", gameResult.getGame().getId()))
-                      .list();
-        
-        if(list.isEmpty())
+        List<GameResult> list = sessionFactory.getCurrentSession().createCriteria(GameResult.class).createAlias("game", "g").createAlias("student", "s").add(Restrictions.eq("s.login", login))
+                .add(Restrictions.eq("game.id", gameResult.getGame().getId())).list();
+
+        if (list.isEmpty())
         {
-            //trzeba dodaæ caly gameresult
+            // trzeba dodaæ caly gameresult
             @SuppressWarnings("unchecked")
-            List<Student> list2 = sessionFactory.getCurrentSession()
-            .createCriteria(Student.class)
-            .add(Restrictions.eq("login", login))
-            .list();
-            
+            List<Student> list2 = sessionFactory.getCurrentSession().createCriteria(Student.class).add(Restrictions.eq("login", login)).list();
+
             Student student = list2.get(0);
             gameResult.setStudent(student);
-            
+
             this.save(gameResult);
         }
         else
@@ -53,14 +46,14 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
             GameResult gameResultBD = list.get(0);
             String resultDB = gameResultBD.getResult();
             String resultNEW = gameResult.getResult();
-            
+
             String resultToSave = resultDB + resultNEW;
-            
+
             gameResultBD.setResult(resultToSave);
-            
+
             this.save(gameResultBD);
         }
-        
+
     }
 
     @Override
@@ -68,7 +61,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     {
         Student student = studentDAO.load(studentID);
         List<GameResult> gameHistory = student.getGameHistory();
-        
+
         return gameHistory;
     }
 
@@ -76,22 +69,52 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     public GameResult getStudentGamesResult(int studentID, int gameID)
     {
         GameResult gameResult = null;
-        
+
         @SuppressWarnings("unchecked")
-        List<GameResult> list = sessionFactory.getCurrentSession()
-                      .createCriteria(GameResult.class)
-                      .createAlias("game", "g")
-                      .createAlias("student", "s")
-                      .add(Restrictions.eq("s.id", studentID))
-                      .add(Restrictions.eq("game.id", gameID))
-                      .list();
-        
-        if(!list.isEmpty())
+        List<GameResult> list = sessionFactory.getCurrentSession().createCriteria(GameResult.class).createAlias("game", "g").createAlias("student", "s").add(Restrictions.eq("s.id", studentID))
+                .add(Restrictions.eq("game.id", gameID)).list();
+
+        if (!list.isEmpty())
         {
             gameResult = list.get(0);
         }
-        
+
         return gameResult;
     }
-    
+
+    @Override
+    public void savePoints(int points, String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+
+        student.setTotalPoints(student.getTotalPoints() + points);
+        student.setLastPoints(points);
+        student.setAvailablePoints(student.getAvailablePoints() + points);
+
+        studentDAO.save(student);
+
+    }
+
+    @Override
+    public PointsTO getPoints(String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+
+        int totalPoints = student.getTotalPoints();
+        int lastPoints = student.getLastPoints();
+        int availablePoints = student.getAvailablePoints();
+
+        return new PointsTO(totalPoints, availablePoints, lastPoints);
+    }
+
+    @Override
+    public void spendPoints(int points, String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+        
+        student.setAvailablePoints(student.getAvailablePoints() - points);
+
+        studentDAO.save(student);
+    }
+
 }
