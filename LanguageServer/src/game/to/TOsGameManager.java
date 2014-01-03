@@ -135,6 +135,7 @@ public class TOsGameManager {
 
             pair.setWordOk(spellPairTO.getWordOk());
             pair.setWordWrong(spellPairTO.getWordWrong());
+            pair.setPolWord(spellPairTO.getPolWord());
             
             pair.setGame(spellGame);
             wordsDB.add(pair);
@@ -153,7 +154,7 @@ public class TOsGameManager {
         List<SpellPair> words = spellGame.getWords();
         for (SpellPair spellPair : words)
         {
-            spellGameTO.addPair(new SpellPairTO(spellPair.getWordOk(), spellPair.getWordWrong()));
+            spellGameTO.addPair(new SpellPairTO(spellPair.getWordOk(), spellPair.getWordWrong(), spellPair.getPolWord()));
         }
 
         return spellGameTO;

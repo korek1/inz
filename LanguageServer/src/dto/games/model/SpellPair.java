@@ -21,6 +21,7 @@ public class SpellPair {
 
     private String wordOk;
     private String wordWrong;
+    private String polWord;
 
     public SpellPair()
     {
@@ -66,5 +67,17 @@ public class SpellPair {
     {
         this.wordWrong = wordWrong;
     }
+
+    public String getPolWord()
+    {
+        return polWord;
+    }
+
+    public void setPolWord(String polWord)
+    {
+        this.polWord = polWord;
+    }
+    
+    
 
 }

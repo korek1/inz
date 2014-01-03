@@ -189,17 +189,18 @@ public class CurrentGameCreator {
         {
             String wordOk = pairTO.getWordOk();
             String wordWrong = pairTO.getWordWrong();
+            String polWord = pairTO.getPolWord();
 
             int rand = CommonUtils.rand(2);
 
             List<Integer> partSolution = new ArrayList<>();
             if (rand == 1)
             {
-                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordOk, wordWrong));
+                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordOk, wordWrong, polWord));
             }
             else
             {
-                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordWrong, wordOk));
+                spellGameStudentTO.addPairTO(new SpellPairStudentTO(wordWrong, wordOk, polWord));
             }
             partSolution.add(rand);
             solution.add(partSolution);

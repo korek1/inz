@@ -4,17 +4,19 @@ public class SpellPairTO {
 
     private String wordOk;
     private String wordWrong;
+    private String polWord;
 
     public SpellPairTO()
     {
         super();
     }
 
-    public SpellPairTO(String wordOk, String wordWrong)
+    public SpellPairTO(String wordOk, String wordWrong, String polWord)
     {
         super();
         this.wordOk = wordOk;
         this.wordWrong = wordWrong;
+        this.polWord = polWord;
     }
 
     public String getWordOk()
@@ -36,5 +38,17 @@ public class SpellPairTO {
     {
         this.wordWrong = wordWrong;
     }
+
+    public String getPolWord()
+    {
+        return polWord;
+    }
+
+    public void setPolWord(String polWord)
+    {
+        this.polWord = polWord;
+    }
+    
+    
 
 }
