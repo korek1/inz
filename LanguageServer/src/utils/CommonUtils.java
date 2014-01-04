@@ -105,6 +105,6 @@ public class CommonUtils {
      */
     public static int rand(int range)
     {
-        return RAND.nextInt(range + 1) + 1;
+        return RAND.nextInt(range) + 1;
     }
 }

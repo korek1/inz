@@ -1,6 +1,8 @@
 package rest;
 
 import game.CurrentGameCreator;
+import game.GameHelper;
+import game.impl.CurrentMillionaireGame;
 import game.to.GameTOs;
 import game.to.TOsGameManager;
 import game.to.millionaire.MillionaireGameTO;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -102,6 +105,20 @@ public class MillionaireRest {
         MillionaireGameTO millionaireGameTO = CurrentGameCreator.createAndStartCurrMillionaire(millionaireGame, login);
 
         return millionaireGameTO;
+
+    }
+    
+    @POST
+    @RolesAllowed({ Role.STUDENT })
+    @Path("/student/millionaire/help/{question}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getLifeline(@HeaderParam("login") String login, @PathParam("question") int question, int type)
+    {
+
+        CurrentMillionaireGame currentMillionaireGame = (CurrentMillionaireGame) GameHelper.getCurrGame(login);
+        
+        return currentMillionaireGame.getLifeline(type, question);
 
     }
 

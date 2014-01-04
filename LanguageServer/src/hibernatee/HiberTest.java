@@ -15,7 +15,9 @@ import org.hibernate.Transaction;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
+import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.model.MillionaireQuestion;
 
 public class HiberTest {
 
@@ -97,7 +99,42 @@ public class HiberTest {
         sentences2.add("Drugie fajne zdanie");
         sentences2.add("Trzecie fajne zdanie");
         rozsypankaGame2.setSentences(sentences2);
-
+        
+        MillionaireGame millionaireGame = new MillionaireGame();
+        millionaireGame.setCategory(3);
+        millionaireGame.setDifficultyFactor(4);
+        millionaireGame.setName("nameeee");
+        millionaireGame.setOwner(teacher2);
+        
+        List<MillionaireQuestion> questions = new ArrayList<>();
+        MillionaireQuestion question1 = new MillionaireQuestion();
+        question1.setAnswer1("tak");
+        question1.setAnswer2("nie");
+        question1.setAnswer3("nie");
+        question1.setAnswer4("nie");
+        question1.setCorrectAnswer(1);
+        
+        question1.setQuestion("pytanie");
+        question1.setGame(millionaireGame);
+        
+        questions.add(question1 );
+        
+        
+        MillionaireQuestion question2 = new MillionaireQuestion();
+        question2.setAnswer1("nie");
+        question2.setAnswer2("nie");
+        question2.setAnswer3("nie");
+        question2.setAnswer4("tak");
+        question2.setCorrectAnswer(4);
+        
+        question2.setQuestion("pytanie");
+        question2.setGame(millionaireGame);
+        
+        questions.add(question2 );
+        
+        
+        millionaireGame.setQuestions(questions );
+        
         try
         {
             Transaction beginTransaction = session.beginTransaction();
@@ -116,6 +153,7 @@ public class HiberTest {
             session.save(rozsypankaGame);
             session.save(rozsypankaGame2);
 
+            session.save(millionaireGame);
             beginTransaction.commit();
         }
         catch (HibernateException e)
