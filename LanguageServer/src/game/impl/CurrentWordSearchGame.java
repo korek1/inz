@@ -18,20 +18,17 @@ public class CurrentWordSearchGame extends CurrentGame {
     {
         boolean correct = false;
 
-        boolean canPerformChecking = manageAttempt(id);
-        if (canPerformChecking)
-        {
-            increaseAttempts();
+        increaseAttempts();
 
-            if (getSolution().contains(ids))
-            {
-                correct = true;
-                increaseCorectAnswers();
-            }
+        if (getSolution().remove(ids))
+        {
+            correct = true;
+            increaseCorectAnswers();
         }
+
         return correct;
     }
-    
+
     public boolean isGameFinished()
     {
         return getCorectAnswers() == getNoumberOfTasks() ? true : false;
