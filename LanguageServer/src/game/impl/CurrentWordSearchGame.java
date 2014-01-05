@@ -31,5 +31,10 @@ public class CurrentWordSearchGame extends CurrentGame {
         }
         return correct;
     }
+    
+    public boolean isGameFinished()
+    {
+        return getCorectAnswers() == getNoumberOfTasks() ? true : false;
+    }
 
 }
