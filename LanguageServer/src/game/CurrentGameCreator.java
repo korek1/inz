@@ -127,7 +127,8 @@ public class CurrentGameCreator {
 
         MillionaireGameTO convertMillionaireGame = TOsGameManager.convertMillionaireGame(millionaireGame);
         List<MillionaireQuestionTO> questions = convertMillionaireGame.getQuestions();
-
+        Collections.shuffle(questions);
+        
         List<List<Integer>> solutionToRemember = new ArrayList<>();
         for (MillionaireQuestionTO millionaireQuestionTO : questions)
         {

@@ -13,7 +13,7 @@ public class Lifelines {
     private boolean askAudience = true;
     private boolean askFriend = true;
 
-    FiftyFiftyHelper fiftyFiftyHelper;
+    private FiftyFiftyHelper fiftyFiftyHelper;
 
     private List<Integer> correctAnswers = new ArrayList<>();
 
