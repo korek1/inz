@@ -41,7 +41,8 @@ public class StudentManagerImpl implements StudentManager {
     public Student getStudentById(int studentId)
     {
         Student student = studentDAO.get(studentId);
-
+        student.getKlasa().getId();
+        
         return student;
     }
 

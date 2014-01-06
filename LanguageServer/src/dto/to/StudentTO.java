@@ -12,7 +12,7 @@ public class StudentTO {
 
     private int orderNoumber;
 
-    private String klasa;
+    private Integer klasaID;
 
     private int totalPoints;
 
@@ -61,14 +61,14 @@ public class StudentTO {
         this.orderNoumber = orderNoumber;
     }
 
-    public String getKlasa()
+    public Integer getKlasaID()
     {
-        return klasa;
+        return klasaID;
     }
 
-    public void setKlasa(String klasa)
+    public void setKlasaID(Integer klasaID)
     {
-        this.klasa = klasa;
+        this.klasaID = klasaID;
     }
 
     public String getLogin()

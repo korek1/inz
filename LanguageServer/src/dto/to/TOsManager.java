@@ -27,6 +27,7 @@ public class TOsManager {
         String lastName = student.getLastName();
         int orderNoumber = student.getOrderNoumber();
         int totalPoints = student.getTotalPoints();
+        int klasaID = student.getKlasa().getId();
 
         studentTO.setId(id);
         studentTO.setFirstName(firstName);
@@ -34,6 +35,7 @@ public class TOsManager {
         studentTO.setOrderNoumber(orderNoumber);
         studentTO.setLogin(login);
         studentTO.setTotalPoints(totalPoints);
+        studentTO.setKlasaID(klasaID);
 
         return studentTO;
     }
