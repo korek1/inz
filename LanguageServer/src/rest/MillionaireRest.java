@@ -6,10 +6,7 @@ import game.impl.CurrentMillionaireGame;
 import game.to.GameTOs;
 import game.to.TOsGameManager;
 import game.to.millionaire.MillionaireGameTO;
-import game.to.millionaire.MillionaireQuestionTO;
-import game.to.wordsearch.WordSearchGameTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -22,13 +19,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import dto.Game;
-import dto.games.MillionaireGame;
-import dto.games.WordSearchGame;
 import rest.auth.Role;
 import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
+import dto.Game;
+import dto.games.MillionaireGame;
 
 @Path("game")
 public class MillionaireRest {
@@ -44,14 +40,14 @@ public class MillionaireRest {
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/millionaire")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postMillionaire(MillionaireGameTO millionaireGameTO, @HeaderParam("login") String login)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer postMillionaire(MillionaireGameTO millionaireGameTO, @HeaderParam("login") String login)
     {
 
         MillionaireGame millionaireGame = TOsGameManager.convertMillionaireGameTO(millionaireGameTO);
-        gameManager.insertGame(millionaireGame, login);
+        Integer id = gameManager.insertGame(millionaireGame, login);
 
-        return "succes";
+        return id;
     }
 
     @GET

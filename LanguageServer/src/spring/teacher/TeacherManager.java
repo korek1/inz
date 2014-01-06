@@ -4,7 +4,7 @@ import dto.Teacher;
 
 public interface TeacherManager {
 
-    void insertTeacher(Teacher teacher);
+    Integer insertTeacher(Teacher teacher);
 
     Teacher getTeacherById(int teacherId);
     

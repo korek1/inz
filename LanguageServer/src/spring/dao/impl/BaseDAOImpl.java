@@ -28,9 +28,17 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
     }
 
     @Override
-    public void save(T t)
+    public Integer save(T t)
     {
-        sessionFactory.getCurrentSession().saveOrUpdate(t);
+        Integer id = (Integer) sessionFactory.getCurrentSession().save(t);
+        
+        return id;
+    }
+    
+    @Override
+    public void update(T t)
+    {
+        sessionFactory.getCurrentSession().update(t);
     }
 
     @SuppressWarnings("unchecked")

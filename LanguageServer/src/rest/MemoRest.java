@@ -55,7 +55,7 @@ public class MemoRest {
     @Path("/memo")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    public String insertMemo(@HeaderParam("login") String login, @HeaderParam("name") String gameName, FormDataMultiPart multiPart)
+    public Integer insertMemo(@HeaderParam("login") String login, @HeaderParam("name") String gameName, FormDataMultiPart multiPart)
     {
         List<FormDataBodyPart> info = multiPart.getFields("gamedetails");
 
@@ -67,7 +67,7 @@ public class MemoRest {
 
         MemoGame memoGame = TOsGameManager.memoConvert(gameTO);
 
-        gameManager.insertGame(memoGame, login);
+        Integer id = gameManager.insertGame(memoGame, login);
         int gameID = memoGame.getId();
 
         List<PicWordPair> picWordPairList = new ArrayList<>();
@@ -100,7 +100,7 @@ public class MemoRest {
         memoGame.setPicWordPair(picWordPairList);
         gameManager.update(memoGame);
 
-        return "hehs";
+        return id;
 
     }
 

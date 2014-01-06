@@ -26,13 +26,14 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     @Transactional
-    public void insertStudent(Student student, String login, int idKlasy)
+    public Integer insertStudent(Student student, String login, int idKlasy)
     {
         Klasa klasa = klasaDAO.load(idKlasy);
         student.setKlasa(klasa);
 
-        studentDAO.save(student);
+        Integer id = studentDAO.save(student);
 
+        return id;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     @Transactional
-    public void insertStudent(StudentInsertTO student, String login)
+    public Integer insertStudent(StudentInsertTO student, String login)
     {
         Klasa klasa = klasaDAO.get(student.getIdKlasy());
         String name = klasa.getName();
@@ -70,7 +71,9 @@ public class StudentManagerImpl implements StudentManager {
         Student studentDB = TOsInsertManager.convertStudentTO(student, name);
         studentDB.setKlasa(klasa);
 
-        studentDAO.save(studentDB);
+        Integer id = studentDAO.save(studentDB);
+        
+        return id;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class StudentManagerImpl implements StudentManager {
             student.setPassword(studentTO.getPassword());
         }
 
-        studentDAO.save(student);
+        studentDAO.update(student);
 
     }
 
@@ -113,7 +116,7 @@ public class StudentManagerImpl implements StudentManager {
         
         student.setPassword(newPass);
         
-        studentDAO.save(student);
+        studentDAO.update(student);
         
     }
 

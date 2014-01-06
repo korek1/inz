@@ -2,9 +2,6 @@ package spring.klasa.impl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +23,15 @@ public class KlasaManagerImpl implements KlasaManager {
 
     @Override
     @Transactional
-    public void insertKlasa(Klasa klasa, String login)
+    public Integer insertKlasa(Klasa klasa, String login)
     {
         Integer teachersId = teacherDAO.getTeachersIdByLogin(login);
         Teacher teacher = teacherDAO.load(teachersId);
         klasa.setTeacher(teacher);
 
-        klasaDAO.save(klasa);
+        Integer id = klasaDAO.save(klasa);
+        
+        return id;
     }
 
     @Override

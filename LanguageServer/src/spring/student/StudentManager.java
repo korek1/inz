@@ -7,9 +7,9 @@ import dto.to.toserver.StudentInsertTO;
 
 public interface StudentManager {
     
-    void insertStudent(Student student, String login, int idKlasy);
+    Integer insertStudent(Student student, String login, int idKlasy);
     
-    void insertStudent(StudentInsertTO student, String login);
+    Integer insertStudent(StudentInsertTO student, String login);
     
     void updateStudent(StudentInsertTO student, int id);
     

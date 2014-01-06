@@ -12,7 +12,6 @@ import spring.game.GameDAO;
 import spring.game.GameManager;
 import spring.teacher.TeacherDAO;
 import dto.Game;
-import dto.GameResult;
 import dto.Teacher;
 import dto.games.HangManGame;
 import dto.games.MemoGame;
@@ -32,14 +31,15 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     @Transactional
-    public void insertGame(Game game, String login)
+    public Integer insertGame(Game game, String login)
     {
         Integer teachersId = teacherDAO.getTeachersIdByLogin(login);
         Teacher teacher = teacherDAO.load(teachersId);
         game.setOwner(teacher);
 
-        gameDAO.save(game);
-
+        Integer id = gameDAO.save(game);
+        
+        return id;
     }
 
     @Override

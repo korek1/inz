@@ -17,7 +17,9 @@ import dto.Student;
 import dto.Teacher;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
+import dto.games.SpellGame;
 import dto.games.model.MillionaireQuestion;
+import dto.games.model.SpellPair;
 
 public class HiberTest {
 
@@ -131,10 +133,37 @@ public class HiberTest {
         question2.setGame(millionaireGame);
         
         questions.add(question2 );
-        
-        
         millionaireGame.setQuestions(questions );
         
+        SpellGame spellGame = new SpellGame();
+        spellGame.setCategory(4);
+        spellGame.setDifficultyFactor(10);
+        spellGame.setName("spellgame");
+        spellGame.setOwner(teacher2);
+        
+        List<SpellPair> words = new ArrayList<>();
+        SpellPair pair = new SpellPair();
+        pair.setGame(spellGame);
+        pair.setPolWord("kot");
+        pair.setWordOk("cat");
+        pair.setWordWrong("coooot");
+        
+        SpellPair pair2 = new SpellPair();
+        pair2.setGame(spellGame);
+        pair2.setPolWord("pies");
+        pair2.setWordOk("dog");
+        pair2.setWordWrong("daaag");
+        
+        SpellPair pair3 = new SpellPair();
+        pair3.setGame(spellGame);
+        pair3.setPolWord("robak");
+        pair3.setWordOk("bug");
+        pair3.setWordWrong("buk");
+        words.add(pair);
+        words.add(pair2);
+        words.add(pair3);
+        
+        spellGame.setWords(words );
         try
         {
             Transaction beginTransaction = session.beginTransaction();
@@ -154,6 +183,7 @@ public class HiberTest {
             session.save(rozsypankaGame2);
 
             session.save(millionaireGame);
+            session.save(spellGame);
             beginTransaction.commit();
         }
         catch (HibernateException e)

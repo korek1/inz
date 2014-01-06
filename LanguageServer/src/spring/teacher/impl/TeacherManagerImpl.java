@@ -1,15 +1,11 @@
 package spring.teacher.impl;
 
-import java.util.List;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import spring.teacher.TeacherDAO;
 import spring.teacher.TeacherManager;
-import dto.Game;
 import dto.Teacher;
 
 @Service
@@ -20,9 +16,11 @@ public class TeacherManagerImpl implements TeacherManager {
 
     @Override
     @Transactional
-    public void insertTeacher(Teacher teacher)
+    public Integer insertTeacher(Teacher teacher)
     {
-        teacherDAO.save(teacher);
+        Integer id = teacherDAO.save(teacher);
+        
+        return id;
     }
 
     @Override

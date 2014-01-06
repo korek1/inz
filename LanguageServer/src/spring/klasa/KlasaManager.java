@@ -6,7 +6,7 @@ import dto.Klasa;
 
 public interface KlasaManager {
     
-    void insertKlasa(Klasa klasa, String login);
+    Integer insertKlasa(Klasa klasa, String login);
 
     Klasa getKlasaById(int klasaId);
     

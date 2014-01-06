@@ -1,19 +1,14 @@
 package rest;
 
 import game.CurrentGameCreator;
-import game.GameHelper;
-import game.to.GameTO;
 import game.to.GameTOs;
-import game.to.SolutionTO;
 import game.to.TOsGameManager;
 import game.to.rozsypanka.RozsypankaGameStudentTO;
 import game.to.rozsypanka.RozsypankaGameTO;
-import game.to.rozsypanka.RozsypankaGameTOs;
 
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -27,7 +22,6 @@ import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
 import dto.Game;
-import dto.games.GameCategory;
 import dto.games.RozsypankaGame;
 
 @Path("game")
@@ -39,14 +33,14 @@ public class RozsypankaRest {
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/rozsypanka")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postRozsypanka(RozsypankaGameTO rozsypankaGameTO, @HeaderParam("login") String login)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer postRozsypanka(RozsypankaGameTO rozsypankaGameTO, @HeaderParam("login") String login)
     {
 
         RozsypankaGame rozsypankaGame = TOsGameManager.convertRozsypankaGameTO(rozsypankaGameTO);
-        gameManager.insertGame(rozsypankaGame, login);
+        Integer id = gameManager.insertGame(rozsypankaGame, login);
 
-        return "succes";
+        return id;
     }
 
     @GET

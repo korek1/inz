@@ -51,7 +51,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
 
             gameResultBD.setResult(resultToSave);
 
-            this.save(gameResultBD);
+            this.update(gameResultBD);
         }
 
     }
@@ -91,7 +91,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
         student.setLastPoints(points);
         student.setAvailablePoints(student.getAvailablePoints() + points);
 
-        studentDAO.save(student);
+        studentDAO.update(student);
 
     }
 
@@ -114,7 +114,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
         
         student.setAvailablePoints(student.getAvailablePoints() - points);
 
-        studentDAO.save(student);
+        studentDAO.update(student);
     }
 
 }

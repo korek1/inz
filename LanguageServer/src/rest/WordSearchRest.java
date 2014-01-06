@@ -22,7 +22,6 @@ import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.student.StudentManager;
 import dto.Game;
-import dto.games.GameCategory;
 import dto.games.WordSearchGame;
 
 @Path("game")
@@ -34,14 +33,14 @@ public class WordSearchRest {
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/wordsearch")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postWordSearch(WordSearchGameTO searchGameTO, @HeaderParam("login") String login)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer postWordSearch(WordSearchGameTO searchGameTO, @HeaderParam("login") String login)
     {
         WordSearchGame wordSearchGame = TOsGameManager.covertWordSearchGameTO(searchGameTO);
 
-        gameManager.insertGame(wordSearchGame, login);
+        Integer id = gameManager.insertGame(wordSearchGame, login);
 
-        return "succes";
+        return id;
     }
 
     // only for teacher

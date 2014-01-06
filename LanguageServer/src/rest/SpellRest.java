@@ -33,14 +33,14 @@ public class SpellRest {
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/spell")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postSpell(SpellGameTO spellGameTO, @HeaderParam("login") String login)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer postSpell(SpellGameTO spellGameTO, @HeaderParam("login") String login)
     {
         SpellGame spellGame = TOsGameManager.covertSpellGameTO(spellGameTO);
 
-        gameManager.insertGame(spellGame, login);
+        Integer id = gameManager.insertGame(spellGame, login);
 
-        return "succes";
+        return id;
     }
 
     @GET

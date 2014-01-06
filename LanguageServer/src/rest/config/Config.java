@@ -4,7 +4,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
-import dto.games.HangManGame;
 import rest.GameRest;
 import rest.HangManRest;
 import rest.MemoRest;

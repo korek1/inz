@@ -104,12 +104,12 @@ public class Rest {
     @Path("/class")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String addClass(KlasaInsertTO klasa, @HeaderParam("login") String login)
+    public Integer addClass(KlasaInsertTO klasa, @HeaderParam("login") String login)
     {
 
-        klasaManager.insertKlasa(new Klasa(klasa), login);
+        Integer id = klasaManager.insertKlasa(new Klasa(klasa), login);
 
-        return "succes";
+        return id;
     }
 
     @POST
@@ -117,11 +117,11 @@ public class Rest {
     @Path("/teacher")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String postTeacher(TeacherInsertTO teacher)
+    public Integer postTeacher(TeacherInsertTO teacher)
     {
-        teacherManager.insertTeacher(new Teacher(teacher));
+        Integer id = teacherManager.insertTeacher(new Teacher(teacher));
 
-        return "succes";
+        return id;
     }
 
     @POST
@@ -129,12 +129,12 @@ public class Rest {
     @Path("/student")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String postStudent(StudentInsertTO student, @HeaderParam("login") String login)
+    public Integer postStudent(StudentInsertTO student, @HeaderParam("login") String login)
     {
 
-        studentManager.insertStudent(student, login);
+        Integer id = studentManager.insertStudent(student, login);
 
-        return "succes";
+        return id;
     }
 
     @POST

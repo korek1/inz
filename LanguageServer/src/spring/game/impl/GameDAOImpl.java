@@ -2,10 +2,8 @@ package spring.game.impl;
 
 import game.helpers.GameTypeEnum;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,6 @@ import org.springframework.stereotype.Service;
 import spring.dao.impl.BaseDAOImpl;
 import spring.game.GameDAO;
 import dto.Game;
-import dto.games.MemoGame;
-import dto.games.MillionaireGame;
-import dto.games.RozsypankaGame;
-import dto.games.WordSearchGame;
 
 @Service
 public class GameDAOImpl extends BaseDAOImpl<Game> implements GameDAO {

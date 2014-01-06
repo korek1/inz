@@ -38,14 +38,14 @@ public class HangManRest {
     @POST
     @RolesAllowed({ Role.TEACHER })
     @Path("/hangman")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postHangMan(HangManTO hangManTO, @HeaderParam("login") String login)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer postHangMan(HangManTO hangManTO, @HeaderParam("login") String login)
     {
 
         HangManGame hangManGame = TOsGameManager.convertHangManGameTO(hangManTO);
-        gameManager.insertGame(hangManGame, login);
+        Integer id = gameManager.insertGame(hangManGame, login);
 
-        return "succes";
+        return id;
     }
 
     @GET

@@ -2,7 +2,6 @@ package spring.teacher.impl;
 
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import spring.dao.impl.BaseDAOImpl;
 import spring.teacher.TeacherDAO;
-import dto.Game;
 import dto.Teacher;
 
 @Service

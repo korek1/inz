@@ -5,7 +5,6 @@ import game.helpers.GameTypeEnum;
 import java.util.List;
 
 import dto.Game;
-import dto.GameResult;
 import dto.games.HangManGame;
 import dto.games.MemoGame;
 import dto.games.MillionaireGame;
@@ -15,7 +14,7 @@ import dto.games.WordSearchGame;
 
 public interface GameManager {
     
-    void insertGame(Game game, String login);
+    Integer insertGame(Game game, String login);
 
     void update(Game game);
     

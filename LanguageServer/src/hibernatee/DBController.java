@@ -1,10 +1,5 @@
 package hibernatee;
 
-import java.util.List;
-
-import org.hibernate.Query;
-
-import auth.Auth;
 
 public final class DBController extends DBBaseControler {
 

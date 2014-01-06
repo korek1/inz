@@ -9,7 +9,6 @@ import game.to.TOsGameManager;
 import game.to.hangman.LetterPositionTO;
 
 import java.text.ParseException;
-import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -21,14 +20,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
-
 import rest.auth.Role;
 import spring.BeanHelper;
 import spring.game.GameManager;
 import spring.gameresult.GameResultManager;
 import spring.student.StudentManager;
-import dto.Game;
+
+import com.google.gson.Gson;
+
 import dto.to.GameCategoryTOs;
 import dto.to.PointsTO;
 import dto.to.gameresult.GameResultClassTOs;
