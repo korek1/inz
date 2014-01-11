@@ -1,5 +1,6 @@
 package spring.klasa.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import spring.klasa.KlasaDAO;
 import spring.klasa.KlasaManager;
+import spring.student.StudentDAO;
 import spring.teacher.TeacherDAO;
 import dto.Klasa;
+import dto.Student;
 import dto.Teacher;
 
 @Service
@@ -21,6 +24,9 @@ public class KlasaManagerImpl implements KlasaManager {
     @Autowired
     private TeacherDAO teacherDAO;
 
+    @Autowired
+    private StudentDAO studentDAO;
+
     @Override
     @Transactional
     public Integer insertKlasa(Klasa klasa, String login)
@@ -30,7 +36,7 @@ public class KlasaManagerImpl implements KlasaManager {
         klasa.setTeacher(teacher);
 
         Integer id = klasaDAO.save(klasa);
-        
+
         return id;
     }
 
@@ -50,6 +56,23 @@ public class KlasaManagerImpl implements KlasaManager {
     {
 
         return klasaDAO.getAllKlasy(login);
+    }
+
+    @Override
+    @Transactional
+    public List<String> getStudentsLogins(String studentLogin)
+    {
+        List<String> logins = new ArrayList<>();
+
+        Student student = studentDAO.getByLogin(studentLogin);
+        Klasa klasa = student.getKlasa();
+        List<Student> students = klasa.getStudents();
+        for (Student s : students)
+        {
+            logins.add(s.getLogin());
+        }
+
+        return logins;
     }
 
 }

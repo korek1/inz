@@ -73,15 +73,14 @@ public class Lifelines {
             {
                 threshold = 25;
             }
+            else if (rand == 2)
+            {
+                threshold = 35;
+            }
             else
-                if (rand == 2)
-                {
-                    threshold = 35;
-                }
-                else
-                {
-                    threshold = 45;
-                }
+            {
+                threshold = 45;
+            }
 
             int forCorrect = CommonUtils.rand(98 - threshold) + threshold;
             int forAns1 = CommonUtils.rand(99 - forCorrect);
@@ -149,15 +148,14 @@ public class Lifelines {
             {
                 threshold = 75;
             }
+            else if (rand == 2)
+            {
+                threshold = 80;
+            }
             else
-                if (rand == 2)
-                {
-                    threshold = 80;
-                }
-                else
-                {
-                    threshold = 90;
-                }
+            {
+                threshold = 90;
+            }
 
             if (threshold > CommonUtils.rand(100))
             {

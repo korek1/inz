@@ -23,8 +23,5 @@ public class HangManGame extends Game {
     {
         this.words = word;
     }
-    
-    
-    
-    
+
 }

@@ -5,7 +5,7 @@ import game.to.GameTO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RozsypankaGameStudentTO extends GameTO{
+public class RozsypankaGameStudentTO extends GameTO {
 
     private List<MappedWordTOs> sentences = new ArrayList<>();
 

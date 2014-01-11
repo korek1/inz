@@ -21,8 +21,8 @@ public class LoginManagerImpl implements LoginManager {
     {
 
         String teacherPassFromDB = loginDAO.getTeacherPass(auth.getLogin());
-        
-        boolean correct = passCorrect(teacherPassFromDB , auth.getPass());
+
+        boolean correct = passCorrect(teacherPassFromDB, auth.getPass());
 
         return correct;
     }
@@ -32,8 +32,8 @@ public class LoginManagerImpl implements LoginManager {
     public boolean validateStudent(Auth auth)
     {
         String studentPassFromDB = loginDAO.getStudentPass(auth.getLogin());
-        
-        boolean correct = passCorrect(studentPassFromDB , auth.getPass());
+
+        boolean correct = passCorrect(studentPassFromDB, auth.getPass());
 
         return correct;
     }
@@ -49,7 +49,7 @@ public class LoginManagerImpl implements LoginManager {
                 correct = true;
             }
         }
-        
+
         return correct;
     }
 

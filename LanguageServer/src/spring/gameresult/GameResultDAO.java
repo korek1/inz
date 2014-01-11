@@ -12,11 +12,11 @@ public interface GameResultDAO {
     List<GameResult> getStudentsGamesResults(int studentID);
 
     GameResult getStudentGamesResult(int studentID, int gameID);
-    
+
     void savePoints(int points, String login);
-    
+
     void spendPoints(int points, String login);
-    
+
     PointsTO getPoints(String login);
 
 }

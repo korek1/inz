@@ -20,9 +20,9 @@ public class Game {
     private int id;
 
     private String name;
-    
+
     private int category;
-    
+
     private int difficultyFactor;
 
     @ManyToOne(cascade = { CascadeType.ALL })
@@ -89,7 +89,5 @@ public class Game {
     {
         this.difficultyFactor = difficultyFactor;
     }
-    
-    
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameResultTOs {
-    
+
     private List<GameResultTO> gameResults = new ArrayList<>();
 
     public GameResultTOs()
@@ -21,13 +21,10 @@ public class GameResultTOs {
     {
         this.gameResults = gameResults;
     }
-    
+
     public void addGameResultTO(GameResultTO gameResultTO)
     {
         gameResults.add(gameResultTO);
     }
-    
-    
-    
 
 }

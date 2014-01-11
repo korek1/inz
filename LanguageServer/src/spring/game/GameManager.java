@@ -13,25 +13,25 @@ import dto.games.SpellGame;
 import dto.games.WordSearchGame;
 
 public interface GameManager {
-    
+
     Integer insertGame(Game game, String login);
 
     void update(Game game);
-    
+
     List<Game> getAllGames(String login, Class<? extends Game> clazz);
 
     RozsypankaGame getRozsypankaById(int gameID);
-    
+
     MemoGame getMemoByID(int gameID);
 
     MillionaireGame getMillionaireByID(int gameID);
-    
+
     WordSearchGame getWordSearchByID(int gameID);
-    
+
     SpellGame getSpellGameByID(int gameID);
-    
+
     HangManGame getHangManByID(int gameID);
-    
+
     GameTypeEnum getType(int id);
 
 }

@@ -27,14 +27,22 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     public void saveOrUpdateGameResult(GameResult gameResult, String login)
     {
         @SuppressWarnings("unchecked")
-        List<GameResult> list = sessionFactory.getCurrentSession().createCriteria(GameResult.class).createAlias("game", "g").createAlias("student", "s").add(Restrictions.eq("s.login", login))
-                .add(Restrictions.eq("game.id", gameResult.getGame().getId())).list();
+        List<GameResult> list = sessionFactory.getCurrentSession()
+                .createCriteria(GameResult.class)
+                .createAlias("game", "g")
+                .createAlias("student", "s")
+                .add(Restrictions.eq("s.login", login))
+                .add(Restrictions.eq("game.id", gameResult.getGame().getId()))
+                .list();
 
         if (list.isEmpty())
         {
             // trzeba dodaæ caly gameresult
             @SuppressWarnings("unchecked")
-            List<Student> list2 = sessionFactory.getCurrentSession().createCriteria(Student.class).add(Restrictions.eq("login", login)).list();
+            List<Student> list2 = sessionFactory.getCurrentSession()
+                .createCriteria(Student.class)
+                .add(Restrictions.eq("login", login))
+                .list();
 
             Student student = list2.get(0);
             gameResult.setStudent(student);
@@ -71,8 +79,12 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
         GameResult gameResult = null;
 
         @SuppressWarnings("unchecked")
-        List<GameResult> list = sessionFactory.getCurrentSession().createCriteria(GameResult.class).createAlias("game", "g").createAlias("student", "s").add(Restrictions.eq("s.id", studentID))
-                .add(Restrictions.eq("game.id", gameID)).list();
+        List<GameResult> list = sessionFactory.getCurrentSession()
+                .createCriteria(GameResult.class)
+                .createAlias("game", "g").createAlias("student", "s")
+                .add(Restrictions.eq("s.id", studentID))
+                .add(Restrictions.eq("game.id", gameID))
+                .list();
 
         if (!list.isEmpty())
         {
@@ -111,7 +123,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     public void spendPoints(int points, String login)
     {
         Student student = studentDAO.getByLogin(login);
-        
+
         student.setAvailablePoints(student.getAvailablePoints() - points);
 
         studentDAO.update(student);

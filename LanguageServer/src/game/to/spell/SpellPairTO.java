@@ -48,7 +48,5 @@ public class SpellPairTO {
     {
         this.polWord = polWord;
     }
-    
-    
 
 }

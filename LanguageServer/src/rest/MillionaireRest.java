@@ -103,7 +103,7 @@ public class MillionaireRest {
         return millionaireGameTO;
 
     }
-    
+
     @POST
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/millionaire/help/{question}")
@@ -113,7 +113,7 @@ public class MillionaireRest {
     {
 
         CurrentMillionaireGame currentMillionaireGame = (CurrentMillionaireGame) GameHelper.getCurrGame(login);
-        
+
         return currentMillionaireGame.getLifeline(type, question);
 
     }

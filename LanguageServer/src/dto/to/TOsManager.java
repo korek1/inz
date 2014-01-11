@@ -15,7 +15,6 @@ import dto.to.gameresult.GameResultTO;
 import dto.to.gameresult.GameResultTOs;
 
 public class TOsManager {
-    
 
     public static StudentTO convertStudent(Student student)
     {
@@ -114,48 +113,45 @@ public class TOsManager {
 
         return klasaTOs;
     }
-    
+
     public static GameResultTOs convertGameResultTO(List<GameResult> gameResults)
     {
         GameResultTOs gameResultTOs = new GameResultTOs();
-        
+
         for (GameResult gameResult : gameResults)
         {
             GameResultTO gameResultTO = GameResultDBTranslator.fromDB(gameResult);
             gameResultTOs.addGameResultTO(gameResultTO);
         }
-        
+
         return gameResultTOs;
     }
-    
+
     public static GameResultClassTO convertGameResultClassTO(Student student, GameResult gameResult)
     {
         GameResultClassTO gameResultClassTO = null;
-        
-            if(CommonUtils.isNotNull(gameResult))
-            {
-                GameResultTO gameResultTO = GameResultDBTranslator.fromDB(gameResult);
-                gameResultClassTO = new GameResultClassTO(gameResultTO);
-            }
-            else
-            {
-                gameResultClassTO = new GameResultClassTO(new GameResultTO());
-            }
-            
-            String firstName = student.getFirstName();
-            String lastName = student.getLastName();
-            int orderNoumber = student.getOrderNoumber();
-            int id = student.getId();
-            
-            gameResultClassTO.setStudentID(id);
-            gameResultClassTO.setStudentName(firstName);
-            gameResultClassTO.setStudentLastName(lastName);
-            gameResultClassTO.setStudentOrderNoumber(orderNoumber);
-            
-        
+
+        if (CommonUtils.isNotNull(gameResult))
+        {
+            GameResultTO gameResultTO = GameResultDBTranslator.fromDB(gameResult);
+            gameResultClassTO = new GameResultClassTO(gameResultTO);
+        }
+        else
+        {
+            gameResultClassTO = new GameResultClassTO(new GameResultTO());
+        }
+
+        String firstName = student.getFirstName();
+        String lastName = student.getLastName();
+        int orderNoumber = student.getOrderNoumber();
+        int id = student.getId();
+
+        gameResultClassTO.setStudentID(id);
+        gameResultClassTO.setStudentName(firstName);
+        gameResultClassTO.setStudentLastName(lastName);
+        gameResultClassTO.setStudentOrderNoumber(orderNoumber);
+
         return gameResultClassTO;
     }
-
-   
 
 }

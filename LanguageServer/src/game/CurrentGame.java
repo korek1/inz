@@ -150,7 +150,7 @@ public abstract class CurrentGame {
     {
         this.corectAnswers = corectAnswers;
     }
-    
+
     protected void removeFromAttempted(Integer i)
     {
         attempted.remove(i);

@@ -1,6 +1,5 @@
 package hibernatee;
 
-
 public final class DBController extends DBBaseControler {
 
     private DBController()

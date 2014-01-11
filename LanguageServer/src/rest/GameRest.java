@@ -83,8 +83,7 @@ public class GameRest {
     /**
      * Returns student's game history
      * 
-     * @param login
-     *            - teacher login
+     * @param login - teacher login
      * @param idStudent
      * @return
      * @throws ParseException
@@ -123,6 +122,13 @@ public class GameRest {
         return json;
     }
 
+    /**
+     * Starts game.
+     * 
+     * @param login
+     * @param gameID
+     * @return
+     */
     @GET
     @RolesAllowed({ Role.TEACHER })
     @Path("/start/{id}")
@@ -136,6 +142,12 @@ public class GameRest {
         return "ok";
     }
 
+    /**
+     * Returns which game has been started by teacher.
+     * 
+     * @param login
+     * @return
+     */
     @GET
     @RolesAllowed({ Role.STUDENT })
     @Path("/start")
@@ -148,6 +160,12 @@ public class GameRest {
         return startedByTeacher;
     }
 
+    /**
+     * Returns how many points scored student.
+     * 
+     * @param login
+     * @return
+     */
     @GET
     @RolesAllowed({ Role.STUDENT })
     @Path("/points")
@@ -159,6 +177,13 @@ public class GameRest {
         return pointsTO;
     }
 
+    /**
+     * Reduce available points.
+     * 
+     * @param login
+     * @param points - how many points student spent on shopping
+     * @return
+     */
     @POST
     @RolesAllowed({ Role.STUDENT })
     @Path("/points")

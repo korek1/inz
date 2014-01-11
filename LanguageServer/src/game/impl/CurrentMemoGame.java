@@ -16,15 +16,15 @@ public class CurrentMemoGame extends CurrentGame {
     public boolean checkIfPartOfGameIsCorrect(int id, List<Integer> ids)
     {
         boolean isCorrect = super.checkIfPartOfGameIsCorrect(id, ids);
-        
-        if(isCorrect == false)
+
+        if (isCorrect == false)
         {
             removeFromAttempted(id);
         }
-        
-        return isCorrect; 
+
+        return isCorrect;
     }
-    
+
     @Override
     public boolean isGameFinished()
     {

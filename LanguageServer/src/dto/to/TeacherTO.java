@@ -1,6 +1,5 @@
 package dto.to;
 
-
 public class TeacherTO {
 
     private int id;

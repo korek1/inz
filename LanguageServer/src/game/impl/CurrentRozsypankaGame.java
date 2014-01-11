@@ -9,7 +9,5 @@ public class CurrentRozsypankaGame extends CurrentGame {
     {
         super(game);
     }
-    
-
 
 }

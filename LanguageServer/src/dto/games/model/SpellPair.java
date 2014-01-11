@@ -77,7 +77,5 @@ public class SpellPair {
     {
         this.polWord = polWord;
     }
-    
-    
 
 }

@@ -14,20 +14,20 @@ import rest.SpellRest;
 import rest.WordSearchRest;
 import rest.ZwierzRest;
 
-public class Config  extends ResourceConfig {
+public class Config extends ResourceConfig {
 
     public Config()
     {
-        super(Rest.class,
-              GameRest.class,
-              MemoRest.class,
-              MillionaireRest.class,
-              RozsypankaRest.class,
-              WordSearchRest.class,
-              HangManRest.class,
-              SpellRest.class,
+        super(Rest.class, 
+              GameRest.class, 
+              MemoRest.class, 
+              MillionaireRest.class, 
+              RozsypankaRest.class, 
+              WordSearchRest.class, 
+              HangManRest.class, 
+              SpellRest.class, 
               ZwierzRest.class);
-        
+
         register(RolesAllowedDynamicFeature.class);
         register(MultiPartFeature.class);
     }

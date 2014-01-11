@@ -31,10 +31,10 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
     public Integer save(T t)
     {
         Integer id = (Integer) sessionFactory.getCurrentSession().save(t);
-        
+
         return id;
     }
-    
+
     @Override
     public void update(T t)
     {

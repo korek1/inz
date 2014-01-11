@@ -30,7 +30,11 @@ public class GameDAOImpl extends BaseDAOImpl<Game> implements GameDAO {
     public List<Game> getAllGames(String login, Class<? extends Game> clazz)
     {
         @SuppressWarnings("unchecked")
-        List<Game> list = sessionFactory.getCurrentSession().createCriteria(clazz).createAlias("owner", "o").add(Restrictions.eq("o.login", login)).list();
+        List<Game> list = sessionFactory.getCurrentSession()
+            .createCriteria(clazz)
+            .createAlias("owner", "o")
+            .add(Restrictions.eq("o.login", login))
+            .list();
 
         return list;
     }

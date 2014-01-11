@@ -19,50 +19,48 @@ public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Student> getStudents()
     {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Student.class);
-              return criteria.list();
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Student.class);
+        return criteria.list();
     }
-
 
     @Override
     public String getMyTeachersLogin(String login)
     {
-        List<?> list = sessionFactory.getCurrentSession().createCriteria(Teacher.class,"t")
-        .createAlias("t.klasy", "k")
-        .createAlias("k.students", "s")
-        .add(Restrictions.eq("s.login", login))
-        .setProjection(Projections.property("login"))
-        .list();
-        
+        List<?> list = sessionFactory.getCurrentSession()
+                .createCriteria(Teacher.class, "t")
+                .createAlias("t.klasy", "k")
+                .createAlias("k.students", "s")
+                .add(Restrictions.eq("s.login", login))
+                .setProjection(Projections.property("login"))
+                .list();
+
         String x = (String) list.get(0);
         System.out.println(x);
-        
-        return x ;
-    }
 
+        return x;
+    }
 
     @Override
     public Student getByLogin(String login)
     {
         Student student = null;
-        
+
         @SuppressWarnings("unchecked")
-        List<Student> list = sessionFactory.getCurrentSession().createCriteria(Student.class, "s")
-        .add(Restrictions.eq("s.login", login))
-        .list();
-        
-        if(!list.isEmpty())
+        List<Student> list = sessionFactory.getCurrentSession()
+            .createCriteria(Student.class, "s")
+            .add(Restrictions.eq("s.login", login))
+            .list();
+
+        if (!list.isEmpty())
         {
             student = list.get(0);
         }
-        
+
         return student;
     }
 

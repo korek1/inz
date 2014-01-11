@@ -26,7 +26,7 @@ public class OnlineTOs {
     {
         onlines.add(new OnlineTO(login, true));
     }
-    
+
     public void addOffline(String login)
     {
         onlines.add(new OnlineTO(login, false));

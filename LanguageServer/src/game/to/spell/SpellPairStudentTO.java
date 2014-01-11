@@ -1,6 +1,5 @@
 package game.to.spell;
 
-
 public class SpellPairStudentTO {
 
     private String word1;
@@ -49,7 +48,5 @@ public class SpellPairStudentTO {
     {
         this.polWord = polWord;
     }
-    
-    
 
 }

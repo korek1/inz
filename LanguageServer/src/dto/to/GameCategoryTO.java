@@ -9,7 +9,7 @@ public class GameCategoryTO {
     {
         super();
     }
-    
+
     public GameCategoryTO(String name, int id)
     {
         super();

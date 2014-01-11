@@ -47,7 +47,6 @@ public class DBUtils {
         return entity;
     }
 
-
     public static void cleanTeacher(Teacher teacher)
     {
 
@@ -83,7 +82,7 @@ public class DBUtils {
             klasa.setStudents(null);
         }
     }
-    
+
     public static void cleanGames(List<Game> games)
     {
         for (Game game : games)
@@ -91,7 +90,7 @@ public class DBUtils {
             cleanGame(game);
         }
     }
-    
+
     public static void cleanGame(Game game)
     {
         game.setOwner(null);

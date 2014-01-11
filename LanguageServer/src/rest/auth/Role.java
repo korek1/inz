@@ -1,6 +1,5 @@
 package rest.auth;
 
-
 public class Role {
 
     public static final String ADMIN = "ADMIN";

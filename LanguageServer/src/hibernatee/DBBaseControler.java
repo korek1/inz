@@ -20,9 +20,7 @@ public class DBBaseControler {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
 
-            ServiceRegistry serviceRegisty = new ServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties())
-                    .buildServiceRegistry();
+            ServiceRegistry serviceRegisty = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
 
             sessionFactory = configuration.buildSessionFactory(serviceRegisty);
 
@@ -38,5 +36,5 @@ public class DBBaseControler {
 
         return getSessionFactory().openSession();
     }
-    
+
 }

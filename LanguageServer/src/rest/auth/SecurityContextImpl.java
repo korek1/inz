@@ -35,12 +35,12 @@ public class SecurityContextImpl implements SecurityContext {
     @Override
     public boolean isUserInRole(String role)
     {
-        
-        if(this.role.equalsIgnoreCase(role))
+
+        if (this.role.equalsIgnoreCase(role))
         {
             return true;
         }
-        
+
         return false;
     }
 

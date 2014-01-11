@@ -27,8 +27,7 @@ public class CurrentMillionaireGame extends CurrentGame {
         {
             lifeline = lifelines.produceFiftyFifty(questionNoumber);
         }
-        else
-        if (type == 2)
+        else if (type == 2)
         {
             lifeline = lifelines.produceAskFriend(questionNoumber);
         }

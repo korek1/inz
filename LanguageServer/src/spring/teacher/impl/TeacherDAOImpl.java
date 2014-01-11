@@ -18,12 +18,14 @@ public class TeacherDAOImpl extends BaseDAOImpl<Teacher> implements TeacherDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
     @Override
     public Teacher getTeacherByLogin(String login)
     {
         @SuppressWarnings("unchecked")
-        List<Teacher> list = sessionFactory.getCurrentSession().createCriteria(Teacher.class).add(Restrictions.eq("login", login)).list();
+        List<Teacher> list = sessionFactory.getCurrentSession()
+                .createCriteria(Teacher.class)
+                .add(Restrictions.eq("login", login))
+                .list();
 
         return list.get(0);
     }
@@ -33,11 +35,11 @@ public class TeacherDAOImpl extends BaseDAOImpl<Teacher> implements TeacherDAO {
     public Integer getTeachersIdByLogin(String login)
     {
         List<Integer> list = sessionFactory.getCurrentSession()
-        .createCriteria(Teacher.class,"t")
-        .add(Restrictions.eq("login", login))
-        .setProjection(Projections.property("id"))
-        .list();
-        
+                .createCriteria(Teacher.class, "t")
+                .add(Restrictions.eq("login", login))
+                .setProjection(Projections.property("id"))
+                .list();
+
         return list.get(0);
     }
 

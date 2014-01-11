@@ -18,34 +18,34 @@ public class FiftyFiftyHelper {
         super();
         this.usedForQuestion = usedForQuestion;
     }
-    
+
     public boolean addRejectedAns(int i)
     {
         boolean added = false;
-        
-        if(CommonUtils.isNull(rejectedAns1))
+
+        if (CommonUtils.isNull(rejectedAns1))
         {
             rejectedAns1 = new Integer(i);
             added = true;
         }
-        else if(CommonUtils.isNull(rejectedAns2) && !rejectedAns1.equals(i))
+        else if (CommonUtils.isNull(rejectedAns2) && !rejectedAns1.equals(i))
         {
             rejectedAns2 = new Integer(i);
             added = true;
         }
-        
+
         return added;
     }
-    
+
     public boolean usedForThisQuestion(Integer question)
     {
         boolean usedForThis = false;
-        
-        if(question.equals(usedForQuestion))
+
+        if (question.equals(usedForQuestion))
         {
             usedForThis = true;
         }
-        
+
         return usedForThis;
     }
 

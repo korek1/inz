@@ -1,17 +1,23 @@
 package spring.student.impl;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import animal.AnimalDirHelper;
+import auth.AuthMenager;
 import spring.klasa.KlasaDAO;
 import spring.student.StudentDAO;
 import spring.student.StudentManager;
 import utils.CommonUtils;
 import dto.Klasa;
 import dto.Student;
+import dto.to.AvatarTO;
+import dto.to.AvatarTOs;
 import dto.to.toserver.StudentInsertTO;
 import dto.to.toserver.TOsInsertManager;
 
@@ -42,7 +48,7 @@ public class StudentManagerImpl implements StudentManager {
     {
         Student student = studentDAO.get(studentId);
         student.getKlasa().getId();
-        
+
         return student;
     }
 
@@ -73,7 +79,7 @@ public class StudentManagerImpl implements StudentManager {
         studentDB.setKlasa(klasa);
 
         Integer id = studentDAO.save(studentDB);
-        
+
         return id;
     }
 
@@ -114,11 +120,76 @@ public class StudentManagerImpl implements StudentManager {
     public void changePass(String newPass, String login)
     {
         Student student = studentDAO.getByLogin(login);
-        
+
         student.setPassword(newPass);
-        
+
         studentDAO.update(student);
-        
+
     }
 
+    @Override
+    @Transactional
+    public void updateLastAvatarUpdate(String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+        student.setLastAvatarUpdate(new Date());
+
+        studentDAO.update(student);
+
+    }
+
+    @Override
+    @Transactional
+    public AvatarTOs getAvatarsTO(String login)
+    {
+        AvatarTOs avatarTOs = new AvatarTOs();
+
+        Student student = studentDAO.getByLogin(login);
+        Klasa klasa = student.getKlasa();
+        List<Student> students = klasa.getStudents();
+
+        for (Student s : students)
+        {
+            String firstName = s.getFirstName();
+            String lastName = s.getLastName();
+            int orderNoumber = s.getOrderNoumber();
+            Date lastAvatarUpdate = s.getLastAvatarUpdate();
+            int totalPoints = s.getTotalPoints();
+
+            avatarTOs.addAvatarTO(new AvatarTO(firstName, lastName, login, orderNoumber, totalPoints, lastAvatarUpdate));
+        }
+
+        return avatarTOs;
+    }
+
+    @Override
+    @Transactional
+    public Student getStudentByLogin(String login)
+    {
+        Student student = studentDAO.getByLogin(login);
+        student.getKlasa().getId();
+
+        return student;
+    }
+
+    @Override
+    @Transactional
+    public void deleteStudent(int id)
+    {
+        Student student = studentDAO.get(id);
+        String login = student.getLogin();
+
+        AuthMenager.dropPassStudent(login);
+
+        try
+        {
+            AnimalDirHelper.deleteStudentsFiles(login);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        studentDAO.delete(student);
+    }
 }

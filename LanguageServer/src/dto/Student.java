@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "STUDENTS")
@@ -31,23 +34,23 @@ public class Student {
 
     private String lastName;
 
-    private Date joinDate;
-
     private Date lastLoginDate;
 
     private int orderNoumber;
-    
+
     private int totalPoints;
-    
+
     private int availablePoints;
 
     private int lastPoints;
-    
+
+    private Date lastAvatarUpdate;
+
     @ManyToOne
     @JoinColumn(name = "klasaId")
     private Klasa klasa;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<GameResult> gameHistory = new ArrayList<>();
 
     public Student()
@@ -61,7 +64,6 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.orderNoumber = orderNoumber;
-        this.joinDate = new Date();
         this.password = password;
         this.login = login;
     }
@@ -99,16 +101,6 @@ public class Student {
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
-    }
-
-    public Date getJoinDate()
-    {
-        return joinDate;
-    }
-
-    public void setJoinDate(Date joinDate)
-    {
-        this.joinDate = joinDate;
     }
 
     public int getOrderNoumber()
@@ -195,8 +187,15 @@ public class Student {
     {
         this.availablePoints = availablePoints;
     }
-    
-    
 
-    
+    public Date getLastAvatarUpdate()
+    {
+        return lastAvatarUpdate;
+    }
+
+    public void setLastAvatarUpdate(Date lastAvatarUpdate)
+    {
+        this.lastAvatarUpdate = lastAvatarUpdate;
+    }
+
 }

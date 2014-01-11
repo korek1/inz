@@ -11,17 +11,17 @@ import dto.games.WordSearchGame;
 public enum GameTypeEnum
 {
     ROZSYPANKA("rozsypanka", RozsypankaGame.class),
-    
+
     MEMO("memo", MemoGame.class),
-    
+
     WORD_SEARCH("wordsearch", WordSearchGame.class),
-    
+
     MILLIONAIRE("millionaire", MillionaireGame.class),
-    
-    SPELL("spell",SpellGame.class),
-    
-    HANG_MAN("hangman",HangManGame.class);
-    
+
+    SPELL("spell", SpellGame.class),
+
+    HANG_MAN("hangman", HangManGame.class);
+
     private GameTypeEnum(String path, Class<? extends Game> clazz)
     {
         this.path = path;
@@ -35,7 +35,7 @@ public enum GameTypeEnum
     {
         return path;
     }
-    
+
     public Class<? extends Game> getClazz()
     {
         return clazz;
@@ -43,18 +43,18 @@ public enum GameTypeEnum
 
     public GameTypeEnum getTypeByClass(Class<? extends Game> clazz)
     {
-        GameTypeEnum gameType = null ;
-        
+        GameTypeEnum gameType = null;
+
         GameTypeEnum[] values = GameTypeEnum.values();
         for (GameTypeEnum gameTypeEnum : values)
         {
-            if(gameTypeEnum.getClazz().equals(clazz))
+            if (gameTypeEnum.getClazz().equals(clazz))
             {
                 gameType = gameTypeEnum;
                 break;
             }
         }
-        
+
         return gameType;
     }
 }

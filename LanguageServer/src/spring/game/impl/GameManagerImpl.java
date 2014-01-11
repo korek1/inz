@@ -38,7 +38,7 @@ public class GameManagerImpl implements GameManager {
         game.setOwner(teacher);
 
         Integer id = gameDAO.save(game);
-        
+
         return id;
     }
 

@@ -8,8 +8,8 @@ import dto.Student;
 public interface StudentDAO extends BaseDAO<Student> {
 
     List<Student> getStudents();
-    
+
     String getMyTeachersLogin(String login);
-    
+
     Student getByLogin(String login);
 }

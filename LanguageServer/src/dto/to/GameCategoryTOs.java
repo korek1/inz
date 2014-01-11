@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameCategoryTOs {
-    
+
     private List<GameCategoryTO> categories = new ArrayList<>();
 
     public GameCategoryTOs()
@@ -21,7 +21,6 @@ public class GameCategoryTOs {
     {
         this.categories = categories;
     }
-    
 
     public void addCategoryTO(GameCategoryTO gameCategoryTO)
     {

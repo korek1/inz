@@ -43,58 +43,58 @@ public class ApacheTest {
 
         String tempPass = login("jan", "pass", true);
 
-     //   checkKlasy(tempPass);
+        // checkKlasy(tempPass);
 
-      //  tempPass = login("Kot1a113", "pass", false);
+        // tempPass = login("Kot1a113", "pass", false);
 
-    //    getMemos(tempPass); // pamietaj ze trzeba najpierw dodaæ gre memo bedac nauczycielem i w lini 48 podac jej ID - ja akurat mialem id=11
-                            // zdjecia dodawaj png bo tak tu jest ustawione na sztywno
-        
+        // getMemos(tempPass); // pamietaj ze trzeba najpierw dodaæ gre memo
+        // bedac nauczycielem i w lini 48 podac jej ID - ja akurat mialem id=11
+        // zdjecia dodawaj png bo tak tu jest ustawione na sztywno
+
         postMemo(tempPass);
 
     }
-    
+
     private static void postMemo(String tempPass) throws URISyntaxException, HttpException, IOException
     {
         HttpPost post = new HttpPost("http://localhost:8080/LanguageServer/game/memo");
-        
+
         post.addHeader("login", "jan");
         post.addHeader("pass", tempPass);
         post.addHeader("Accept", "*/*");
-      
+
         GameTO gameTO = new GameTO();
         gameTO.setName("gamename2");
         gameTO.setDifficultyFactor(4);
         gameTO.setCategoryId(4);
         String jsonGameTO = g.toJson(gameTO);
 
-        
         MultipartEntity multipart = new MultipartEntity();
-        
+
         StringBody jsonContent = new StringBody(jsonGameTO);
         multipart.addPart("gamedetails", jsonContent);
-        
+
         File imageCat = new File("C:\\Users\\acer\\Desktop\\memo\\cat.PNG");
         multipart.addPart("cat", new FileBody(imageCat));
-        
+
         File imageDog = new File("C:\\Users\\acer\\Desktop\\memo\\dog.PNG");
         multipart.addPart("dog", new FileBody(imageDog));
-        
+
         File imageBug = new File("C:\\Users\\acer\\Desktop\\memo\\bug.PNG");
         multipart.addPart("bug", new FileBody(imageBug));
-        
+
         post.setEntity(multipart);
-        
+
         HttpResponse execute = client.execute(post);
-        
+
         StatusLine statusLine = execute.getStatusLine();
-        
+
         System.out.println(statusLine.getStatusCode());
     }
 
     private static void getMemos(String tempPass) throws Exception
     {
-        HttpGet get = new HttpGet("http://localhost:8080/LanguageServer/game/student/memo/11"); //tu musisz podac id gry ktora dodasz
+        HttpGet get = new HttpGet("http://localhost:8080/LanguageServer/game/student/memo/11"); // tu musisz podac id gry ktora dodasz
 
         get.addHeader("login", "Kot1a113");
         get.addHeader("pass", tempPass);
@@ -106,7 +106,8 @@ public class ApacheTest {
         String value = headers[0].getValue();
 
         int indexOf = value.indexOf("boundary=");
-        String boundary = value.substring(indexOf + 9); // wyciagamy boundary z headera
+        String boundary = value.substring(indexOf + 9); // wyciagamy boundary z
+                                                        // headera
 
         byte[] bytes = boundary.getBytes();
 
@@ -118,13 +119,15 @@ public class ApacheTest {
 
         multipartStream.skipPreamble();
         boolean bool = true;
-        int i =1;
-        while (bool) // lecimy po wszytskich czesciach miltipart data form - czyli jak dodasz 4 obrazki to przeleci petle 4 razy
+        int i = 1;
+        while (bool) // lecimy po wszytskich czesciach miltipart data form -
+                     // czyli jak dodasz 4 obrazki to przeleci petle 4 razy
         {
-            String readHeaders = multipartStream.readHeaders(); 
+            String readHeaders = multipartStream.readHeaders();
             System.out.println(readHeaders);
 
-            String location = "C:\\Users\\acer\\Desktop\\fromserv\\"; // tu sobie zmien na swoja lokalna lokalizacje 
+            String location = "C:\\Users\\acer\\Desktop\\fromserv\\"; // tu sobie zmien na swoja lokalna lokalizacje
+
             File f = new File(location + i++ + ".png");
             OutputStream output = new FileOutputStream(f);
             multipartStream.readBodyData(output);
@@ -132,11 +135,13 @@ public class ApacheTest {
             bool = multipartStream.readBoundary();
             output.close();
         }
-        // po wykonaniu tego powinnas miec zapisane wszytskie image z serwera w folderze jaki podalas wyzej
-        // a naglowiki na consoli wypisane 
+        // po wykonaniu tego powinnas miec zapisane wszytskie image z serwera w
+        // folderze jaki podalas wyzej
+        // a naglowiki na consoli wypisane
         // np Content-Type: image/PNG w tym wypadku bo z serwera leci png
-        // jak Kukuis przesle mi jpg to bedzie image/jpg wiec na to trzeba zwrocic uwagê
-        
+        // jak Kukuis przesle mi jpg to bedzie image/jpg wiec na to trzeba
+        // zwrocic uwagê
+
     }
 
     private static String login(String login, String pass, boolean teacher) throws Exception

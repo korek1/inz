@@ -27,7 +27,7 @@ public class HiberTest {
 
     public static void main(String[] args) throws IOException
     {
-     //   clearPaths();
+        // clearPaths();
 
         db = DBController.getInstance();
         Session session = db.getSession();
@@ -101,13 +101,13 @@ public class HiberTest {
         sentences2.add("Drugie fajne zdanie");
         sentences2.add("Trzecie fajne zdanie");
         rozsypankaGame2.setSentences(sentences2);
-        
+
         MillionaireGame millionaireGame = new MillionaireGame();
         millionaireGame.setCategory(3);
         millionaireGame.setDifficultyFactor(4);
         millionaireGame.setName("nameeee");
         millionaireGame.setOwner(teacher2);
-        
+
         List<MillionaireQuestion> questions = new ArrayList<>();
         MillionaireQuestion question1 = new MillionaireQuestion();
         question1.setAnswer1("tak");
@@ -115,45 +115,44 @@ public class HiberTest {
         question1.setAnswer3("nie");
         question1.setAnswer4("nie");
         question1.setCorrectAnswer(1);
-        
+
         question1.setQuestion("pytanie");
         question1.setGame(millionaireGame);
-        
-        questions.add(question1 );
-        
-        
+
+        questions.add(question1);
+
         MillionaireQuestion question2 = new MillionaireQuestion();
         question2.setAnswer1("nie");
         question2.setAnswer2("nie");
         question2.setAnswer3("nie");
         question2.setAnswer4("tak");
         question2.setCorrectAnswer(4);
-        
+
         question2.setQuestion("pytanie");
         question2.setGame(millionaireGame);
-        
-        questions.add(question2 );
-        millionaireGame.setQuestions(questions );
-        
+
+        questions.add(question2);
+        millionaireGame.setQuestions(questions);
+
         SpellGame spellGame = new SpellGame();
         spellGame.setCategory(4);
         spellGame.setDifficultyFactor(10);
         spellGame.setName("spellgame");
         spellGame.setOwner(teacher2);
-        
+
         List<SpellPair> words = new ArrayList<>();
         SpellPair pair = new SpellPair();
         pair.setGame(spellGame);
         pair.setPolWord("kot");
         pair.setWordOk("cat");
         pair.setWordWrong("coooot");
-        
+
         SpellPair pair2 = new SpellPair();
         pair2.setGame(spellGame);
         pair2.setPolWord("pies");
         pair2.setWordOk("dog");
         pair2.setWordWrong("daaag");
-        
+
         SpellPair pair3 = new SpellPair();
         pair3.setGame(spellGame);
         pair3.setPolWord("robak");
@@ -162,8 +161,8 @@ public class HiberTest {
         words.add(pair);
         words.add(pair2);
         words.add(pair3);
-        
-        spellGame.setWords(words );
+
+        spellGame.setWords(words);
         try
         {
             Transaction beginTransaction = session.beginTransaction();
@@ -196,13 +195,13 @@ public class HiberTest {
         }
 
     }
-    
+
     private static void clearPaths() throws IOException
     {
         String dir = MemoDirHelper.BASE_DIR;
-        
+
         System.out.println(dir);
-        
+
         FileUtils.deleteDirectory(new File(dir));
     }
 

@@ -1,7 +1,7 @@
 package dto.to.toserver;
 
 public class KlasaInsertTO {
-    
+
     private String name;
 
     private int year;
@@ -30,7 +30,5 @@ public class KlasaInsertTO {
     {
         this.year = year;
     }
-    
-    
 
 }

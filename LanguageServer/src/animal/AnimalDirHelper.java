@@ -1,6 +1,7 @@
 package animal;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class AnimalDirHelper {
         int i = 0;
         for (InputStream inputStream : files)
         {
-            if(CommonUtils.isNotNull(inputStream))
+            if (CommonUtils.isNotNull(inputStream))
             {
                 FileUtils.saveToFile(inputStream, list.get(i));
             }
@@ -54,6 +55,32 @@ public class AnimalDirHelper {
         listFiles.add(f4);
 
         return listFiles;
+    }
+
+    /**
+     * Returns students animal avatar.
+     * 
+     * @param studentLogin
+     * @return
+     */
+    public static File getStudentsAnimalAvatar(String studentLogin)
+    {
+        String path = BASE_DIR + studentLogin + File.separator + ANIMAL_DIR;
+
+        File avatar = new File(path + fileName4);
+
+        return avatar;
+    }
+
+    public static void deleteStudentsFiles(String studentLogin) throws IOException
+    {
+        String path = BASE_DIR + studentLogin + File.separator;
+
+        File toDelete = new File(path);
+        if (toDelete.exists())
+        {
+            org.apache.commons.io.FileUtils.forceDelete(toDelete);
+        }
     }
 
     private static List<String> getList(String path)

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MappedWordTOs {
-    
+
     List<MappedWordTO> sentence = new ArrayList<>();
 
     public MappedWordTOs()
@@ -21,8 +21,5 @@ public class MappedWordTOs {
     {
         this.sentence = sentence;
     }
-    
-    
-    
 
 }

@@ -36,19 +36,18 @@ public class AuthFilter implements ContainerRequestFilter {
         String pass = request.getHeaderString(Constants.PASSWORD);
 
         validStudent = AuthMenager.veryfiPassStudent(login, pass);
-        
+
         if (!validStudent)
         {
             role = Role.TEACHER;
             validTeacher = AuthMenager.veryfiPassTeacher(login, pass);
             if (!validTeacher)
             {
-                 request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                 .entity("UNAUTHORIZED")
-                 .build());
+                request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("UNAUTHORIZED")
+                        .build());
             }
         }
-
 
         return role;
 

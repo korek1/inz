@@ -128,7 +128,7 @@ public class TOsGameManager {
 
         List<SpellPair> wordsDB = new ArrayList<>();
         List<SpellPairTO> words = spellGameTO.getWords();
-        
+
         for (SpellPairTO spellPairTO : words)
         {
             SpellPair pair = new SpellPair();
@@ -136,7 +136,7 @@ public class TOsGameManager {
             pair.setWordOk(spellPairTO.getWordOk());
             pair.setWordWrong(spellPairTO.getWordWrong());
             pair.setPolWord(spellPairTO.getPolWord());
-            
+
             pair.setGame(spellGame);
             wordsDB.add(pair);
         }
@@ -280,13 +280,13 @@ public class TOsGameManager {
 
         return gameTO;
     }
-    
+
     public static MemoGame memoConvert(GameTO gameTO)
     {
         MemoGame memoGame = new MemoGame();
-        
+
         convertGame(gameTO, memoGame);
-        
+
         return memoGame;
     }
 

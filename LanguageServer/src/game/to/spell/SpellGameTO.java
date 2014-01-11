@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpellGameTO extends GameTO {
-    
+
     List<SpellPairTO> words = new ArrayList<>();
 
     public SpellGameTO()
@@ -28,6 +28,5 @@ public class SpellGameTO extends GameTO {
     {
         words.add(pairTO);
     }
-    
 
 }
