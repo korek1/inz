@@ -1,5 +1,6 @@
 package game;
 
+import utils.CommonUtils;
 import dto.GameResult;
 
 /**
@@ -11,12 +12,10 @@ import dto.GameResult;
 public class PointsDirector {
 
     private CurrentGame currGame;
-    private int points;
 
-    private final double TIME_FACTOR = 1.00;
-    private final double DIFF_FACTOR = 0.1;
+    private final int BASE_FOR_GAME = 100;
 
-    private final int TOTAL_POINTS_FOR_SINGLE_GAME = 100;
+    private final int BASE_TIME_BONUS = 100;
 
     public PointsDirector(CurrentGame currGame)
     {
@@ -38,45 +37,61 @@ public class PointsDirector {
 
     public int calcPoints()
     {
-        points = calculatePoints();
-        return points;
+        int points = ( ( pointsFormDiff() + timePoints() ) * correctness() ) / 100;
+        
+        return points > 0 ? points : 0;
     }
 
-    private int calculatePoints()
+    /**
+     * Max 150. Min -50;
+     * @return
+     */
+    private int timePoints()
     {
-        int pointsForGame = 0;
-
+        int points = 0;
+        
+        long estimatedTimetoFinishGame = currGame.getEstimatedTimetoFinishGame();
         long gameDuration = currGame.getGameDuration();
 
-        int corectAnswers = currGame.getCorectAnswers();
+        if(estimatedTimetoFinishGame >= 1.5f * gameDuration) // 1.5 times quicker
+        {
+            points = (int) (BASE_TIME_BONUS * 1.5f);
+        }
+        else if(estimatedTimetoFinishGame >= gameDuration)
+        {
+            points = BASE_TIME_BONUS;
+        }
+        else if(gameDuration > 2 * estimatedTimetoFinishGame) // over 2 times longer
+        {
+            points = -50;
+        }
+        
+        return points;
+    }
 
+    /**
+     * % in int
+     * 
+     * @return
+     */
+    private int correctness()
+    {
+        int corectAnswers = currGame.getCorectAnswers();
         int noumberOfTasks = currGame.getNoumberOfTasks();
 
+        return CommonUtils.getPercentage(corectAnswers, noumberOfTasks);
+    }
+
+    /**
+     * Max 200 points. Min 110 points.
+     * 
+     * @return
+     */
+    private int pointsFormDiff()
+    {
         int difficultyFactor = currGame.getGame().getDifficultyFactor();
 
-        double gameDurationPoints = calcGameDurationPoints(gameDuration, noumberOfTasks);
-
-        double calcCorectPoints = calcCorectPoints(corectAnswers, noumberOfTasks);
-
-        pointsForGame = (int) ((calcCorectPoints - gameDurationPoints) * ((difficultyFactor * DIFF_FACTOR)));
-
-        return pointsForGame > 0 ? pointsForGame : 0;
-    }
-
-    private double calcGameDurationPoints(long gameDuration, int noumberOfTasks)
-    {
-        return ((gameDuration / noumberOfTasks) * TIME_FACTOR);
-    }
-
-    private double calcCorectPoints(int corectAnswers, int noumberOfTasks)
-    {
-
-        return ((corectAnswers / noumberOfTasks) * TOTAL_POINTS_FOR_SINGLE_GAME);
-    }
-
-    public int getPoints()
-    {
-        return points;
+        return BASE_FOR_GAME + difficultyFactor * 10;
     }
 
 }

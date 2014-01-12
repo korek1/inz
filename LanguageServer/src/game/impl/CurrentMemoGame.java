@@ -6,6 +6,8 @@ import dto.Game;
 import game.CurrentGame;
 
 public class CurrentMemoGame extends CurrentGame {
+    
+    public static final long ESTIMATE_TIME_PER_TASK = 20000; //20 sek
 
     public CurrentMemoGame(Game game)
     {
@@ -29,6 +31,12 @@ public class CurrentMemoGame extends CurrentGame {
     public boolean isGameFinished()
     {
         return getCorectAnswers() == getNoumberOfTasks() ? true : false;
+    }
+
+    @Override
+    public long getEstimatedTimetoFinishGame()
+    {
+        return ESTIMATE_TIME_PER_TASK * getNoumberOfTasks();
     }
 
 }

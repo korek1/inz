@@ -10,6 +10,8 @@ import dto.Game;
 import game.CurrentGame;
 
 public class CurrentHangManGame extends CurrentGame {
+    
+    public static final long ESTIMATE_TIME_PER_TASK = 20000; //20 sek
 
     private List<Integer> letterPosition = new ArrayList<>();
 
@@ -80,6 +82,12 @@ public class CurrentHangManGame extends CurrentGame {
     public List<Integer> getLetterPosition()
     {
         return letterPosition;
+    }
+
+    @Override
+    public long getEstimatedTimetoFinishGame()
+    {
+        return ESTIMATE_TIME_PER_TASK * getNoumberOfTasks();
     }
 
 }

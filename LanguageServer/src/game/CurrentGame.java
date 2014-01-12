@@ -79,6 +79,8 @@ public abstract class CurrentGame {
     {
         return attempts == noumberOfTasks ? true : false;
     }
+    
+    public abstract long getEstimatedTimetoFinishGame();
 
     public Game getGame()
     {

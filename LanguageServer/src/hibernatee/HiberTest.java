@@ -12,6 +12,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import auth.EncryptHelper;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
@@ -48,7 +49,7 @@ public class HiberTest {
         student.setLastName("Kot");
         student.setKlasa(klasa);
         student.setLogin("Kot1a113");
-        student.setPassword("pass");
+        student.setPassword(EncryptHelper.createEncryptedPass("pass"));
         student.setOrderNoumber(1);
 
         Student student2 = new Student();
@@ -56,7 +57,7 @@ public class HiberTest {
         student2.setLastName("Byk");
         student2.setKlasa(klasa2);
         student2.setLogin("Byk1a113");
-        student2.setPassword("pass");
+        student2.setPassword(EncryptHelper.createEncryptedPass("pass"));
         student2.setOrderNoumber(1);
 
         Student student3 = new Student();
@@ -64,7 +65,7 @@ public class HiberTest {
         student3.setLastName("XYZ");
         student3.setKlasa(klasa);
         student3.setLogin("a");
-        student3.setPassword("a");
+        student3.setPassword(EncryptHelper.createEncryptedPass("a"));
         student3.setOrderNoumber(2);
 
         Student student4 = new Student();
@@ -72,7 +73,7 @@ public class HiberTest {
         student4.setLastName("XXX");
         student4.setKlasa(klasa);
         student4.setLogin("b");
-        student4.setPassword("b");
+        student4.setPassword(EncryptHelper.createEncryptedPass("b"));
         student4.setOrderNoumber(3);
 
         klasa.setTeacher(teacher2);

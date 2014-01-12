@@ -2,6 +2,7 @@ package dto.to.toserver;
 
 import java.util.Calendar;
 
+import auth.EncryptHelper;
 import dto.Student;
 
 public class TOsInsertManager {
@@ -19,7 +20,7 @@ public class TOsInsertManager {
         student.setLastName(lastName);
         student.setOrderNoumber(orderNoumber);
         student.setLogin(createLoginForStudent(lastName, orderNoumber, klasName));
-        student.setPassword(password);
+        student.setPassword(EncryptHelper.createEncryptedPass(password));
 
         return student;
 
@@ -38,10 +39,4 @@ public class TOsInsertManager {
         return login;
     }
 
-    private static String createPassForStudent(String lastName)
-    {
-        String pass = lastName;
-
-        return pass;
-    }
 }

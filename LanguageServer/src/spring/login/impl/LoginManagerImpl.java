@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import auth.Auth;
+import auth.EncryptHelper;
 import spring.login.LoginDAO;
 import spring.login.LoginManager;
 import utils.CommonUtils;
@@ -42,12 +43,10 @@ public class LoginManagerImpl implements LoginManager {
     {
         boolean correct = false;
 
-        if (CommonUtils.isNotNull(fromDB))
+        if (CommonUtils.isNotEmpty(fromDB))
         {
-            if (fromDB.equals(fromRequest))
-            {
-                correct = true;
-            }
+            correct = EncryptHelper.isPassCorrect(fromRequest, fromDB);
+
         }
 
         return correct;

@@ -89,7 +89,7 @@ public class CommonUtils {
     public static int getPercentage(long l1, long l2)
     {
 
-        return (int) ((l1 * 100.0f) / l2);
+        return l1 > 0 ? (int) ((l1 * 100.0f) / l2) : 0;
     }
 
     public static long getCurrentTimeStamp()

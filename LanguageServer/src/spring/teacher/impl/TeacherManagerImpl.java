@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import auth.EncryptHelper;
 import spring.teacher.TeacherDAO;
 import spring.teacher.TeacherManager;
 import utils.CommonUtils;
@@ -62,7 +63,7 @@ public class TeacherManagerImpl implements TeacherManager {
 
         if (CommonUtils.isNotEmpty(teacherInsertTO.getPassword()))
         {
-            teacher.setPassword(teacherInsertTO.getPassword());
+            teacher.setPassword(EncryptHelper.createEncryptedPass(teacherInsertTO.getPassword()));
         }
 
         teacherDAO.update(teacher);

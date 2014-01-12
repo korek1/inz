@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import auth.EncryptHelper;
 import dto.to.toserver.TeacherInsertTO;
 
 @Entity
@@ -50,7 +51,7 @@ public class Teacher {
         this.firstName = firstName;
         this.lastName = lastName;
         this.joinDate = new Date();
-        this.password = password;
+        this.password = EncryptHelper.createEncryptedPass(password);
         this.login = login;
     }
 
@@ -60,7 +61,7 @@ public class Teacher {
         this.firstName = teacherInsertTO.getFirstName();
         this.lastName = teacherInsertTO.getLastName();
         this.login = teacherInsertTO.getLogin();
-        this.password = teacherInsertTO.getPassword();
+        this.password = EncryptHelper.createEncryptedPass(teacherInsertTO.getPassword());
     }
 
     public int getId()

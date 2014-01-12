@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import animal.AnimalDirHelper;
 import auth.AuthMenager;
+import auth.EncryptHelper;
 import spring.klasa.KlasaDAO;
 import spring.student.StudentDAO;
 import spring.student.StudentManager;
@@ -108,7 +109,7 @@ public class StudentManagerImpl implements StudentManager {
         }
         if (CommonUtils.isNotNull(studentTO.getPassword()))
         {
-            student.setPassword(studentTO.getPassword());
+            student.setPassword(EncryptHelper.createEncryptedPass(studentTO.getPassword()));
         }
 
         studentDAO.update(student);
@@ -121,7 +122,7 @@ public class StudentManagerImpl implements StudentManager {
     {
         Student student = studentDAO.getByLogin(login);
 
-        student.setPassword(newPass);
+        student.setPassword(EncryptHelper.createEncryptedPass(newPass));
 
         studentDAO.update(student);
 

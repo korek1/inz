@@ -6,6 +6,8 @@ import game.CurrentGame;
 import game.helpers.Lifelines;
 
 public class CurrentMillionaireGame extends CurrentGame {
+    
+    public static final long ESTIMATE_TIME_PER_TASK = 20000; //20 sek
 
     private Lifelines lifelines;
 
@@ -37,6 +39,12 @@ public class CurrentMillionaireGame extends CurrentGame {
         }
 
         return lifeline;
+    }
+    
+    @Override
+    public long getEstimatedTimetoFinishGame()
+    {
+        return ESTIMATE_TIME_PER_TASK * getNoumberOfTasks();
     }
 
 }
