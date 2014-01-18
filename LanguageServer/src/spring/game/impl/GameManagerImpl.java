@@ -125,4 +125,10 @@ public class GameManagerImpl implements GameManager {
         return spellGame;
     }
 
+    @Override
+    public void delete(int id)
+    {
+        gameDAO.delete(gameDAO.load(id));
+    }
+
 }

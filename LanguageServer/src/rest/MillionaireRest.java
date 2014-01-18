@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -51,7 +52,7 @@ public class MillionaireRest {
     }
 
     @GET
-    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
+    @RolesAllowed({ Role.TEACHER })
     @Path("/millionaire/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public MillionaireGameTO getWordSearchGame(@PathParam("id") int id)
@@ -61,6 +62,19 @@ public class MillionaireRest {
         MillionaireGameTO millionaireGameTO = TOsGameManager.convertMillionaireGame(millionaireGame);
 
         return millionaireGameTO;
+
+    }
+    
+    @DELETE
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/millionaire/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String delete(@PathParam("id") int id)
+    {
+
+        gameManager.delete(id);
+
+        return "ok";
 
     }
 

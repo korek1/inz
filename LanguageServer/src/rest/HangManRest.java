@@ -9,6 +9,7 @@ import game.to.hangman.HangManTO;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -49,7 +50,7 @@ public class HangManRest {
     }
 
     @GET
-    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
+    @RolesAllowed({ Role.TEACHER })
     @Path("/hangman/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public HangManTO getHangManGame(@PathParam("id") int id)
@@ -59,6 +60,19 @@ public class HangManRest {
         HangManTO hangManTO = TOsGameManager.convertHangManGame(hangManGame);
 
         return hangManTO;
+
+    }
+    
+    @DELETE
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/hangman/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String delete(@PathParam("id") int id)
+    {
+
+        gameManager.delete(id);
+
+        return "ok";
 
     }
 

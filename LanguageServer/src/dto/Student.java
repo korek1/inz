@@ -43,6 +43,8 @@ public class Student {
     private int availablePoints;
 
     private int lastPoints;
+    
+    private boolean female;
 
     private Date lastAvatarUpdate;
 
@@ -197,5 +199,17 @@ public class Student {
     {
         this.lastAvatarUpdate = lastAvatarUpdate;
     }
+
+    public boolean isFemale()
+    {
+        return female;
+    }
+
+    public void setFemale(boolean female)
+    {
+        this.female = female;
+    }
+
+    
 
 }

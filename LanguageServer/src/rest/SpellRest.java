@@ -9,6 +9,7 @@ import game.to.spell.SpellGameTO;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -54,6 +55,19 @@ public class SpellRest {
         SpellGameTO spellGameTO = TOsGameManager.convertSpellGame(spellGame);
 
         return spellGameTO;
+
+    }
+    
+    @DELETE
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/spell/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String delete(@PathParam("id") int id)
+    {
+
+        gameManager.delete(id);
+
+        return "ok";
 
     }
 

@@ -11,6 +11,8 @@ public class StudentInsertTO {
     private int orderNoumber;
 
     private int idKlasy;
+    
+    private boolean female;
 
     public StudentInsertTO()
     {
@@ -66,5 +68,16 @@ public class StudentInsertTO {
     {
         this.password = password;
     }
+
+    public boolean isFemale()
+    {
+        return female;
+    }
+
+    public void setFemale(boolean female)
+    {
+        this.female = female;
+    }
+    
 
 }

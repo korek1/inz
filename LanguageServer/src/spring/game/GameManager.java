@@ -17,6 +17,8 @@ public interface GameManager {
     Integer insertGame(Game game, String login);
 
     void update(Game game);
+    
+    void delete(int id);
 
     List<Game> getAllGames(String login, Class<? extends Game> clazz);
 

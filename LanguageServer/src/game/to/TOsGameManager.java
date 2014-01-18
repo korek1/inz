@@ -290,7 +290,7 @@ public class TOsGameManager {
         return memoGame;
     }
 
-    private static void convertGame(GameTO gameTO, Game game)
+    public static void convertGame(GameTO gameTO, Game game)
     {
         int id = game.getId();
         String name = game.getName();

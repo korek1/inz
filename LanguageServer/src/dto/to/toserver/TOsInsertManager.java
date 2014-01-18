@@ -15,12 +15,14 @@ public class TOsInsertManager {
         String lastName = studentInsertTO.getLastName();
         int orderNoumber = studentInsertTO.getOrderNoumber();
         String password = studentInsertTO.getPassword();
+        boolean female = studentInsertTO.isFemale();
 
         student.setFirstName(firstName);
         student.setLastName(lastName);
         student.setOrderNoumber(orderNoumber);
         student.setLogin(createLoginForStudent(lastName, orderNoumber, klasName));
         student.setPassword(EncryptHelper.createEncryptedPass(password));
+        student.setFemale(female);
 
         return student;
 

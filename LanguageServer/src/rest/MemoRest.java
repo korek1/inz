@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -55,7 +56,7 @@ public class MemoRest {
     @Path("/memo")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    public Integer insertMemo(@HeaderParam("login") String login, @HeaderParam("name") String gameName, FormDataMultiPart multiPart)
+    public Integer insertMemo(@HeaderParam("login") String login, FormDataMultiPart multiPart)
     {
         List<FormDataBodyPart> info = multiPart.getFields("gamedetails");
 
@@ -118,7 +119,7 @@ public class MemoRest {
     }
 
     @GET
-    @RolesAllowed({ Role.STUDENT, Role.TEACHER })
+    @RolesAllowed({ Role.TEACHER })
     @Path("/memo/{id}")
     @Produces(MediaType.MULTIPART_FORM_DATA)
     public Response getMemo(@HeaderParam("login") String login, @PathParam("id") int gameID) throws ParseException
@@ -137,8 +138,21 @@ public class MemoRest {
             multiPart.field(word, (Object) pic, new MediaType("image", extension));
 
         }
-
+        
         return Response.ok(multiPart, MediaType.MULTIPART_FORM_DATA).build();
+    }
+    
+    @DELETE
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/memo/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String delete(@PathParam("id") int id)
+    {
+
+        gameManager.delete(id);
+
+        return "ok";
+
     }
 
     @GET

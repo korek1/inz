@@ -9,6 +9,7 @@ import game.to.wordsearch.WordSearchGameTO;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -55,6 +56,19 @@ public class WordSearchRest {
         WordSearchGameTO wordSearchGameTO = TOsGameManager.convertSearchGame(wordSearchGame);
 
         return wordSearchGameTO;
+
+    }
+    
+    @DELETE
+    @RolesAllowed({ Role.TEACHER })
+    @Path("/wordsearch/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String delete(@PathParam("id") int id)
+    {
+
+        gameManager.delete(id);
+
+        return "ok";
 
     }
 
