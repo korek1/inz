@@ -5,7 +5,7 @@ import game.CurrentGame;
 
 public class CurrentSpellGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_TASK = 3000; //3 sek
+    public static final long ESTIMATE_TIME_PER_TASK = 3;
 
     public CurrentSpellGame(Game game)
     {

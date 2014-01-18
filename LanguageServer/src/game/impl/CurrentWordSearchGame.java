@@ -8,7 +8,7 @@ import dto.Game;
 
 public class CurrentWordSearchGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_TASK = 10000; //10 sek
+    public static final long ESTIMATE_TIME_PER_TASK = 10;
 
     public CurrentWordSearchGame(Game game)
     {

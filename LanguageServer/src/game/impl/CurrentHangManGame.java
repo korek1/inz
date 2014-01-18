@@ -11,7 +11,7 @@ import game.CurrentGame;
 
 public class CurrentHangManGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_LETTER = 5000; //5 sek
+    public static final long ESTIMATE_TIME_PER_LETTER = 5;
 
     private List<Integer> letterPosition = new ArrayList<>();
 
