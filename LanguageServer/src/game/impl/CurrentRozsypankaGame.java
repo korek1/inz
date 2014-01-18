@@ -7,7 +7,7 @@ import dto.Game;
 
 public class CurrentRozsypankaGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_WORD = 20000; //20 sek
+    public static final long ESTIMATE_TIME_PER_WORD = 4000; //20 sek
 
     public CurrentRozsypankaGame(Game game)
     {

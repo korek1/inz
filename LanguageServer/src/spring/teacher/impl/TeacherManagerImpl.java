@@ -27,7 +27,7 @@ public class TeacherManagerImpl implements TeacherManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Teacher getTeacherById(int teacherId)
     {
         Teacher teacher = teacherDAO.get(teacherId);
@@ -37,7 +37,7 @@ public class TeacherManagerImpl implements TeacherManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Teacher getTeacherByLogin(String login)
     {
         Teacher teacher = teacherDAO.getTeacherByLogin(login);

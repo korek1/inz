@@ -7,7 +7,7 @@ import game.helpers.Lifelines;
 
 public class CurrentMillionaireGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_TASK = 20000; //20 sek
+    public static final long ESTIMATE_TIME_PER_TASK = 8000; //8 sek
 
     private Lifelines lifelines;
 

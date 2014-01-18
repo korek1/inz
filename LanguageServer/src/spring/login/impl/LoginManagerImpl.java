@@ -17,7 +17,7 @@ public class LoginManagerImpl implements LoginManager {
     LoginDAO loginDAO;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean validateTeacher(Auth auth)
     {
 
@@ -29,7 +29,7 @@ public class LoginManagerImpl implements LoginManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean validateStudent(Auth auth)
     {
         String studentPassFromDB = loginDAO.getStudentPass(auth.getLogin());

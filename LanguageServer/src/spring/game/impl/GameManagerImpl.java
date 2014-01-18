@@ -43,7 +43,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public RozsypankaGame getRozsypankaById(int gameID)
     {
         RozsypankaGame game = (RozsypankaGame) gameDAO.getById(gameID, RozsypankaGame.class);
@@ -53,7 +53,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Game> getAllGames(String login, Class<? extends Game> clazz)
     {
         List<Game> games = gameDAO.getAllGames(login, clazz);
@@ -69,7 +69,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public MemoGame getMemoByID(int gameID)
     {
         MemoGame memoGame = (MemoGame) gameDAO.getById(gameID, MemoGame.class);
@@ -79,7 +79,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public MillionaireGame getMillionaireByID(int gameID)
     {
         MillionaireGame millionaireGame = (MillionaireGame) gameDAO.getById(gameID, MillionaireGame.class);
@@ -89,7 +89,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public WordSearchGame getWordSearchByID(int gameID)
     {
         WordSearchGame wordSearchGame = (WordSearchGame) gameDAO.getById(gameID, WordSearchGame.class);
@@ -98,7 +98,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public GameTypeEnum getType(int id)
     {
         GameTypeEnum type = gameDAO.getType(id);
@@ -107,7 +107,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public HangManGame getHangManByID(int gameID)
     {
         HangManGame hangManGame = (HangManGame) gameDAO.getById(gameID, HangManGame.class);
@@ -116,7 +116,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public SpellGame getSpellGameByID(int gameID)
     {
         SpellGame spellGame = (SpellGame) gameDAO.getById(gameID, SpellGame.class);

@@ -35,7 +35,7 @@ public class GameResultManagerImpl implements GameResultManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public GameResultTOs getStudentsGamesResult(int studentID)
     {
         List<GameResult> studentsGamesResults = gameResultDAO.getStudentsGamesResults(studentID);
@@ -46,7 +46,7 @@ public class GameResultManagerImpl implements GameResultManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public GameResultClassTOs getClassGameResults(int classID, int gameID)
     {
         Klasa klasa = klasaDAO.load(classID);
@@ -75,7 +75,7 @@ public class GameResultManagerImpl implements GameResultManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public PointsTO getPoints(String login)
     {
         PointsTO points = gameResultDAO.getPoints(login);

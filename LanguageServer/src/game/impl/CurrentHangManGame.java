@@ -11,7 +11,7 @@ import game.CurrentGame;
 
 public class CurrentHangManGame extends CurrentGame {
     
-    public static final long ESTIMATE_TIME_PER_TASK = 20000; //20 sek
+    public static final long ESTIMATE_TIME_PER_LETTER = 5000; //5 sek
 
     private List<Integer> letterPosition = new ArrayList<>();
 
@@ -87,7 +87,13 @@ public class CurrentHangManGame extends CurrentGame {
     @Override
     public long getEstimatedTimetoFinishGame()
     {
-        return ESTIMATE_TIME_PER_TASK * getNoumberOfTasks();
+        int letterCount = 0;
+        for(List<Integer> list : getSolution())
+        {
+            letterCount += list.size();
+        }
+        
+        return ESTIMATE_TIME_PER_LETTER * letterCount;
     }
 
 }

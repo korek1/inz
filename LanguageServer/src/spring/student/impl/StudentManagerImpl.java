@@ -44,7 +44,7 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Student getStudentById(int studentId)
     {
         Student student = studentDAO.get(studentId);
@@ -54,14 +54,14 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Student> getStudents()
     {
         return studentDAO.getStudents();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public String getMyTeachersLogin(String login)
     {
         String teachersLogin = studentDAO.getMyTeachersLogin(login);
@@ -140,7 +140,7 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public AvatarTOs getAvatarsTO(String login)
     {
         AvatarTOs avatarTOs = new AvatarTOs();
@@ -164,7 +164,7 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Student getStudentByLogin(String login)
     {
         Student student = studentDAO.getByLogin(login);

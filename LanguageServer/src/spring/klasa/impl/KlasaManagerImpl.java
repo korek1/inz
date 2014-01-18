@@ -36,12 +36,12 @@ public class KlasaManagerImpl implements KlasaManager {
         klasa.setTeacher(teacher);
 
         Integer id = klasaDAO.save(klasa);
-
+        
         return id;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Klasa getKlasaById(int klasaId)
     {
         Klasa klasa = klasaDAO.get(klasaId);
@@ -51,7 +51,7 @@ public class KlasaManagerImpl implements KlasaManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Klasa> getAllKlasy(String login)
     {
 
@@ -59,7 +59,7 @@ public class KlasaManagerImpl implements KlasaManager {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<String> getStudentsLogins(String studentLogin)
     {
         List<String> logins = new ArrayList<>();

@@ -1,6 +1,9 @@
 package hibernatee;
 
 import game.helpers.MemoDirHelper;
+import game.to.TOsGameManager;
+import game.to.hangman.HangManTO;
+import game.to.wordsearch.WordSearchGameTO;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +19,11 @@ import auth.EncryptHelper;
 import dto.Klasa;
 import dto.Student;
 import dto.Teacher;
+import dto.games.HangManGame;
 import dto.games.MillionaireGame;
 import dto.games.RozsypankaGame;
 import dto.games.SpellGame;
+import dto.games.WordSearchGame;
 import dto.games.model.MillionaireQuestion;
 import dto.games.model.SpellPair;
 
@@ -89,6 +94,7 @@ public class HiberTest {
         sentences.add("Pierwsze fajne zdanie");
         sentences.add("Drugie fajne zdanie");
         sentences.add("Trzecie fajne zdanie");
+        sentences.add("Wyraz1 wyraz2 wyraz3 wyraz4 wyraz5 wyraz6 wyraz7 wyraz8 wyraz9 wyraz10");
         rozsypankaGame.setSentences(sentences);
 
         RozsypankaGame rozsypankaGame2 = new RozsypankaGame();
@@ -164,6 +170,42 @@ public class HiberTest {
         words.add(pair3);
 
         spellGame.setWords(words);
+        
+        
+        HangManTO hangManTO = new HangManTO();
+        hangManTO.setCategoryId(5);
+        hangManTO.setDifficultyFactor(10);
+        hangManTO.setName("hang");
+        
+        hangManTO.addWord("wardrobe");
+        hangManTO.addWord("armchair");
+        hangManTO.addWord("bathroom");
+        hangManTO.addWord("kitchen");
+        
+        HangManGame HangManGame = TOsGameManager.convertHangManGameTO(hangManTO);
+        HangManGame.setOwner(teacher2);
+        
+        WordSearchGameTO searchGameTO = new WordSearchGameTO();
+        searchGameTO.setCategoryId(5);
+        searchGameTO.setDifficultyFactor(10);
+        searchGameTO.setName("search");
+        
+        searchGameTO.addAngWord("kitechn");
+        searchGameTO.addPolWord("kuchnia");
+        
+        searchGameTO.addAngWord("lazienka");
+        searchGameTO.addPolWord("bathroom");
+        
+        searchGameTO.addAngWord("sypialnia");
+        searchGameTO.addPolWord("bedroom");
+        
+        searchGameTO.addAngWord("dywan");
+        searchGameTO.addPolWord("carpet");
+        
+        WordSearchGame WordSearch= TOsGameManager.covertWordSearchGameTO(searchGameTO);
+        
+        
+        
         try
         {
             Transaction beginTransaction = session.beginTransaction();
@@ -184,6 +226,10 @@ public class HiberTest {
 
             session.save(millionaireGame);
             session.save(spellGame);
+            
+            session.save(HangManGame);
+            session.save(WordSearch);
+            
             beginTransaction.commit();
         }
         catch (HibernateException e)
