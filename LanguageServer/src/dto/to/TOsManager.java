@@ -27,6 +27,7 @@ public class TOsManager {
         int orderNoumber = student.getOrderNoumber();
         int totalPoints = student.getTotalPoints();
         int klasaID = student.getKlasa().getId();
+        boolean female = student.isFemale();
 
         studentTO.setId(id);
         studentTO.setFirstName(firstName);
@@ -35,6 +36,7 @@ public class TOsManager {
         studentTO.setLogin(login);
         studentTO.setTotalPoints(totalPoints);
         studentTO.setKlasaID(klasaID);
+        studentTO.setFemale(female);
 
         return studentTO;
     }
@@ -74,12 +76,14 @@ public class TOsManager {
             int orderNoumber = student.getOrderNoumber();
             int idStudent = student.getId();
             String login = student.getLogin();
+            boolean female = student.isFemale();
 
             studentTO.setFirstName(firstName);
             studentTO.setLastName(lastName);
             studentTO.setOrderNoumber(orderNoumber);
             studentTO.setId(idStudent);
             studentTO.setLogin(login);
+            studentTO.setFemale(female);
 
             klasaTO.addStudentTO(studentTO);
         }

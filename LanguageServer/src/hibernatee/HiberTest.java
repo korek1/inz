@@ -94,7 +94,6 @@ public class HiberTest {
         sentences.add("Pierwsze fajne zdanie");
         sentences.add("Drugie fajne zdanie");
         sentences.add("Trzecie fajne zdanie");
-        sentences.add("Wyraz1 wyraz2 wyraz3 wyraz4 wyraz5 wyraz6 wyraz7 wyraz8 wyraz9 wyraz10");
         rozsypankaGame.setSentences(sentences);
 
         RozsypankaGame rozsypankaGame2 = new RozsypankaGame();

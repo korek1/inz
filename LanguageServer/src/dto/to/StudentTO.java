@@ -15,6 +15,8 @@ public class StudentTO {
     private Integer klasaID;
 
     private int totalPoints;
+    
+    private boolean female;
 
     public StudentTO()
     {
@@ -90,5 +92,17 @@ public class StudentTO {
     {
         this.totalPoints = totalPoints;
     }
+
+    public boolean isFemale()
+    {
+        return female;
+    }
+
+    public void setFemale(boolean female)
+    {
+        this.female = female;
+    }
+    
+    
 
 }
