@@ -7,7 +7,7 @@ import dto.to.gameresult.GameResultTOs;
 
 public interface GameResultManager {
 
-    void saveOrUpdateGameResult(GameResult gameResult, String login);
+    int saveOrUpdateGameResult(GameResult gameResult, String login);
 
     GameResultTOs getStudentsGamesResult(int studentID);
 

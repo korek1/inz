@@ -1,6 +1,7 @@
 package rest;
 
 import game.CurrentGameCreator;
+import game.GameRest;
 import game.to.GameTOs;
 import game.to.TOsGameManager;
 import game.to.spell.SpellGameStudentTO;
@@ -26,7 +27,7 @@ import dto.Game;
 import dto.games.SpellGame;
 
 @Path("game")
-public class SpellRest {
+public class SpellRest implements GameRest<SpellGameTO, SpellGameStudentTO> {
 
     GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
@@ -35,7 +36,7 @@ public class SpellRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/spell")
     @Produces(MediaType.TEXT_PLAIN)
-    public Integer postSpell(SpellGameTO spellGameTO, @HeaderParam("login") String login)
+    public Integer insertGame(SpellGameTO spellGameTO, @HeaderParam("login") String login)
     {
         SpellGame spellGame = TOsGameManager.covertSpellGameTO(spellGameTO);
 
@@ -48,7 +49,7 @@ public class SpellRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/spell/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SpellGameTO getSpell(@PathParam("id") int id)
+    public SpellGameTO getGame(@PathParam("id") int id)
     {
 
         SpellGame spellGame = gameManager.getSpellGameByID(id);
@@ -62,7 +63,7 @@ public class SpellRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/spell/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String delete(@PathParam("id") int id)
+    public String deleteGame(@PathParam("id") int id)
     {
 
         gameManager.delete(id);
@@ -75,7 +76,7 @@ public class SpellRest {
     @RolesAllowed({ Role.STUDENT, Role.TEACHER })
     @Path("/spells")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameTOs getSpells(@HeaderParam("login") String login)
+    public GameTOs getAllGames(@HeaderParam("login") String login)
     {
 
         List<Game> allGames = gameManager.getAllGames(login, SpellGame.class);
@@ -89,19 +90,19 @@ public class SpellRest {
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/spells")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameTOs getSpellsStudent(@HeaderParam("login") String login)
+    public GameTOs getAllGamesForStudent(@HeaderParam("login") String login)
     {
 
         String teacherLogin = studentManager.getMyTeachersLogin(login);
 
-        return getSpells(teacherLogin);
+        return getAllGames(teacherLogin);
     }
 
     @GET
     @Path("/student/spell/{id}")
     @RolesAllowed({ Role.STUDENT })
     @Produces(MediaType.APPLICATION_JSON)
-    public SpellGameStudentTO getSpellStudent(@HeaderParam("login") String login, @PathParam("id") int id)
+    public SpellGameStudentTO getGameForStudent(@HeaderParam("login") String login, @PathParam("id") int id)
     {
 
         SpellGame spellGame = gameManager.getSpellGameByID(id);

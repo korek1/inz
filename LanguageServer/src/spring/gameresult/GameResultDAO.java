@@ -7,7 +7,7 @@ import dto.to.PointsTO;
 
 public interface GameResultDAO {
 
-    void saveOrUpdateGameResult(GameResult gameResult, String login);
+    int saveOrUpdateGameResult(GameResult gameResult, String login);
 
     List<GameResult> getStudentsGamesResults(int studentID);
 

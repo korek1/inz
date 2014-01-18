@@ -29,9 +29,9 @@ public class GameResultManagerImpl implements GameResultManager {
 
     @Override
     @Transactional
-    public void saveOrUpdateGameResult(GameResult gameResult, String login)
+    public int saveOrUpdateGameResult(GameResult gameResult, String login)
     {
-        gameResultDAO.saveOrUpdateGameResult(gameResult, login);
+        return gameResultDAO.saveOrUpdateGameResult(gameResult, login);
     }
 
     @Override

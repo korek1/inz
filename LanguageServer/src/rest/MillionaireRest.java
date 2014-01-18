@@ -2,6 +2,7 @@ package rest;
 
 import game.CurrentGameCreator;
 import game.GameHelper;
+import game.GameRest;
 import game.impl.CurrentMillionaireGame;
 import game.to.GameTOs;
 import game.to.TOsGameManager;
@@ -28,7 +29,7 @@ import dto.Game;
 import dto.games.MillionaireGame;
 
 @Path("game")
-public class MillionaireRest {
+public class MillionaireRest implements GameRest<MillionaireGameTO, MillionaireGameTO> {
 
     GameManager gameManager = (GameManager) BeanHelper.getBean("gameManagerImpl");
     StudentManager studentManager = (StudentManager) BeanHelper.getBean("studentManagerImpl");
@@ -42,7 +43,7 @@ public class MillionaireRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/millionaire")
     @Produces(MediaType.TEXT_PLAIN)
-    public Integer postMillionaire(MillionaireGameTO millionaireGameTO, @HeaderParam("login") String login)
+    public Integer insertGame(MillionaireGameTO millionaireGameTO, @HeaderParam("login") String login)
     {
 
         MillionaireGame millionaireGame = TOsGameManager.convertMillionaireGameTO(millionaireGameTO);
@@ -55,7 +56,7 @@ public class MillionaireRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/millionaire/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public MillionaireGameTO getWordSearchGame(@PathParam("id") int id)
+    public MillionaireGameTO getGame(@PathParam("id") int id)
     {
 
         MillionaireGame millionaireGame = gameManager.getMillionaireByID(id);
@@ -69,7 +70,7 @@ public class MillionaireRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/millionaire/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String delete(@PathParam("id") int id)
+    public String deleteGame(@PathParam("id") int id)
     {
 
         gameManager.delete(id);
@@ -82,7 +83,7 @@ public class MillionaireRest {
     @RolesAllowed({ Role.TEACHER })
     @Path("/millionaires")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameTOs getWordSearchGames(@HeaderParam("login") String login)
+    public GameTOs getAllGames(@HeaderParam("login") String login)
     {
 
         List<Game> allGames = gameManager.getAllGames(login, MillionaireGame.class);
@@ -96,12 +97,12 @@ public class MillionaireRest {
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/millionaires")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameTOs getWordSearchGamesStudent(@HeaderParam("login") String login)
+    public GameTOs getAllGamesForStudent(@HeaderParam("login") String login)
     {
 
         String teacherLogin = studentManager.getMyTeachersLogin(login);
 
-        return getWordSearchGames(teacherLogin);
+        return getAllGames(teacherLogin);
 
     }
 
@@ -109,7 +110,7 @@ public class MillionaireRest {
     @RolesAllowed({ Role.STUDENT })
     @Path("/student/millionaire/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public MillionaireGameTO getWordSearchGameStudent(@HeaderParam("login") String login, @PathParam("id") int id)
+    public MillionaireGameTO getGameForStudent(@HeaderParam("login") String login, @PathParam("id") int id)
     {
         MillionaireGame millionaireGame = gameManager.getMillionaireByID(id);
         MillionaireGameTO millionaireGameTO = CurrentGameCreator.createAndStartCurrMillionaire(millionaireGame, login);

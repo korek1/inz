@@ -50,11 +50,12 @@ public class GameHelper {
 
             // calculate points and save to db
             PointsDirector pointsDirector = new PointsDirector(currentGame);
-            int points = pointsDirector.calcPoints();
-            gameResultManager.addPoints(points, login);
 
             GameResult produceGameResult = pointsDirector.produceGameResult();
-            gameResultManager.saveOrUpdateGameResult(produceGameResult, login);
+            int gameAttempt = gameResultManager.saveOrUpdateGameResult(produceGameResult, login);
+
+            int points = pointsDirector.calcPoints(gameAttempt);
+            gameResultManager.addPoints(points, login);
 
             removeGame(login);
         }

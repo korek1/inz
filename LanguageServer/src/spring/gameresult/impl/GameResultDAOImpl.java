@@ -1,5 +1,7 @@
 package spring.gameresult.impl;
 
+import game.GameResultDBTranslator;
+
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -24,7 +26,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
     private StudentDAO studentDAO;
 
     @Override
-    public void saveOrUpdateGameResult(GameResult gameResult, String login)
+    public int saveOrUpdateGameResult(GameResult gameResult, String login)
     {
         @SuppressWarnings("unchecked")
         List<GameResult> list = sessionFactory.getCurrentSession()
@@ -35,6 +37,7 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
                 .add(Restrictions.eq("game.id", gameResult.getGame().getId()))
                 .list();
 
+        String resultToSave = gameResult.getResult();
         if (list.isEmpty())
         {
             // trzeba dodaæ caly gameresult
@@ -55,12 +58,14 @@ public class GameResultDAOImpl extends BaseDAOImpl<GameResult> implements GameRe
             String resultDB = gameResultBD.getResult();
             String resultNEW = gameResult.getResult();
 
-            String resultToSave = resultDB + resultNEW;
+            resultToSave = resultDB + resultNEW;
 
             gameResultBD.setResult(resultToSave);
 
             this.update(gameResultBD);
         }
+        
+        return resultToSave.split(GameResultDBTranslator.RESUT_SEPARATOR).length - 1;
 
     }
 

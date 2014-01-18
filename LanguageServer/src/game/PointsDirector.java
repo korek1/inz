@@ -35,10 +35,14 @@ public class PointsDirector {
 
     }
 
-    public int calcPoints()
+    public int calcPoints(int gameAttempt)
     {
+        int temp = 11 - gameAttempt;
+        int factor = temp > 0 ? temp : 1 ;
+        
         int points = ( ( pointsFormDiff() + timePoints() ) * correctness() ) / 100;
         
+        points = points * factor / 10;
         return points > 0 ? points : 0;
     }
 

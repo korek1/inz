@@ -8,8 +8,8 @@ import utils.CommonUtils;
 
 public class GameResultDBTranslator {
 
-    private static final String VALUE_SEPARATOR = "#";
-    private static final String RESUT_SEPARATOR = "%";
+    public static final String VALUE_SEPARATOR = "#";
+    public static final String RESUT_SEPARATOR = "%";
 
     public static String toDB(CurrentGame currGame)
     {
@@ -18,8 +18,9 @@ public class GameResultDBTranslator {
 
         long gameDuration = currGame.getGameDuration();
         int percentage = CommonUtils.getPercentage(corectAnswers, noumberOfTasks);
+        int attempts = currGame.getAttempts();
 
-        String result = gameDuration + VALUE_SEPARATOR + percentage + RESUT_SEPARATOR;
+        String result = gameDuration + VALUE_SEPARATOR + percentage + VALUE_SEPARATOR + attempts + RESUT_SEPARATOR;
 
         return result;
     }
@@ -36,8 +37,9 @@ public class GameResultDBTranslator {
             String[] split = result.split(VALUE_SEPARATOR);
             int duration = Integer.parseInt(split[0]);
             int score = Integer.parseInt(split[1]);
+            int attemps = Integer.parseInt(split[2]);
 
-            ScoreTO scoreTO = new ScoreTO(duration, score);
+            ScoreTO scoreTO = new ScoreTO(duration, score, attemps);
 
             gameResultTO.addScoreTO(scoreTO);
         }

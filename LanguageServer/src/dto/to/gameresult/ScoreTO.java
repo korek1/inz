@@ -4,17 +4,19 @@ public class ScoreTO {
 
     private int duration;
     private int score;
+    private int attemps;
 
     public ScoreTO()
     {
         super();
     }
 
-    public ScoreTO(int duration, int score)
+    public ScoreTO(int duration, int score, int attemps)
     {
         super();
         this.duration = duration;
         this.score = score;
+        this.attemps = attemps;
     }
 
     public int getDuration()
@@ -36,5 +38,17 @@ public class ScoreTO {
     {
         this.score = score;
     }
+
+    public int getAttemps()
+    {
+        return attemps;
+    }
+
+    public void setAttemps(int attemps)
+    {
+        this.attemps = attemps;
+    }
+    
+    
 
 }

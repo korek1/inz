@@ -96,7 +96,7 @@ public class ZwierzRest {
     @GET
     @RolesAllowed({ Role.STUDENT })
     @Path("/avatar")
-    @Produces(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
     public AvatarTOs getAvatarsInfo(@HeaderParam("login") String login) throws ParseException
     {
         AvatarTOs avatarTOs = studentManager.getAvatarsTO(login);

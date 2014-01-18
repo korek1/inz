@@ -156,8 +156,9 @@ public class StudentManagerImpl implements StudentManager {
             int orderNoumber = s.getOrderNoumber();
             Date lastAvatarUpdate = s.getLastAvatarUpdate();
             int totalPoints = s.getTotalPoints();
+            String studentLogin = s.getLogin();
 
-            avatarTOs.addAvatarTO(new AvatarTO(firstName, lastName, login, orderNoumber, totalPoints, lastAvatarUpdate));
+            avatarTOs.addAvatarTO(new AvatarTO(firstName, lastName, studentLogin, orderNoumber, totalPoints, lastAvatarUpdate));
         }
 
         return avatarTOs;
