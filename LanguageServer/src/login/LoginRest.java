@@ -6,7 +6,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import spring.BeanHelper;
 import spring.login.LoginManager;
@@ -36,6 +38,10 @@ public class LoginRest {
 
             AuthMenager.addTempPassStudent(auth.getLogin(), tempPass);
         }
+        else
+        {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
 
         return tempPass;
     }
@@ -58,6 +64,10 @@ public class LoginRest {
             tempPass = auth.getLogin() + Integer.toString(nextInt);
 
             AuthMenager.addTempPassTeacher(auth.getLogin(), tempPass);
+        }
+        else
+        {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         return tempPass;

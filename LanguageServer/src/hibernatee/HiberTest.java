@@ -189,6 +189,7 @@ public class HiberTest {
         searchGameTO.setDifficultyFactor(10);
         searchGameTO.setName("search");
         
+        
         searchGameTO.addAngWord("kitechn");
         searchGameTO.addPolWord("kuchnia");
         
@@ -203,7 +204,7 @@ public class HiberTest {
         
         WordSearchGame WordSearch= TOsGameManager.covertWordSearchGameTO(searchGameTO);
         
-        
+        WordSearch.setOwner(teacher2);
         
         try
         {

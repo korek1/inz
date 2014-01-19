@@ -43,10 +43,14 @@ public class LoginDAOImpl implements LoginDAO {
         @SuppressWarnings("rawtypes")
         List list = sessionFactory.getCurrentSession().createCriteria(clazz).add(Restrictions.eq("login", login)).setProjection(Projections.property("password")).list();
 
-        Object obj = list.get(0);
-        if (CommonUtils.isNotNull(obj) && obj instanceof String)
+        Object obj = null;
+        if (!list.isEmpty())
         {
-            pass = (String) obj;
+            obj = list.get(0);
+            if (CommonUtils.isNotNull(obj) && obj instanceof String)
+            {
+                pass = (String) obj;
+            }
         }
 
         return pass;

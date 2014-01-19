@@ -40,7 +40,6 @@ public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
                 .list();
 
         String x = (String) list.get(0);
-        System.out.println(x);
 
         return x;
     }
