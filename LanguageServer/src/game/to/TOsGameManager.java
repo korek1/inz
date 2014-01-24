@@ -285,7 +285,7 @@ public class TOsGameManager {
     {
         MemoGame memoGame = new MemoGame();
 
-        convertGame(gameTO, memoGame);
+        convertGameTO(memoGame, gameTO);
 
         return memoGame;
     }
@@ -305,7 +305,7 @@ public class TOsGameManager {
         gameTO.setDifficultyFactor(difficultyFactor);
     }
 
-    private static void convertGameTO(Game game, GameTO gameTO)
+    public static void convertGameTO(Game game, GameTO gameTO)
     {
         int categoryId = gameTO.getCategoryId();
         String name = gameTO.getName();
