@@ -51,7 +51,7 @@ public class ApacheTest {
         // bedac nauczycielem i w lini 48 podac jej ID - ja akurat mialem id=11
         // zdjecia dodawaj png bo tak tu jest ustawione na sztywno
 
-        postMemo(tempPass);
+     //   postMemo(tempPass);
 
     }
 
@@ -150,7 +150,7 @@ public class ApacheTest {
         HttpPost post = null;
         if (teacher)
         {
-            post = new HttpPost("http://localhost:8080/LanguageServer/login/teacher");
+            post = new HttpPost("https://localhost:8181/LanguageServer/login/teacher");
         }
         else
         {
