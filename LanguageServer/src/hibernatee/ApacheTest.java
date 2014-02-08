@@ -24,7 +24,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import auth.Auth;
 
@@ -34,13 +33,14 @@ import dto.to.KlasaTO;
 import dto.to.KlasaTOs;
 
 public class ApacheTest {
-
-    static HttpClient client = new DefaultHttpClient();
+  //  Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+//    static HttpClient client = new DefaultHttpClient();
+    static HttpClient client = ClientFactory.getNewHttpClient();
     static Gson g = new Gson();
 
     public static void main(String[] args) throws Exception
     {
-
+        //System.setProperty ("jsse.enableSNIExtension", "false");
         String tempPass = login("jan", "pass", true);
 
         // checkKlasy(tempPass);
