@@ -8,47 +8,47 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum(String.class)
 public enum GameCategory
 {
-    @XmlEnumValue("ogólna")
-    GENERAL(0, "ogólna"),
+    @XmlEnumValue("Ogólna")
+    GENERAL(0, "Ogólna"),
 
-    @XmlEnumValue("cz³owiek")
-    HUMAN(1, "cz³owiek"),
+    @XmlEnumValue("Cz³owiek")
+    HUMAN(1, "Cz³owiek"),
 
-    @XmlEnumValue("dom")
-    HOUSE(2, "dom"),
+    @XmlEnumValue("Dom")
+    HOUSE(2, "Dom"),
 
-    @XmlEnumValue("szko³a")
-    SHOOL(3, "szko³a"),
+    @XmlEnumValue("Szko³a")
+    SHOOL(3, "Szko³a"),
 
-    @XmlEnumValue("praca")
-    WORK(4, "praca"),
+    @XmlEnumValue("Praca")
+    WORK(4, "Praca"),
 
-    @XmlEnumValue("¿ycie towarzyskie")
-    SOCIAL_LIFE(5, "¿ycie towarzyskie"),
+    @XmlEnumValue("¯ycie towarzyskie")
+    SOCIAL_LIFE(5, "¯ycie towarzyskie"),
 
-    @XmlEnumValue("¿ywienie")
-    NUTRICTION(6, "¿ywienie"),
+    @XmlEnumValue("¯ywienie")
+    NUTRICTION(6, "¯ywienie"),
 
-    @XmlEnumValue("zakupy")
-    SHOPPING(7, "zakupy"),
+    @XmlEnumValue("Zakupy")
+    SHOPPING(7, "Zakupy"),
 
-    @XmlEnumValue("podró¿e")
-    TRAVEL(8, "podró¿e"),
+    @XmlEnumValue("Podró¿e")
+    TRAVEL(8, "Podró¿e"),
 
-    @XmlEnumValue("kultura")
-    CULTURE(9, "kultura"),
+    @XmlEnumValue("Kultura")
+    CULTURE(9, "Kultura"),
 
-    @XmlEnumValue("sport")
-    SPORT(10, "sport"),
+    @XmlEnumValue("Sport")
+    SPORT(10, "Sport"),
 
-    @XmlEnumValue("zdrowie")
-    HEALTH(11, "zdrowie"),
+    @XmlEnumValue("Zdrowie")
+    HEALTH(11, "Zdrowie"),
 
-    @XmlEnumValue("nauka")
-    SCIENCE(12, "nauka"),
+    @XmlEnumValue("Nauka")
+    SCIENCE(12, "Nauka"),
 
-    @XmlEnumValue("œrodowisko")
-    ENVIROMENT(13, "œrodowisko");
+    @XmlEnumValue("Œrodowisko")
+    ENVIROMENT(13, "Œrodowisko");
 
     public static int validateCategory(int id)
     {

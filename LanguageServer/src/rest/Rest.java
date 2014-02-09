@@ -315,41 +315,4 @@ public class Rest {
         return id;
     }
 
-    // /**
-    // * Image
-    // */
-    // @POST
-    // @Path("/image")
-    // @Consumes(MediaType.MULTIPART_FORM_DATA)
-    // @Produces(MediaType.TEXT_PLAIN)
-    // public String uploadFile(@FormDataParam("file") InputStream
-    // uploadedInputStream, @FormDataParam("file") FormDataContentDisposition
-    // fileDetail)
-    // {
-    // // need be customized
-    // String uploadedFileLocation = "C:\\Users\\acer\\Desktop\\res\\" +
-    // fileDetail.getFileName();
-    //
-    // // save it
-    // FileUtils.saveToFile(uploadedInputStream, uploadedFileLocation);
-    //
-    // return "hehs";
-    //
-    // }
-    //
-    // @GET
-    // @Path("/image")
-    // @Produces("image/png")
-    // public Response get()
-    // {
-    // File file = new File("C:\\Users\\acer\\Desktop\\postStudent.png");
-    //
-    // ResponseBuilder response = Response.ok((Object) file);
-    // response.header("Content-Disposition",
-    // "attachment; filename=image_from_server.png");
-    // return response.build();
-    // }
-    //
-    // // ////////////////////////////////
-
 }
